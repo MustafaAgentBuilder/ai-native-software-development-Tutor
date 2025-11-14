@@ -1,55 +1,259 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# TutorGPT Constitution
+
+## Mission Statement
+
+**TutorGPT transforms static documentation into intelligent, personalized learning experiences.**
+
+Every learner deserves an AI tutor that understands their unique background, adapts content to their experience level, responds instantly to questions, guides them through complex concepts, and celebrates their progress.
+
+---
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Learner-First Always (NON-NEGOTIABLE)
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+**Every decision serves the learner's success.**
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+- User experience takes priority over technical complexity
+- Features must solve real learning problems
+- Interface should feel intuitive, not intimidating
+- Performance must be fast enough to maintain flow state
+- Errors should be helpful, not frustrating
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+**NOT:**
+- Building features because they're technically interesting
+- Optimizing for developer convenience over user needs
+- Adding complexity that confuses learners
+- Accepting slow performance that breaks concentration
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### II. Test-Driven Development (TDD) MANDATORY
 
-### [PRINCIPLE_6_NAME]
+**All code development follows TDD methodology - NO EXCEPTIONS.**
 
+**TDD Cycle (Red-Green-Refactor):**
+- **RED:** Write failing test that describes desired behavior
+- **GREEN:** Write minimal code to make the test pass
+- **REFACTOR:** Clean up code while keeping tests green
+- **REPEAT:** Continue cycle for next feature/behavior
 
-[PRINCIPLE__DESCRIPTION]
+**Quality Gates:**
+- Minimum 90% test coverage required
+- Tests must run quickly (< 30 seconds full suite)
+- Tests must be deterministic and stable
+- Clear test names and descriptions
+- Keep tests simple and focused
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+**Application Areas:**
+- API Endpoints: Test request/response before implementation
+- Agent Responses: Test agent behavior with various inputs
+- Database Operations: Test data persistence and retrieval
+- WebSocket Communication: Test real-time message flow
+- Content Generation: Test personalization logic and outputs
+- Authentication: Test security and user management flows
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### III. Agent-First Architecture
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+**AI capabilities drive the technical architecture.**
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+- **Context-Aware:** Agent has access to all relevant user and content context
+- **Stateful Conversations:** Maintain understanding across interactions
+- **Proactive Intelligence:** Agent can initiate helpful interactions
+- **Autonomous Decisions:** Agent chooses best teaching approach
+- **Learning Capability:** System improves through user interactions
+- **Test-Driven Agent Development:** All agent logic thoroughly tested
+
+### IV. Personalization Without Burden
+
+**The system learns about users by observing, not asking.**
+
+- Minimal signup questions (only 4 essential ones)
+- Agent adapts based on interaction patterns
+- Learning preferences inferred from behavior
+- Progressive personalization that improves over time
+- Transparent about how personalization works
+
+**NOT:**
+- Overwhelming users with long surveys
+- Requiring manual configuration of preferences
+- Black-box personalization without explanation
+- Personalization that feels intrusive
+
+### V. Real-Time by Default
+
+**Interactions feel live and responsive.**
+
+- **WebSocket Foundation:** Real-time communication as primary interface
+- **Streaming Responses:** Long responses stream as they generate
+- **Live Status:** Show connection status and agent activity
+- **Instant Feedback:** Immediate response to user actions
+- **Background Processing:** Heavy operations don't block interface
+
+### VI. Performance as Feature
+
+**Speed and reliability are core features, not afterthoughts.**
+
+**Performance Standards:**
+- Summary tabs load instantly (under 200ms)
+- Chat responses feel conversational (under 4 seconds)
+- WebSocket connections are stable and reliable
+- Personalized content generates within reasonable time
+- System gracefully handles high concurrent load
+
+**NOT:**
+- Accepting slow performance as "good enough"
+- Building features without considering performance impact
+- Leaving optimization for "later"
+- Ignoring user frustration with loading times
+
+### VII. Content Integrity and Accuracy
+
+**Generated content preserves technical accuracy while enhancing understanding.**
+
+- Personalized content maintains factual correctness
+- Agent explanations align with source material
+- Code examples are runnable and best-practice
+- Language translation preserves technical meaning
+- Sources are clearly attributed and traceable
+
+**NOT:**
+- Simplifying content to the point of inaccuracy
+- Adding personal opinions or biased interpretations
+- Generating code that doesn't work
+- Translating in ways that change technical meaning
+
+### VIII. Privacy and Transparency
+
+**Users control their data and understand how it's used.**
+
+- Clear explanation of data collection and use
+- User consent for personalization features
+- Option to delete account and all data
+- Transparent about AI model usage and limitations
+- Secure handling of all personal information
+
+---
+
+## Technology Stack Requirements
+
+### Required Technologies
+- **Backend:** Python 3.11+ with OpenAI Agents SDK
+- **API Framework:** FastAPI with async/await
+- **Real-time:** WebSockets for live communication
+- **Agent Framework:** OpenAI Agents SDK with MCP integration
+- **Testing:** pytest with async support, 90%+ coverage
+- **Package Management:** UV for dependency management
+
+### Architecture Patterns
+- **Agent Pattern:** Orchestrator + Specialist agents (teaching, summarization, Q&A)
+- **Communication:** WebSocket-first with RESTful fallback
+- **State Management:** Context-aware with memory persistence
+- **Error Handling:** Graceful degradation with helpful messages
+
+---
+
+## Development Workflow
+
+### Feature Development Process
+
+1. **Specification First**
+   - Write clear `spec.md` defining WHAT we're building
+   - Include user stories, success criteria, constraints
+   - Get approval before proceeding
+
+2. **Planning Phase**
+   - Create `plan.md` defining HOW we'll build it
+   - Architecture decisions with rationale
+   - Technology choices with tradeoffs
+   - ADR creation for significant decisions
+
+3. **Task Breakdown**
+   - Generate `tasks.md` with testable tasks
+   - Each task has acceptance criteria
+   - Include test cases for validation
+   - Dependency ordering
+
+4. **TDD Implementation**
+   - **RED:** Write failing test first
+   - **GREEN:** Implement minimal code to pass
+   - **REFACTOR:** Clean up while tests stay green
+   - **COMMIT:** Small, atomic commits with clear messages
+
+5. **Quality Gates**
+   - All tests passing (90%+ coverage)
+   - Code passes linting (ruff, black, mypy)
+   - Performance benchmarks met
+   - Security checks passed
+   - Documentation updated
+
+### Code Review Requirements
+- All changes require peer review
+- Tests must be included with code
+- Performance impact assessed
+- Security implications considered
+- Documentation updated
+
+---
+
+## Quality Standards
+
+### Functional Quality
+- Features work correctly and reliably
+- Agent responses are factually correct
+- Same inputs produce consistent outputs
+- Graceful error handling
+- Cross-platform compatibility
+
+### Performance Quality
+- Chat responses under 4 seconds
+- Summary generation under 200ms
+- 99.9% uptime with graceful recovery
+- Supports 100+ concurrent learners
+- Optimal resource usage
+
+### User Experience Quality
+- Intuitive navigation without explanation
+- Clean, modern design that aids comprehension
+- Accessible (screen readers, keyboard navigation)
+- Mobile-friendly responsive design
+- Clear guidance when errors occur
+
+### Content Quality
+- Technical information is correct and up-to-date
+- Explanations are clear at appropriate level
+- Topics covered thoroughly without overwhelming
+- Code samples work and illustrate concepts
+- Content respects diverse backgrounds
+
+---
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+### Constitutional Authority
+- This constitution supersedes all other development practices
+- All features, code, and decisions must align with these principles
+- Deviations require documented justification and approval
+- Amendments require team consensus and version update
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+### Enforcement
+- All PRs must demonstrate compliance with principles
+- Code reviews verify adherence to TDD and quality standards
+- Architecture decisions must align with Agent-First principle
+- Performance benchmarks must be met before merge
+- Learner-First principle guides all feature prioritization
+
+### Amendment Process
+- Proposals must be documented with rationale
+- Team discussion and consensus required
+- Impact assessment on existing systems
+- Version increment and changelog update
+- Communication to all stakeholders
+
+---
+
+**Version**: 1.0.0 | **Ratified**: 2025-11-14 | **Last Amended**: 2025-11-14
+
+---
+
+*"The best teacher is one who suggests rather than dogmatizes, and inspires their listener with the wish to teach themselves." - Edward Bulwer-Lytton*
+
+*"In the age of AI, the greatest teaching tool is one that adapts to each student's mind." - TutorGPT Team*

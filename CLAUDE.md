@@ -208,3 +208,17 @@ Wait for consent; never auto-create ADRs. Group related decisions (stacks, authe
 
 ## Code Standards
 See `.specify/memory/constitution.md` for code quality, testing, performance, security, and architecture principles.
+
+- When you see tasks involving: AI agents, chatbots, LLMs, conversational AI, or agent workflows → IMMEDIATELY execute these steps: ALWAYS read the skills located in
+
+
+
+1. Run: view C:\Users\USER\.claude\skills\openai-agents-expert.md
+
+2. Run: view C:\Users\USER\.claude\skills\Prompt-&-Context-Engineering-Skill.md
+
+3. Then implement following the patterns from both skills
+
+
+
+Never skip step 1 and 2. These skills contain critical implementation knowledge
