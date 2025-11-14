@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(uv init:*)",
+      "Bash(uv sync:*)",
+      "Bash(git fetch:*)",
+      "Bash(powershell.exe -ExecutionPolicy Bypass -File \".specify/scripts/powershell/create-new-feature.ps1\" -Json \"AI-powered book learning platform with three tabs (Original, Summary, Personalized). Features: Pre-generated summaries for Part 1 (all chapters), personalized AI tutoring requiring login, 4 action buttons (Explain, Main Points, Example, Ask Tutor), real-time chat with WebSocket, and user authentication with learning profiles. Summaries are publicly accessible, personalized content requires user account.\" -Number 1 -ShortName \"tutorgpt-platform\")",
+      "Bash(powershell.exe -ExecutionPolicy Bypass -File \".specify/scripts/powershell/setup-plan.ps1\" -Json)",
+      "Bash(git --version)",
+      "Bash(git rev-parse:*)",
+      "Bash(gh:*)",
+      "Bash(git add:*)"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "playwright",
+    "context7"
+  ]
+}
