@@ -1,9 +1,18 @@
 # Implementation Plan: TutorGPT - AI-Powered Book Learning Platform
 
-**Branch**: `001-tutorgpt-platform` | **Date**: 2025-11-14 | **Spec**: [spec.md](./spec.md)
+**Branch**: `001-tutorgpt-platform` | **Date**: 2025-11-14 | **Last Updated**: 2025-11-15 | **Spec**: [spec.md](./spec.md)
 **Input**: Feature specification from `/specs/001-tutorgpt-platform/spec.md`
 
 **Note**: This plan defines HOW we'll build TutorGPT following Test-Driven Development and Agent-First Architecture principles.
+
+**🔴 CRITICAL ARCHITECTURE UPDATE (2025-11-15)**:
+- **Backend Architecture Changed**: Simple OpenAI API → RAG-Powered OLIVIA AI Agent
+- **Required**: OpenAI Agents SDK (NOT `openai.chat.completions.create()`)
+- **Required**: ChromaDB RAG with 2,026 pre-computed embeddings
+- **Required**: WebSocket streaming for all agent responses
+- **Required**: Conversation memory (last 7 messages per user)
+- **Embeddings Location**: `Tutor-Agent/data/embeddings/` (19MB, already copied)
+- **See**: `ARCHITECTURE_UPDATE.md` and `TASKS_UPDATE.md` for complete details
 
 ## Summary
 
@@ -19,7 +28,7 @@ TutorGPT transforms the "AI Native Software Development" book (Part 1) into an i
 **Project Type**: Web application (backend API + enhanced static site frontend)
 **Performance Goals**: Summary <200ms, Personalized <5s (first)/<500ms (cached), Chat <4s, Actions <3s, WebSocket connect <1s
 **Constraints**: Part 1 only (4 chapters), 100+ concurrent users support, Test coverage ≥90%, All features TDD-developed
-**Scale/Scope**: ~107 lessons, 587 embedding chunks (19MB), 4 user profile dimensions, real-time bi-directional communication
+**Scale/Scope**: ~107 lessons, 2,026 embedding chunks (19MB), 4 user profile dimensions, real-time bi-directional communication
 
 ## Constitution Check
 
@@ -231,7 +240,7 @@ P:\Ai native Book\ai-native-software-development\Tutor\
 **Integration Strategy**:
 - Symlink or copy `P:\Ai native Book\...\Tutor\backend\data\embeddings` to `Tutor-Agent/data/embeddings`
 - Load ChromaDB with `PersistentClient(path="./data/embeddings")`
-- Collection name: `book_content` (587 chunks from 107 lessons)
+- Collection name: `book_content` (2,026 chunks from 107 lessons)
 
 ## Complexity Tracking
 
@@ -254,7 +263,7 @@ P:\Ai native Book\ai-native-software-development\Tutor\
 1. **Agent Context Management**
    - **Question**: How to efficiently build agent context from user profile + page + history?
    - **Research**: OpenAI Agents SDK context injection patterns
-   - **Decision point**: Context window management for 587 embedding chunks
+   - **Decision point**: Context window management for 2,026 embedding chunks
 
 2. **WebSocket Scaling**
    - **Question**: How to handle 100+ concurrent WebSocket connections efficiently?
@@ -424,7 +433,7 @@ class UniversalTutorAgent:
 **Decision**: Use pre-computed ChromaDB embeddings with multi-level retrieval.
 
 **Rationale**:
-- Embeddings already exist (587 chunks, 19MB)
+- Embeddings already exist (2,026 chunks, 19MB)
 - ChromaDB HNSW index provides fast search (<100ms)
 - Multi-level retrieval (page → chapter → book) improves context relevance
 

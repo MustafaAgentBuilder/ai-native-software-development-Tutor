@@ -149,6 +149,68 @@ Every learner deserves an AI tutor that understands their unique background, ada
 - **State Management:** Context-aware with memory persistence
 - **Error Handling:** Graceful degradation with helpful messages
 
+### AI Agent Principles (MANDATORY)
+
+**All AI Interactions MUST Use OpenAI Agents SDK**
+- ❌ **NEVER** use simple `openai.chat.completions.create()` calls
+- ✅ **ALWAYS** use OpenAI Agents SDK with tools, handoffs, and structured outputs
+- ✅ Agents MUST have tools, memory, and streaming capabilities
+
+**RAG Requirements (Retrieval-Augmented Generation)**
+- ALL content generation MUST use RAG (not hallucination)
+- ChromaDB embeddings are the source of truth for book content
+- Agent MUST search embeddings before generating responses
+- Responses MUST include source attribution where applicable
+
+**Streaming Responses (Real-Time Communication)**
+- ALL agent responses MUST stream (not blocking)
+- Frontend MUST show "Generating..." state during streaming
+- Use `Runner.stream()` for async streaming
+- WebSocket is the primary communication channel
+
+**Conversation Memory (Context Preservation)**
+- Remember last 7 messages per user (stored in database)
+- Include conversation history in agent context on each request
+- Store in `conversation_messages` table with user_id + timestamps
+- Memory retrieval MUST be fast (<50ms)
+
+**Agent Tools (Mandatory for OLIVIA)**
+
+Every agent MUST have at minimum these three tools:
+
+1. **RAG Search Tool** (`search_book_content`)
+   - Queries ChromaDB for relevant content
+   - Supports scoped search (page/chapter/book)
+   - Returns top-k chunks with metadata and source attribution
+
+2. **User Profile Retrieval Tool** (`get_user_profile`)
+   - Fetches user's 4-question profile
+   - Programming experience, AI experience, learning style, language
+   - Used for content personalization
+
+3. **Conversation History Tool** (`get_conversation_history`)
+   - Retrieves last 7 messages for context
+   - Enables conversation continuity
+   - Prevents repetitive responses
+
+**Six-Step Prompting Framework (ACILPR)**
+
+All agent prompts MUST follow this structure:
+
+1. **Actor**: Define who the agent is (e.g., "You are OLIVIA, an AI tutor...")
+2. **Context**: Provide user profile + current page + conversation history
+3. **Instruction**: Clearly state what needs to be done
+4. **Limitations**: Define constraints and boundaries
+5. **Persona**: Set communication style based on user level
+6. **Response Format**: Specify output structure (markdown, JSON, etc.)
+
+**Performance Targets**
+- RAG search: <500ms
+- Personalized content generation: <5s (first), <200ms (cached)
+- Action button responses: <3s
+- Chat responses: <4s
+- WebSocket connection: <1s
+
 ---
 
 ## Development Workflow
@@ -250,7 +312,7 @@ Every learner deserves an AI tutor that understands their unique background, ada
 
 ---
 
-**Version**: 1.0.0 | **Ratified**: 2025-11-14 | **Last Amended**: 2025-11-14
+**Version**: 1.1.0 | **Ratified**: 2025-11-14 | **Last Amended**: 2025-11-15
 
 ---
 

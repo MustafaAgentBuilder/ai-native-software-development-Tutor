@@ -28,32 +28,53 @@ Building an AI-powered book learning platform with three tabs for each lesson:
 - `book-source/src/components/SummaryTab/index.tsx`
 - `book-source/static/summaries/*.md` (34 files)
 
-### 2. Personalized Learning Backend (100% Complete)
+### 2. Personalized Learning Backend (70% Complete - RAG Agent Required)
 - ✅ User authentication (JWT with 7-day expiration)
 - ✅ 4-question learning profile system
 - ✅ Database models (User, PersonalizedContent)
-- ✅ OpenAI content generation with adaptive prompting
-- ✅ Content caching with profile-aware invalidation
-- ✅ API endpoints (signup, login, me, personalized content)
+- ✅ ChromaDB embeddings (19MB book content, 2,026 chunks)
+- ✅ chromadb dependency added to pyproject.toml
+- ⏳ **OLIVIA AI Agent with RAG (NEEDS IMPLEMENTATION)**
+- ⏳ **Streaming response via WebSocket (NEEDS IMPLEMENTATION)**
+- ⏳ **Conversation memory - last 7 messages (NEEDS IMPLEMENTATION)**
+- ⏳ **RAG tool for ChromaDB search (NEEDS IMPLEMENTATION)**
+- ❌ Simple OpenAI API approach (DEPRECATED - Must Upgrade)
+
+**Current State**: Simple OpenAI API → **Must Upgrade** → AI Agent with RAG + WebSocket
 
 **Backend Stack**:
-- FastAPI + SQLAlchemy + OpenAI
+- FastAPI + SQLAlchemy + OpenAI Agents SDK
+- ChromaDB for RAG (2,026 embeddings)
+- WebSocket for streaming responses
 - SQLite (dev) → PostgreSQL (prod ready)
 - JWT authentication
 - Bcrypt password hashing
 
-**API Endpoints**:
-- `POST /api/v1/auth/signup` - Register with profile
-- `POST /api/v1/auth/login` - Get JWT token
-- `GET /api/v1/auth/me` - Get user profile
-- `GET /api/v1/content/personalized/{page_path}` - Get personalized content
+**API Endpoints** (Existing):
+- `POST /api/v1/auth/signup` - Register with profile ✅
+- `POST /api/v1/auth/login` - Get JWT token ✅
+- `GET /api/v1/auth/me` - Get user profile ✅
+- `GET /api/v1/content/personalized/{page_path}` - Get personalized content (⚠️ needs WebSocket)
 
-**Key Files**:
-- `Tutor-Agent/src/tutor_agent/main.py`
-- `Tutor-Agent/src/tutor_agent/api/v1/auth.py`
-- `Tutor-Agent/src/tutor_agent/api/v1/content.py`
-- `Tutor-Agent/src/tutor_agent/models/user.py`
-- `Tutor-Agent/src/tutor_agent/services/personalized_content.py`
+**API Endpoints** (Needs Implementation):
+- `WS /ws/personalized/{page_path}` - WebSocket streaming for personalized content ⏳
+- `WS /ws/chat` - Real-time chat with OLIVIA agent ⏳
+- `WS /ws/action` - Action button responses (Explain, MainPoints, Example, AskTutor) ⏳
+
+**Key Files** (Existing):
+- `Tutor-Agent/src/tutor_agent/main.py` ✅
+- `Tutor-Agent/src/tutor_agent/api/v1/auth.py` ✅
+- `Tutor-Agent/src/tutor_agent/api/v1/content.py` ✅
+- `Tutor-Agent/src/tutor_agent/models/user.py` ✅
+- `Tutor-Agent/data/embeddings/` ✅ (ChromaDB - 19MB)
+- `Tutor-Agent/src/tutor_agent/services/personalized_content.py` ❌ (DEPRECATED)
+
+**Key Files** (Needs Implementation):
+- `Tutor-Agent/src/tutor_agent/services/agent/olivia_agent.py` ⏳
+- `Tutor-Agent/src/tutor_agent/services/rag_service.py` ⏳
+- `Tutor-Agent/src/tutor_agent/services/conversation_service.py` ⏳
+- `Tutor-Agent/src/tutor_agent/core/websocket_manager.py` ⏳
+- `Tutor-Agent/src/tutor_agent/api/v1/websocket.py` ⏳
 
 ---
 
@@ -110,10 +131,13 @@ Frontend runs on: `http://localhost:3000`
 - Check `specs/001-tutorgpt-platform/tasks.md` - All user stories
 
 **Architecture**:
-- Backend: FastAPI + OpenAI Agents SDK
+- Backend: FastAPI + OpenAI Agents SDK + ChromaDB RAG
 - Frontend: React + TypeScript + Docusaurus
 - Database: SQLite (SQLAlchemy ORM)
+- Embeddings: ChromaDB (2,026 chunks, 768-dim vectors)
+- Real-Time: WebSocket for streaming responses
 - Auth: JWT tokens (7-day expiration)
+- Agent: OLIVIA (RAG-powered with 3 tools + conversation memory)
 
 ---
 

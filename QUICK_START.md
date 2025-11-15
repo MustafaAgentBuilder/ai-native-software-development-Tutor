@@ -49,6 +49,28 @@ npm start
 
 ---
 
+## 🧠 OLIVIA AI Agent
+
+The backend uses a **RAG-powered AI agent**, not simple API calls.
+
+**What this means**:
+- Content is retrieved from ChromaDB embeddings (not hardcoded)
+- Agent has tools to search, reason, and adapt
+- Responses stream in real-time via WebSocket
+- Conversation context is preserved (last 7 messages)
+- All AI interactions use OpenAI Agents SDK
+
+**Embeddings Location**: `Tutor-Agent/data/embeddings/` (19MB ChromaDB, 2,026 chunks)
+
+**Agent Implementation** (Needs to be created):
+- `Tutor-Agent/src/tutor_agent/services/agent/olivia_agent.py`
+- `Tutor-Agent/src/tutor_agent/services/rag_service.py`
+- `Tutor-Agent/src/tutor_agent/core/websocket_manager.py`
+
+**Current Status**: ⚠️ Simple OpenAI API → **Must Upgrade** → RAG Agent + WebSocket
+
+---
+
 ## 🎯 Your Mission
 
 **Build the PersonalizedTab frontend UI**

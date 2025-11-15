@@ -22,15 +22,17 @@
 
 ## ✅ What Was Completed
 
-### Backend (100% Complete)
+### Backend (70% Complete - NEEDS RAG AGENT IMPLEMENTATION)
 - ✅ User authentication system (JWT-based)
 - ✅ Database models for User and PersonalizedContent
 - ✅ 4-question learning profile system
-- ✅ Personalized content generation using OpenAI
-- ✅ Adaptive prompting based on user profile
-- ✅ Content caching with profile-aware invalidation
-- ✅ API endpoints: signup, login, me, personalized content
-- ✅ Database initialization (SQLite with migration path to PostgreSQL)
+- ✅ ChromaDB embeddings (19MB book content, 2,026 chunks)
+- ✅ chromadb dependency added to pyproject.toml
+- ⏳ **OLIVIA AI Agent with RAG (NEEDS IMPLEMENTATION)**
+- ⏳ **Streaming response via WebSocket (NEEDS IMPLEMENTATION)**
+- ⏳ **Conversation memory (last 7 messages) (NEEDS IMPLEMENTATION)**
+- ⏳ **RAG tool for ChromaDB search (NEEDS IMPLEMENTATION)**
+- ❌ Simple OpenAI API approach (DEPRECATED - Must upgrade to Agent)
 
 ### Frontend (0% Complete - THIS IS YOUR TASK)
 - ⏳ PersonalizedTab login/signup UI
@@ -75,13 +77,185 @@ Display Personalized Markdown Content
 - **Frontend**: React + TypeScript + Docusaurus
 - **Database**: SQLite (dev) / PostgreSQL (prod)
 - **Auth**: JWT (7-day expiration)
-- **AI**: OpenAI API (gpt-4o-mini) with Six-Step Prompting Framework
+- **AI**: OpenAI Agents SDK + ChromaDB RAG + WebSocket Streaming
+- **Embeddings**: ChromaDB (2,026 chunks, 768-dimensional vectors)
+
+---
+
+## 🤖 OLIVIA AI Agent Architecture
+
+### Agent Overview
+
+**OLIVIA** (OpenAI Learning and Interactive Virtual Instructional Agent) is a RAG-powered AI tutor that:
+- Uses **OpenAI Agents SDK** for reasoning and tool use
+- Queries **ChromaDB embeddings** for relevant book content (2,026 chunks)
+- Adapts content to user's **4-question learning profile**
+- Remembers **last 7 conversation messages** per user
+- **Streams responses** via WebSocket for live "Generating..." UX
+
+### Agent Tools
+
+The OLIVIA agent has access to three specialized tools:
+
+1. **`search_book_content(page_path, query, scope)`**
+   - Queries ChromaDB for relevant book content
+   - Supports page-specific, chapter-wide, or full-book search
+   - Returns top-k relevant chunks with metadata
+   - Example: `search_book_content("/01-Introducing-AI/...", "git workflow", "page")`
+
+2. **`get_user_profile(user_id)`**
+   - Retrieves user's 4-question profile:
+     - Programming experience (beginner/intermediate/advanced)
+     - AI experience (none/basic/intermediate/advanced)
+     - Learning style (visual/practical/conceptual/mixed)
+     - Preferred language (en/es/fr/de/zh/ja)
+   - Returns profile for content adaptation
+
+3. **`get_conversation_history(user_id, limit=7)`**
+   - Retrieves last 7 messages from conversation
+   - Provides context for follow-up questions
+   - Ensures conversation continuity
+
+### Agent Flow (Personalized Content Generation)
+
+```
+1. User requests personalized content for page X
+   ↓
+2. Frontend opens WebSocket connection
+   ↓
+3. Backend authenticates JWT token
+   ↓
+4. PersonalizedContentService checks cache
+   ↓
+5. OLIVIA agent receives context:
+   - User profile (4 questions)
+   - Conversation history (last 7 messages)
+   - Current page path
+   ↓
+6. Agent uses RAG tool to search ChromaDB:
+   - Finds relevant chunks for current page
+   - Retrieves 3-5 most relevant sections
+   ↓
+7. Agent generates personalized content using:
+   - Original content (from RAG)
+   - User profile (adaptation level)
+   - Conversation context (continuity)
+   - Six-Step Prompting Framework (ACILPR)
+   ↓
+8. Agent streams response to frontend
+   - Chunks sent via WebSocket
+   - Frontend shows "Generating..." animation
+   - Content appears word-by-word
+   ↓
+9. PersonalizedContentService caches result
+   - Stores with user_id + page_path + profile_snapshot
+   - Next request returns cached content (<200ms)
+```
+
+### Six-Step Prompting Framework (ACILPR)
+
+OLIVIA uses this framework for all content generation:
+
+1. **Actor**: "You are OLIVIA, an AI tutor specializing in AI-Native Software Development..."
+2. **Context**: User profile + current page + conversation history
+3. **Instruction**: Generate personalized content adapted to user level
+4. **Limitations**: Keep length similar to original, preserve code examples, no emojis
+5. **Persona**: Adaptive based on user level (encouraging for beginners, challenging for advanced)
+6. **Response Format**: Markdown with structured sections
+
+### RAG Architecture
+
+**ChromaDB Embeddings** (`Tutor-Agent/data/embeddings/`):
+- **Collection**: `book_content`
+- **Total Chunks**: 2,026 (from 107 lessons in Part 1)
+- **Embedding Dimension**: 768
+- **Distance Metric**: Cosine similarity
+- **Metadata per chunk**:
+  - `file_path`: Original markdown file
+  - `chapter`: Chapter number
+  - `lesson`: Lesson title
+  - `heading`: Section heading
+  - `topics`: Extracted keywords
+  - `difficulty`: beginner/intermediate/advanced
+  - `content_type`: text/heading/code
+  - `chunk_index`, `chunk_size`
+
+**RAG Search Strategy**:
+- **Level 1**: Search current page only (most relevant)
+- **Level 2**: If insufficient results, search current chapter
+- **Level 3**: If still insufficient, search entire book
+- Returns top-k chunks with source attribution
+
+### WebSocket Streaming
+
+**Endpoints**:
+- `/ws/personalized/{page_path}` - Stream personalized content generation
+- `/ws/chat` - Bi-directional chat with agent
+- `/ws/action` - Stream action button responses (Explain, Main Points, Example, Ask Tutor)
+
+**Message Format**:
+```json
+{
+  "type": "chunk",
+  "content": "This is a streaming...",
+  "timestamp": "2025-11-15T12:30:00Z"
+}
+```
+
+**Final Message**:
+```json
+{
+  "type": "complete",
+  "total_time_ms": 4523,
+  "tokens_used": 1200
+}
+```
+
+### Conversation Memory
+
+**Storage**: `conversation_messages` table in database
+
+**Schema**:
+```sql
+CREATE TABLE conversation_messages (
+    id UUID PRIMARY KEY,
+    user_id UUID REFERENCES users(id),
+    role VARCHAR(20),  -- 'user' or 'assistant'
+    content TEXT,
+    page_context VARCHAR(500),
+    created_at TIMESTAMP
+);
+```
+
+**Retrieval**: Last 7 messages per user, ordered by `created_at DESC`
+
+**Context Building**:
+```python
+context = {
+    "user_profile": {
+        "programming_experience": "beginner",
+        "ai_experience": "basic",
+        "learning_style": "visual",
+        "preferred_language": "en"
+    },
+    "current_page": "/01-Introducing-AI/...",
+    "conversation_history": [
+        {"role": "user", "content": "What is git?"},
+        {"role": "assistant", "content": "Git is a version control system..."},
+        # ... last 7 messages
+    ],
+    "rag_sources": [
+        {"chunk": "Git tracks changes...", "source": "03-git/01-intro.md"},
+        # ... top-k RAG results
+    ]
+}
+```
 
 ---
 
 ## 📁 File Structure
 
-### Backend Files (All Complete ✅)
+### Backend Files (70% Complete - RAG Agent Needed)
 ```
 Tutor-Agent/
 ├── src/tutor_agent/
@@ -97,11 +271,31 @@ Tutor-Agent/
 │   │   └── user.py                      # User & PersonalizedContent models
 │   ├── schemas/
 │   │   └── auth.py                      # Pydantic request/response schemas
-│   └── services/
-│       └── personalized_content.py      # OpenAI content generation
-├── data/                                # SQLite database directory
+│   ├── services/
+│   │   ├── agent/                       # ⏳ NEEDS IMPLEMENTATION
+│   │   │   ├── olivia_agent.py          # OLIVIA AI Agent class
+│   │   │   ├── tools/                   # Agent tools
+│   │   │   │   ├── search_book_content.py  # RAG search tool
+│   │   │   │   ├── get_user_profile.py     # User profile tool
+│   │   │   │   └── get_conversation_history.py  # Memory tool
+│   │   │   ├── prompts/
+│   │   │   │   └── six_step_template.py    # ACILPR prompt framework
+│   │   │   ├── context_builder.py       # Build agent context
+│   │   │   └── streaming.py             # WebSocket streaming handler
+│   │   ├── rag_service.py               # ⏳ ChromaDB RAG search service
+│   │   ├── conversation_service.py      # ⏳ Conversation memory management
+│   │   └── personalized_content.py      # ❌ DEPRECATED (uses simple OpenAI API)
+│   ├── core/
+│   │   ├── websocket_manager.py         # ⏳ WebSocket connection manager
+│   │   ├── websocket_auth.py            # ⏳ WebSocket JWT authentication
+│   │   └── message_queue.py             # ⏳ Streaming message queue
+├── data/                                # Data directory
+│   ├── embeddings/                      # ✅ ChromaDB embeddings (19MB, 2,026 chunks)
+│   │   ├── chroma.sqlite3               # ChromaDB database
+│   │   └── d69c732b-.../                # Vector index files
+│   └── tutorgpt.db                      # SQLite database (auto-created)
 ├── .env.example                         # Environment variables template
-└── pyproject.toml                       # Dependencies
+└── pyproject.toml                       # ✅ Dependencies (chromadb>=0.4.0 added)
 
 Frontend Files (Need to Create ⏳)
 book-source/

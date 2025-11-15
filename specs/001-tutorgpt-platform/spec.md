@@ -28,6 +28,13 @@ Any visitor can read the original book content and access pre-generated summarie
 
 Registered users receive personalized content adapted to their experience level, learning style, and preferred language.
 
+**🔴 ARCHITECTURE REQUIREMENT (Updated 2025-11-15)**:
+- **MUST use OpenAI Agents SDK** (NOT simple `openai.chat.completions.create()`)
+- **MUST implement RAG** with ChromaDB embeddings (2,026 chunks)
+- **MUST stream responses** via WebSocket ("Generating..." UX)
+- **MUST remember last 7 conversation messages** per user
+- **See**: `ARCHITECTURE_UPDATE.md` for complete implementation details
+
 **Why this priority**: Differentiator from static documentation - transforms generic content into tailored learning. Requires P1 to be functional first (users need to see value before committing to signup).
 
 **Independent Test**: User completes 4-question signup (programming experience, AI experience, learning style, language), navigates to any Part 1 page, clicks Personalized tab, and receives content rewritten specifically for their profile within 5 seconds on first request.

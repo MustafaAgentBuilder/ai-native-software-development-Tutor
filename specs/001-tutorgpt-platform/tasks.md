@@ -13,6 +13,27 @@ description: "Task list for TutorGPT - AI-Powered Book Learning Platform"
 
 **Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
 
+---
+
+## 🔴 CRITICAL ARCHITECTURE UPDATE (2025-11-15)
+
+**Backend Architecture Changed**: Simple OpenAI API → RAG-Powered OLIVIA AI Agent
+
+**What This Means**:
+- ❌ **REMOVE**: All simple `openai.chat.completions.create()` approach tasks
+- ✅ **ADD**: ~30 new tasks for RAG agent implementation (see below)
+- ✅ **REQUIRED**: OpenAI Agents SDK, ChromaDB RAG, WebSocket streaming, Conversation memory
+
+**Changes Applied**:
+1. Phase 2 (Foundational): Added OLIVIA agent foundation tasks (T021-T035)
+2. User Story 2 (Personalized): Updated to use RAG agent + WebSocket (T057-T087)
+3. User Story 3 (Action Buttons): Updated to use WebSocket streaming (T103-T113)
+4. User Story 4 (Chat): Updated to use WebSocket bi-directional messaging (T118-T129)
+
+**See**: `TASKS_UPDATE.md` and `ARCHITECTURE_UPDATE.md` for complete details
+
+---
+
 ## Format: `[ID] [P?] [Story] Description`
 
 - **[P]**: Can run in parallel (different files, no dependencies)
