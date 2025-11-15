@@ -51,6 +51,14 @@ differentiation:
   extension_for_advanced: "Map how specific AI tools address each lifecycle phase; research emerging tools in DevOps/SRE automation"
   remedial_for_struggling: "Focus on core 3 phases (planning, implementation, operations); use simple phase diagram before discussing convergence"
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import SummaryTab from '@site/src/components/SummaryTab';
+
+<Tabs>
+  <TabItem value="original" label="📖 Original" default>
+
+
 
 # The Development Lifecycle in Transition
 
@@ -298,3 +306,18 @@ The lesson mentions the 'compounding effect'—each phase improvement makes the 
 
 
 
+
+  </TabItem>
+
+  <TabItem value="summary" label="📝 Summary">
+
+<SummaryTab pagePath="01-Introducing-AI-Driven-Development/01-ai-development-revolution/04-development-lifecycle-transition" />
+
+  </TabItem>
+
+  <TabItem value="personalized" label="✨ Personalized">
+
+*Login required for personalized content powered by OLIVIA AI Tutor*
+
+  </TabItem>
+</Tabs>

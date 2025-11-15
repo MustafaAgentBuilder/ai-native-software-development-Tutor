@@ -51,6 +51,14 @@ differentiation:
   extension_for_advanced: "Research how other fields (medicine, law) maintain relevance in fast-changing domains; propose solutions for CS education"
   remedial_for_struggling: "Focus on one gap (mobile development example); use timeline visualization before discussing AI gaps"
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import SummaryTab from '@site/src/components/SummaryTab';
+
+<Tabs>
+  <TabItem value="original" label="📖 Original" default>
+
+
 
 # Why Traditional CS Education Falls Short
 
@@ -313,3 +321,18 @@ Create a balanced learning plan for me: If I have [X hours per week], how should
 
 
 
+
+  </TabItem>
+
+  <TabItem value="summary" label="📝 Summary">
+
+<SummaryTab pagePath="01-Introducing-AI-Driven-Development/01-ai-development-revolution/08-traditional-cs-education-gaps" />
+
+  </TabItem>
+
+  <TabItem value="personalized" label="✨ Personalized">
+
+*Login required for personalized content powered by OLIVIA AI Tutor*
+
+  </TabItem>
+</Tabs>

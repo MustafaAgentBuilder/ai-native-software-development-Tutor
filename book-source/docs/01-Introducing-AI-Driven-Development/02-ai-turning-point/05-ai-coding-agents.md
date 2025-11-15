@@ -52,6 +52,14 @@ differentiation:
   extension_for_advanced: "Research emerging platforms and their integration capabilities; predict stack evolution"
   remedial_for_struggling: "Focus on one layer at a time; use simple architecture diagram before discussing connections"
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import SummaryTab from '@site/src/components/SummaryTab';
+
+<Tabs>
+  <TabItem value="original" label="📖 Original" default>
+
+
 
 # The Modern AI Development Stack
 
@@ -481,3 +489,18 @@ I'm worried about learning tools that become obsolete. Let's explore what's dura
 
 
 
+
+  </TabItem>
+
+  <TabItem value="summary" label="📝 Summary">
+
+<SummaryTab pagePath="01-Introducing-AI-Driven-Development/02-ai-turning-point/05-ai-coding-agents" />
+
+  </TabItem>
+
+  <TabItem value="personalized" label="✨ Personalized">
+
+*Login required for personalized content powered by OLIVIA AI Tutor*
+
+  </TabItem>
+</Tabs>

@@ -52,6 +52,14 @@ differentiation:
   extension_for_advanced: "Research case studies of companies making paradigm shifts; analyze adoption patterns"
   remedial_for_struggling: "Focus on Priya/Marcus comparison; establish basic paradigm distinction before discussing multiplicative effects"
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import SummaryTab from '@site/src/components/SummaryTab';
+
+<Tabs>
+  <TabItem value="original" label="📖 Original" default>
+
+
 
 # Why This Moment Demands a New Paradigm
 
@@ -194,3 +202,18 @@ Based on the Priya/Marcus story, create a simple self-assessment for me. Ask 5-7
 
 **Expected outcome:** Actionable one-week experiment to shift toward systematic AI usage
 
+
+  </TabItem>
+
+  <TabItem value="summary" label="📝 Summary">
+
+<SummaryTab pagePath="01-Introducing-AI-Driven-Development/04-nine-pillars/01-why-new-paradigm" />
+
+  </TabItem>
+
+  <TabItem value="personalized" label="✨ Personalized">
+
+*Login required for personalized content powered by OLIVIA AI Tutor*
+
+  </TabItem>
+</Tabs>

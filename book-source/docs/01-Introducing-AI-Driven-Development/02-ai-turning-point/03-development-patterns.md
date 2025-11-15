@@ -52,6 +52,14 @@ differentiation:
   extension_for_advanced: "Research code quality metrics comparing vibe vs. spec-driven; analyze refactoring costs"
   remedial_for_struggling: "Use one simple example (personal project vs. team project); build understanding incrementally"
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import SummaryTab from '@site/src/components/SummaryTab';
+
+<Tabs>
+  <TabItem value="original" label="📖 Original" default>
+
+
 
 # Development Patterns — Vibe Coding vs. Spec-Driven Development
 
@@ -356,3 +364,18 @@ I need a simple decision framework: Given a project, how do I choose between "ex
 **What you're learning**: Framework co-creation—you're building decision tools WITH your AI, not just receiving them. This is AI partnership in action.
 
 
+
+  </TabItem>
+
+  <TabItem value="summary" label="📝 Summary">
+
+<SummaryTab pagePath="01-Introducing-AI-Driven-Development/02-ai-turning-point/03-development-patterns" />
+
+  </TabItem>
+
+  <TabItem value="personalized" label="✨ Personalized">
+
+*Login required for personalized content powered by OLIVIA AI Tutor*
+
+  </TabItem>
+</Tabs>

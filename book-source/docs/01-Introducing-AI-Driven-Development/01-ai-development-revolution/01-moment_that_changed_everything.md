@@ -53,6 +53,13 @@ differentiation:
   remedial_for_struggling: "Focus on YC W25 example (95% AI-generated code) as primary case study; use concrete data before abstract concepts"
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import SummaryTab from '@site/src/components/SummaryTab';
+
+<Tabs>
+  <TabItem value="original" label="📖 Original" default>
+
 # A Moment That Changed Everything
 
 **Lesson Video:**
@@ -175,4 +182,17 @@ Based on what we've discussed, explain: If I'm learning to build solutions in 20
 
 **Expected outcome**: Clarity on what to learn vs. what to delegate to AI.
 
+  </TabItem>
 
+  <TabItem value="summary" label="📝 Summary">
+
+<SummaryTab pagePath="01-Introducing-AI-Driven-Development/01-ai-development-revolution/01-moment_that_changed_everything" />
+
+  </TabItem>
+
+  <TabItem value="personalized" label="✨ Personalized">
+
+*Login required for personalized content powered by OLIVIA AI Tutor*
+
+  </TabItem>
+</Tabs>

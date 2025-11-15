@@ -54,6 +54,14 @@ differentiation:
   extension_for_advanced: "Research current founder economics; calculate value-per-founder for recent acquisitions"
   remedial_for_struggling: "Focus on one precedent (Instagram or WhatsApp) before comparing multiple cases"
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import SummaryTab from '@site/src/components/SummaryTab';
+
+<Tabs>
+  <TabItem value="original" label="📖 Original" default>
+
+
 
 # The Economics of Super Orchestrators: Why the 90-10 Rule Changes Everything
 
@@ -181,3 +189,18 @@ The lesson says the bottleneck is 'human attention, not infrastructure.' Explain
 
 
 
+
+  </TabItem>
+
+  <TabItem value="summary" label="📝 Summary">
+
+<SummaryTab pagePath="01-Introducing-AI-Driven-Development/03-billion-dollar-ai/03-super-orchestrators" />
+
+  </TabItem>
+
+  <TabItem value="personalized" label="✨ Personalized">
+
+*Login required for personalized content powered by OLIVIA AI Tutor*
+
+  </TabItem>
+</Tabs>

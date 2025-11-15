@@ -54,6 +54,14 @@ differentiation:
   extension_for_advanced: "Research model fine-tuning techniques; analyze real integrations in chosen vertical"
   remedial_for_struggling: "Focus on understanding why 'all-or-nothing' requirement is necessary before diving into technical details"
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import SummaryTab from '@site/src/components/SummaryTab';
+
+<Tabs>
+  <TabItem value="original" label="📖 Original" default>
+
+
 
 # Three Requirements for Vertical Success: All Three, or None
 
@@ -252,3 +260,18 @@ The lesson says 'all three or none,' meaning if I'm missing even one requirement
 
 
 
+
+  </TabItem>
+
+  <TabItem value="summary" label="📝 Summary">
+
+<SummaryTab pagePath="01-Introducing-AI-Driven-Development/03-billion-dollar-ai/06-three-requirements" />
+
+  </TabItem>
+
+  <TabItem value="personalized" label="✨ Personalized">
+
+*Login required for personalized content powered by OLIVIA AI Tutor*
+
+  </TabItem>
+</Tabs>

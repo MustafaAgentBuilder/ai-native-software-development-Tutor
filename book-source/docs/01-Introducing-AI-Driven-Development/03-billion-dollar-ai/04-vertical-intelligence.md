@@ -54,6 +54,14 @@ differentiation:
   extension_for_advanced: "Research MCP standard; analyze how MCPs enable intelligence reuse"
   remedial_for_struggling: "Focus on system prompts and skills; skip deep technical details about MCPs"
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import SummaryTab from '@site/src/components/SummaryTab';
+
+<Tabs>
+  <TabItem value="original" label="📖 Original" default>
+
+
 
 # From Code Reuse to Vertical Intelligence: The New Architecture of Software
 
@@ -190,3 +198,18 @@ The lesson says 'code is disposable, intelligence is permanent.' This feels wast
 
 
 
+
+  </TabItem>
+
+  <TabItem value="summary" label="📝 Summary">
+
+<SummaryTab pagePath="01-Introducing-AI-Driven-Development/03-billion-dollar-ai/04-vertical-intelligence" />
+
+  </TabItem>
+
+  <TabItem value="personalized" label="✨ Personalized">
+
+*Login required for personalized content powered by OLIVIA AI Tutor*
+
+  </TabItem>
+</Tabs>

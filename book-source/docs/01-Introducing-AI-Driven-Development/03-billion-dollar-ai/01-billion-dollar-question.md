@@ -54,6 +54,14 @@ differentiation:
   extension_for_advanced: "Research current unicorn companies and AI-enabled revenue models; analyze scaling strategies"
   remedial_for_struggling: "Focus on concrete examples of solo developers building with AI agents today; explain incremental capabilities before discussing scale"
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import SummaryTab from '@site/src/components/SummaryTab';
+
+<Tabs>
+  <TabItem value="original" label="📖 Original" default>
+
+
 
 # The Billion-Dollar Question
 
@@ -141,3 +149,18 @@ The lesson says I don't need 'a large team, years of experience, or venture capi
 
 
 
+
+  </TabItem>
+
+  <TabItem value="summary" label="📝 Summary">
+
+<SummaryTab pagePath="01-Introducing-AI-Driven-Development/03-billion-dollar-ai/01-billion-dollar-question" />
+
+  </TabItem>
+
+  <TabItem value="personalized" label="✨ Personalized">
+
+*Login required for personalized content powered by OLIVIA AI Tutor*
+
+  </TabItem>
+</Tabs>

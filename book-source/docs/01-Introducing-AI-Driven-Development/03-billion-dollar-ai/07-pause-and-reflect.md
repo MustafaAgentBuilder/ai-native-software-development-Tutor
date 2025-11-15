@@ -54,6 +54,14 @@ differentiation:
   extension_for_advanced: "Map frameworks to specific venture; create detailed 18-month roadmap"
   remedial_for_struggling: "Focus on one reflection prompt deeply; skip others if needed"
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import SummaryTab from '@site/src/components/SummaryTab';
+
+<Tabs>
+  <TabItem value="original" label="📖 Original" default>
+
+
 
 # Pause and Reflect
 
@@ -153,3 +161,18 @@ I'm feeling overwhelmed by all the frameworks in this chapter. Help me create a 
 **Expected outcome**: Personal cheat sheet you can reference as you execute.
 
 
+
+  </TabItem>
+
+  <TabItem value="summary" label="📝 Summary">
+
+<SummaryTab pagePath="01-Introducing-AI-Driven-Development/03-billion-dollar-ai/07-pause-and-reflect" />
+
+  </TabItem>
+
+  <TabItem value="personalized" label="✨ Personalized">
+
+*Login required for personalized content powered by OLIVIA AI Tutor*
+
+  </TabItem>
+</Tabs>

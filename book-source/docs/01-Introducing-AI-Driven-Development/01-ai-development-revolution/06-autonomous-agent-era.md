@@ -51,6 +51,14 @@ differentiation:
   extension_for_advanced: "Research current agent frameworks (Claude, Anthropic's Building with Claude); predict 5-year agent capability trajectory"
   remedial_for_struggling: "Focus on simple comparison (autocomplete vs. agents); use timeline visualization before detailed capability discussion"
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import SummaryTab from '@site/src/components/SummaryTab';
+
+<Tabs>
+  <TabItem value="original" label="📖 Original" default>
+
+
 
 # The Autonomous Agent Era
 
@@ -305,3 +313,18 @@ The lesson emphasizes 'human judgment remains essential.' Give me 3-5 concrete e
 
 
 
+
+  </TabItem>
+
+  <TabItem value="summary" label="📝 Summary">
+
+<SummaryTab pagePath="01-Introducing-AI-Driven-Development/01-ai-development-revolution/06-autonomous-agent-era" />
+
+  </TabItem>
+
+  <TabItem value="personalized" label="✨ Personalized">
+
+*Login required for personalized content powered by OLIVIA AI Tutor*
+
+  </TabItem>
+</Tabs>

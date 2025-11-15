@@ -52,6 +52,14 @@ differentiation:
   extension_for_advanced: "Compare AIDD to other methodologies (Agile, DevOps); research how organizations adopt AIDD"
   remedial_for_struggling: "Focus on core definition; skip nine characteristics initially, build understanding incrementally"
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import SummaryTab from '@site/src/components/SummaryTab';
+
+<Tabs>
+  <TabItem value="original" label="📖 Original" default>
+
+
 
 # AIDD Defined: A Complete Methodology
 
@@ -223,3 +231,18 @@ The self-assessment scale goes from 1 (Completely New) to 5 (Fully Embracing). I
 **Expected outcome:** Clear milestones to track your progress up the mastery scale
 
 
+
+  </TabItem>
+
+  <TabItem value="summary" label="📝 Summary">
+
+<SummaryTab pagePath="01-Introducing-AI-Driven-Development/04-nine-pillars/02-aidd-defined" />
+
+  </TabItem>
+
+  <TabItem value="personalized" label="✨ Personalized">
+
+*Login required for personalized content powered by OLIVIA AI Tutor*
+
+  </TabItem>
+</Tabs>

@@ -12,7 +12,15 @@
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(git push:*)",
-      "Bash(git checkout:*)"
+      "Bash(git checkout:*)",
+      "Bash(powershell.exe -ExecutionPolicy Bypass -File \".specify/scripts/powershell/check-prerequisites.ps1\" -Json)",
+      "Bash(\".specify/scripts/bash/create-phr.sh\" --title \"Generate comprehensive tasks for tutorgpt platform\" --stage tasks --feature tutorgpt-platform --json)",
+      "Bash(uv run python:*)",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_take_screenshot",
+      "mcp__playwright__browser_click",
+      "mcp__playwright__browser_snapshot",
+      "mcp__playwright__browser_close"
     ]
   },
   "enableAllProjectMcpServers": true,

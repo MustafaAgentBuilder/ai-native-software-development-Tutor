@@ -51,6 +51,14 @@ differentiation:
   extension_for_advanced: "Research how other professions adapted when technology commoditized their routine work (accountants with spreadsheets, architects with CAD)"
   remedial_for_struggling: "Focus on one barrier (syntax) and how AI removes it; use concrete examples before abstract strategies"
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import SummaryTab from '@site/src/components/SummaryTab';
+
+<Tabs>
+  <TabItem value="original" label="📖 Original" default>
+
+
 
 # The Opportunity Window
 
@@ -356,3 +364,18 @@ Based on this 'opportunity window' idea, create a simple 30-day action plan for 
 
 
 
+
+  </TabItem>
+
+  <TabItem value="summary" label="📝 Summary">
+
+<SummaryTab pagePath="01-Introducing-AI-Driven-Development/01-ai-development-revolution/07-opportunity-window" />
+
+  </TabItem>
+
+  <TabItem value="personalized" label="✨ Personalized">
+
+*Login required for personalized content powered by OLIVIA AI Tutor*
+
+  </TabItem>
+</Tabs>

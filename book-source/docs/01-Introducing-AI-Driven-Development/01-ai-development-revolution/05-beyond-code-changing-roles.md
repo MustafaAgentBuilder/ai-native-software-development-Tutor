@@ -51,6 +51,14 @@ differentiation:
   extension_for_advanced: "Research job postings and skill requirements for AI-era developer roles; analyze salary and demand trends"
   remedial_for_struggling: "Focus on one career level (e.g., junior developer); use concrete code example before abstract concepts"
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import SummaryTab from '@site/src/components/SummaryTab';
+
+<Tabs>
+  <TabItem value="original" label="📖 Original" default>
+
+
 
 # Beyond Code: The Changing Role of Developers
 
@@ -336,3 +344,18 @@ The lesson says 'developers are more valuable, not less' with AI. Explain why th
 
 
 
+
+  </TabItem>
+
+  <TabItem value="summary" label="📝 Summary">
+
+<SummaryTab pagePath="01-Introducing-AI-Driven-Development/01-ai-development-revolution/05-beyond-code-changing-roles" />
+
+  </TabItem>
+
+  <TabItem value="personalized" label="✨ Personalized">
+
+*Login required for personalized content powered by OLIVIA AI Tutor*
+
+  </TabItem>
+</Tabs>

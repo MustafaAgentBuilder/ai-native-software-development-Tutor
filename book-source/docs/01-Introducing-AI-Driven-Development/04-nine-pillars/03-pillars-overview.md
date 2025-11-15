@@ -52,6 +52,14 @@ differentiation:
   extension_for_advanced: "Map each pillar to specific projects; analyze how different domains prioritize different pillars"
   remedial_for_struggling: "Focus on understanding barriers first; skip detailed integration until foundation is solid"
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import SummaryTab from '@site/src/components/SummaryTab';
+
+<Tabs>
+  <TabItem value="original" label="📖 Original" default>
+
+
 
 # The Nine Pillars—Overview and Integration
 
@@ -198,3 +206,18 @@ The lesson explains interdependencies between pillars. Create a simple 'learning
 
 **Expected outcome:** Logical learning sequence that builds knowledge progressively
 
+
+  </TabItem>
+
+  <TabItem value="summary" label="📝 Summary">
+
+<SummaryTab pagePath="01-Introducing-AI-Driven-Development/04-nine-pillars/03-pillars-overview" />
+
+  </TabItem>
+
+  <TabItem value="personalized" label="✨ Personalized">
+
+*Login required for personalized content powered by OLIVIA AI Tutor*
+
+  </TabItem>
+</Tabs>

@@ -51,6 +51,14 @@ differentiation:
   extension_for_advanced: "Research and compare disruption timelines in other technology domains (cloud computing, mobile, containers); predict future AI timeline"
   remedial_for_struggling: "Focus on one simple comparison (retail then software); use timeline visualization before abstract concepts"
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import SummaryTab from '@site/src/components/SummaryTab';
+
+<Tabs>
+  <TabItem value="original" label="📖 Original" default>
+
+
 
 # Software Disrupting Itself
 
@@ -252,3 +260,18 @@ The lesson mentions a 'recursion effect'—AI tools being used to improve AI too
 
 
 
+
+  </TabItem>
+
+  <TabItem value="summary" label="📝 Summary">
+
+<SummaryTab pagePath="01-Introducing-AI-Driven-Development/01-ai-development-revolution/03-software-disrupting-itself" />
+
+  </TabItem>
+
+  <TabItem value="personalized" label="✨ Personalized">
+
+*Login required for personalized content powered by OLIVIA AI Tutor*
+
+  </TabItem>
+</Tabs>

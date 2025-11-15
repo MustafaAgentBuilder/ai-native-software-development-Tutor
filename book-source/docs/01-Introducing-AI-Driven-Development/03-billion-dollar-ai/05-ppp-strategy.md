@@ -54,6 +54,14 @@ differentiation:
   extension_for_advanced: "Research companies that executed similar strategies; analyze their phase transitions"
   remedial_for_struggling: "Focus on one phase deeply; understand CAC reduction before discussing pivot mechanics"
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import SummaryTab from '@site/src/components/SummaryTab';
+
+<Tabs>
+  <TabItem value="original" label="📖 Original" default>
+
+
 
 # The Piggyback Protocol Pivot: Your Strategic Playbook for Entering Vertical Markets
 
@@ -200,3 +208,18 @@ I'm worried about Phase 3, the 'pivot.' What if the incumbent systems see me as 
 
 
 
+
+  </TabItem>
+
+  <TabItem value="summary" label="📝 Summary">
+
+<SummaryTab pagePath="01-Introducing-AI-Driven-Development/03-billion-dollar-ai/05-ppp-strategy" />
+
+  </TabItem>
+
+  <TabItem value="personalized" label="✨ Personalized">
+
+*Login required for personalized content powered by OLIVIA AI Tutor*
+
+  </TabItem>
+</Tabs>

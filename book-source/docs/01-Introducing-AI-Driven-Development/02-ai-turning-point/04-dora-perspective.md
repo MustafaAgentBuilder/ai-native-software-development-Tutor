@@ -52,6 +52,14 @@ differentiation:
   extension_for_advanced: "Research DORA 2025 full report; analyze correlation between capabilities and productivity gains"
   remedial_for_struggling: "Focus on amplifier concept with simple examples; explain one DORA capability deeply"
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import SummaryTab from '@site/src/components/SummaryTab';
+
+<Tabs>
+  <TabItem value="original" label="📖 Original" default>
+
+
 
 # The DORA Perspective — AI as Amplifier
 
@@ -356,3 +364,17 @@ I'm worried that guardrails will slow me down and negate AI's speed advantage. L
 ```
 
 **What you're learning**: Resolving the speed-quality paradox through reflection—your AI guides you to discover that guardrails enable speed, not hinder it, by examining your own past projects.
+  </TabItem>
+
+  <TabItem value="summary" label="📝 Summary">
+
+<SummaryTab pagePath="01-Introducing-AI-Driven-Development/02-ai-turning-point/04-dora-perspective" />
+
+  </TabItem>
+
+  <TabItem value="personalized" label="✨ Personalized">
+
+*Login required for personalized content powered by OLIVIA AI Tutor*
+
+  </TabItem>
+</Tabs>

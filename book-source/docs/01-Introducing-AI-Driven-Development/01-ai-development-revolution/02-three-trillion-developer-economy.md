@@ -51,6 +51,14 @@ differentiation:
   extension_for_advanced: "Research current developer salaries vs. economic value generated; analyze regional variations"
   remedial_for_struggling: "Focus on simple GDP comparison; use relatable examples before diving into calculation details"
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import SummaryTab from '@site/src/components/SummaryTab';
+
+<Tabs>
+  <TabItem value="original" label="📖 Original" default>
+
+
 
 # The $3 Trillion Developer Economy
 
@@ -256,3 +264,18 @@ Based on this economic shift, help me think strategically: Should I focus on lea
 
 
 
+
+  </TabItem>
+
+  <TabItem value="summary" label="📝 Summary">
+
+<SummaryTab pagePath="01-Introducing-AI-Driven-Development/01-ai-development-revolution/02-three-trillion-developer-economy" />
+
+  </TabItem>
+
+  <TabItem value="personalized" label="✨ Personalized">
+
+*Login required for personalized content powered by OLIVIA AI Tutor*
+
+  </TabItem>
+</Tabs>

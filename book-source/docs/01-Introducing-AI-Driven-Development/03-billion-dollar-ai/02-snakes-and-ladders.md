@@ -54,6 +54,14 @@ differentiation:
   extension_for_advanced: "Research current unicorn startups and map them to layers; analyze why they chose specific layers"
   remedial_for_struggling: "Focus on one layer at a time; use simple examples (restaurants, retail) before applying to AI"
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import SummaryTab from '@site/src/components/SummaryTab';
+
+<Tabs>
+  <TabItem value="original" label="📖 Original" default>
+
+
 
 # The Snakes and Ladders Framework: Why Vertical Markets Beat Head-On Competition
 
@@ -171,3 +179,18 @@ The lesson mentions Microsoft's failure with Windows Mobile as a lesson about co
 
 
 
+
+  </TabItem>
+
+  <TabItem value="summary" label="📝 Summary">
+
+<SummaryTab pagePath="01-Introducing-AI-Driven-Development/03-billion-dollar-ai/02-snakes-and-ladders" />
+
+  </TabItem>
+
+  <TabItem value="personalized" label="✨ Personalized">
+
+*Login required for personalized content powered by OLIVIA AI Tutor*
+
+  </TabItem>
+</Tabs>

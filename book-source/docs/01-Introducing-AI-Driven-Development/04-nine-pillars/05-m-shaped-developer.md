@@ -52,6 +52,14 @@ differentiation:
   extension_for_advanced: "Identify three complementary domains for M-shaped development; create learning roadmap"
   remedial_for_struggling: "Compare one domain pair first (backend/frontend); build understanding before discussing broader profiles"
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import SummaryTab from '@site/src/components/SummaryTab';
+
+<Tabs>
+  <TabItem value="original" label="📖 Original" default>
+
+
 
 # The M-Shaped Developer—What AIDD Makes Possible
 
@@ -236,3 +244,18 @@ The lesson asks 'What would your ideal M-shaped profile look like in 2 years?' C
 
 
 
+
+  </TabItem>
+
+  <TabItem value="summary" label="📝 Summary">
+
+<SummaryTab pagePath="01-Introducing-AI-Driven-Development/04-nine-pillars/05-m-shaped-developer" />
+
+  </TabItem>
+
+  <TabItem value="personalized" label="✨ Personalized">
+
+*Login required for personalized content powered by OLIVIA AI Tutor*
+
+  </TabItem>
+</Tabs>

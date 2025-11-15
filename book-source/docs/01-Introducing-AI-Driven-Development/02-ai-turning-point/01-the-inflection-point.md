@@ -52,6 +52,14 @@ differentiation:
   extension_for_advanced: "Research GDPval Benchmark details; analyze capability improvement trajectory"
   remedial_for_struggling: "Focus on one breakthrough example (ICPC); explain incrementally"
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import SummaryTab from '@site/src/components/SummaryTab';
+
+<Tabs>
+  <TabItem value="original" label="📖 Original" default>
+
+
 
 # The Inflection Point — Why 2025 Is Different
 
@@ -344,3 +352,18 @@ Now that we've explored the evidence and my context, let's co-create my personal
 **What you're learning**: Co-creation with AI—you don't just receive answers, you shape them through iteration. This is how AI partnership actually works.
 
 
+
+  </TabItem>
+
+  <TabItem value="summary" label="📝 Summary">
+
+<SummaryTab pagePath="01-Introducing-AI-Driven-Development/02-ai-turning-point/01-the-inflection-point" />
+
+  </TabItem>
+
+  <TabItem value="personalized" label="✨ Personalized">
+
+*Login required for personalized content powered by OLIVIA AI Tutor*
+
+  </TabItem>
+</Tabs>

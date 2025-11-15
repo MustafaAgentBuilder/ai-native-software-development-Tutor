@@ -52,6 +52,14 @@ differentiation:
   extension_for_advanced: "Deep dive into each pillar's technical implementation; research emerging technologies in each area"
   remedial_for_struggling: "Focus on 2-3 pillars deeply; return to others when foundation is solid"
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import SummaryTab from '@site/src/components/SummaryTab';
+
+<Tabs>
+  <TabItem value="original" label="📖 Original" default>
+
+
 
 # The Nine Pillars Detailed—Deep Dive
 
@@ -281,3 +289,18 @@ Pick ONE pillar that excites me most [tell AI which one]. Create a 30-day learni
 
 **Expected outcome:** Focused 30-day plan for mastering your highest-priority pillar
 
+
+  </TabItem>
+
+  <TabItem value="summary" label="📝 Summary">
+
+<SummaryTab pagePath="01-Introducing-AI-Driven-Development/04-nine-pillars/04-pillars-detailed" />
+
+  </TabItem>
+
+  <TabItem value="personalized" label="✨ Personalized">
+
+*Login required for personalized content powered by OLIVIA AI Tutor*
+
+  </TabItem>
+</Tabs>

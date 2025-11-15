@@ -52,6 +52,14 @@ differentiation:
   extension_for_advanced: "Research technology adoption curves; analyze real companies' AIDD adoption patterns"
   remedial_for_struggling: "Focus on one bottleneck story (Sarah or Marcus) before discussing multiple historical examples"
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import SummaryTab from '@site/src/components/SummaryTab';
+
+<Tabs>
+  <TabItem value="original" label="📖 Original" default>
+
+
 
 # Why All Nine Matter—Urgency Without Panic
 
@@ -211,3 +219,18 @@ The realistic timeline says Months 1-6 (pillars 1-3), Months 7-12 (pillars 4-6),
 
 
 
+
+  </TabItem>
+
+  <TabItem value="summary" label="📝 Summary">
+
+<SummaryTab pagePath="01-Introducing-AI-Driven-Development/04-nine-pillars/06-why-all-nine-matter" />
+
+  </TabItem>
+
+  <TabItem value="personalized" label="✨ Personalized">
+
+*Login required for personalized content powered by OLIVIA AI Tutor*
+
+  </TabItem>
+</Tabs>

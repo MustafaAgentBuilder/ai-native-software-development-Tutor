@@ -52,6 +52,14 @@ differentiation:
   extension_for_advanced: "Design an agentic version of a complex workflow; specify intent disambiguation rules"
   remedial_for_struggling: "Focus on single example (hotel booking); build understanding through one concrete transformation"
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import SummaryTab from '@site/src/components/SummaryTab';
+
+<Tabs>
+  <TabItem value="original" label="📖 Original" default>
+
+
 
 # From User Interface to User Intent
 
@@ -528,3 +536,18 @@ Let's discover: What makes intent specification different from interface specifi
 
 **What you're learning**: Specification thinking for agentic systems—clarity in the face of ambiguity.
 
+
+  </TabItem>
+
+  <TabItem value="summary" label="📝 Summary">
+
+<SummaryTab pagePath="01-Introducing-AI-Driven-Development/02-ai-turning-point/02-user-interface-intent" />
+
+  </TabItem>
+
+  <TabItem value="personalized" label="✨ Personalized">
+
+*Login required for personalized content powered by OLIVIA AI Tutor*
+
+  </TabItem>
+</Tabs>
