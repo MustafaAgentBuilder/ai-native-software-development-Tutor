@@ -7,12 +7,21 @@ Implements Six-Step Prompting Framework (ACILPR) with real-time RAG.
 """
 
 import asyncio
-from typing import AsyncGenerator, Optional, Dict, Any
-from agents import Agent, Runner, ItemHelpers, OpenAIChatCompletionsModel, AsyncOpenAI, set_tracing_disabled
+import os
+from typing import Any, AsyncGenerator, Dict, Optional
+
+from agents import (
+    Agent,
+    AsyncOpenAI,
+    ItemHelpers,
+    OpenAIChatCompletionsModel,
+    Runner,
+    set_tracing_disabled,
+)
+from dotenv import load_dotenv
+
 from tutor_agent.models.user import User
 from tutor_agent.services.agent.tools import search_book_content
-from dotenv import load_dotenv
-import os
 
 # Load environment variables
 load_dotenv()
@@ -38,17 +47,19 @@ class OLIVIAAgent:
 
         # Create Gemini API provider using AsyncOpenAI
         self.gemini_provider = AsyncOpenAI(
-            api_key=os.getenv("GEMINI_API_KEY"),
+            api_key=os.getenv("AIzaSyCCtY-MeVd-fMdeH3w81s6B1vQF90izzt0"),
             base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
         )
 
         # Set up the chat completion model with Gemini
         self.model = OpenAIChatCompletionsModel(
-            model="gemini-2.0-flash-exp",  # Fast, free Gemini model
+            model="gemini-2.0-flash",  # Fast, free Gemini model
             openai_client=self.gemini_provider,
         )
 
-    def _create_personalized_agent(self, user: User, page_path: Optional[str] = None) -> Agent:
+    def _create_personalized_agent(
+        self, user: User, page_path: Optional[str] = None
+    ) -> Agent:
         """
         Create a personalized agent instance for specific user
 
@@ -67,12 +78,14 @@ class OLIVIAAgent:
             name="OLIVIA",
             instructions=instructions,
             tools=[search_book_content],  # RAG search tool
-            model=self.model  # Gemini 2.0 Flash model
+            model=self.model,  # Gemini 2.0 Flash model
         )
 
         return agent
 
-    def _build_personalized_instructions(self, user: User, page_path: Optional[str] = None) -> str:
+    def _build_personalized_instructions(
+        self, user: User, page_path: Optional[str] = None
+    ) -> str:
         """
         Build agent instructions using Six-Step Framework (ACILPR)
 
@@ -150,7 +163,11 @@ Use markdown formatting. Be clear and concise.
 
     def _get_adaptive_instruction(self, user: User) -> str:
         """Generate adaptive instruction based on user profile"""
-        from tutor_agent.models.user import ProgrammingExperience, AIExperience, LearningStyle
+        from tutor_agent.models.user import (
+            AIExperience,
+            LearningStyle,
+            ProgrammingExperience,
+        )
 
         # Adapt based on programming experience
         if user.programming_experience == ProgrammingExperience.BEGINNER:
@@ -164,7 +181,9 @@ Use markdown formatting. Be clear and concise.
         if user.ai_experience == AIExperience.NONE:
             ai_instruction = "Introduce AI concepts gently. Explain all AI terminology. Focus on practical applications."
         elif user.ai_experience == AIExperience.BASIC:
-            ai_instruction = "Build on basic AI knowledge. Introduce ML/LLM concepts progressively."
+            ai_instruction = (
+                "Build on basic AI knowledge. Introduce ML/LLM concepts progressively."
+            )
         elif user.ai_experience == AIExperience.INTERMEDIATE:
             ai_instruction = "Assume familiarity with ML basics. Focus on agent architectures and advanced patterns."
         else:  # ADVANCED
@@ -194,7 +213,7 @@ Your goal is to make this content maximally effective for THIS learner's profile
 
     def _get_adaptive_persona(self, user: User) -> str:
         """Generate adaptive persona based on user profile"""
-        from tutor_agent.models.user import ProgrammingExperience, LearningStyle
+        from tutor_agent.models.user import LearningStyle, ProgrammingExperience
 
         # Beginners need encouraging tone
         if user.programming_experience == ProgrammingExperience.BEGINNER:
@@ -224,7 +243,7 @@ Communication Style:
         original_content: str,
         user: User,
         page_path: str,
-        user_query: Optional[str] = None
+        user_query: Optional[str] = None,
     ) -> AsyncGenerator[str, None]:
         """
         Generate personalized content OR answer questions with streaming
@@ -298,8 +317,8 @@ Remember: Use the search_book_content tool to find related concepts if needed.
             # Skip raw response events (too granular)
             if event.type == "raw_response_event":
                 # Extract text delta for streaming
-                if hasattr(event, 'data') and hasattr(event.data, 'delta'):
-                    if hasattr(event.data.delta, 'text'):
+                if hasattr(event, "data") and hasattr(event.data, "delta"):
+                    if hasattr(event.data.delta, "text"):
                         chunk = event.data.delta.text
                         full_response += chunk
                         yield chunk
@@ -331,10 +350,7 @@ Remember: Use the search_book_content tool to find related concepts if needed.
             yield full_response
 
     async def generate_personalized_content(
-        self,
-        original_content: str,
-        user: User,
-        page_path: str
+        self, original_content: str, user: User, page_path: str
     ) -> AsyncGenerator[str, None]:
         """
         Generate personalized content with streaming (legacy method)
@@ -378,14 +394,15 @@ def get_olivia_agent() -> OLIVIAAgent:
 # Test Function
 # ============================================================================
 
+
 async def test_olivia_agent():
     """Test OLIVIA agent with sample user"""
     from tutor_agent.models.user import (
-        User,
-        ProgrammingExperience,
         AIExperience,
         LearningStyle,
-        PreferredLanguage
+        PreferredLanguage,
+        ProgrammingExperience,
+        User,
     )
 
     print("🤖 Testing OLIVIA Agent...\n")
@@ -396,7 +413,7 @@ async def test_olivia_agent():
         programming_experience=ProgrammingExperience.BEGINNER,
         ai_experience=AIExperience.NONE,
         learning_style=LearningStyle.VISUAL,
-        preferred_language=PreferredLanguage.EN
+        preferred_language=PreferredLanguage.EN,
     )
 
     # Sample content
@@ -417,11 +434,9 @@ def greet(name):
     print("-" * 60)
 
     async for chunk in agent.generate_personalized_content(
-        original_content,
-        test_user,
-        "04-Python-Fundamentals/03-functions"
+        original_content, test_user, "04-Python-Fundamentals/03-functions"
     ):
-        print(chunk, end='', flush=True)
+        print(chunk, end="", flush=True)
 
     print("\n" + "-" * 60)
     print("\n✅ OLIVIA Agent Test Complete")
