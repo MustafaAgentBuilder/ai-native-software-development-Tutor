@@ -376,3 +376,84 @@ async def get_personalized_content(
             status_code=500,
             detail=f"Failed to generate personalized content: {str(e)}",
         )
+
+
+# ============================================================================
+# OLIVIA Agent Test Endpoint (Development Only)
+# ============================================================================
+
+@router.post("/test-olivia")
+async def test_olivia_agent(
+    query: str = Query(..., description="Question to ask OLIVIA"),
+    page_path: Optional[str] = Query(None, description="Optional page context")
+):
+    """
+    🧪 Test endpoint for OLIVIA agent (Development/Testing only)
+
+    Test the RAG-powered OLIVIA agent without authentication.
+
+    Args:
+        query: Question to ask OLIVIA
+        page_path: Optional page path for context
+
+    Returns:
+        OLIVIA's response with RAG-powered answer
+    """
+    try:
+        from tutor_agent.services.agent.olivia_agent import OLIVIAAgent
+        from tutor_agent.models.user import User
+        from enum import Enum
+
+        # Create mock user for testing
+        class MockExperience(Enum):
+            BEGINNER = "beginner"
+            INTERMEDIATE = "intermediate"
+            ADVANCED = "advanced"
+
+        class MockUser:
+            def __init__(self):
+                self.id = 999
+                self.email = "test@example.com"
+                self.name = "Test User"
+                self.programming_experience = type('obj', (object,), {'value': 'intermediate'})()
+                self.ai_experience = type('obj', (object,), {'value': 'beginner'})()
+                self.learning_style = type('obj', (object,), {'value': 'visual'})()
+                self.preferred_language = type('obj', (object,), {'value': 'en'})()
+
+        test_user = MockUser()
+
+        # Initialize OLIVIA
+        olivia = OLIVIAAgent()
+
+        # Generate response (collecting streaming chunks)
+        response_chunks = []
+        async for chunk in olivia.generate_personalized_content_stream(
+            original_content="",
+            user=test_user,
+            page_path=page_path or "test",
+            user_query=query
+        ):
+            response_chunks.append(chunk)
+
+        full_response = "".join(response_chunks)
+
+        return {
+            "status": "success",
+            "query": query,
+            "page_path": page_path,
+            "response": full_response,
+            "user_profile": {
+                "programming": "intermediate",
+                "ai_experience": "beginner",
+                "learning_style": "visual"
+            },
+            "note": "This is a test endpoint using a mock user profile"
+        }
+
+    except Exception as e:
+        import traceback
+        return {
+            "status": "error",
+            "error": str(e),
+            "traceback": traceback.format_exc()
+        }
