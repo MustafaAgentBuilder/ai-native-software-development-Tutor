@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 # Chapter 24: Object-Oriented Programming - Part 1
 
 ## Overview

@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Lists Part 3 - Sorting, Reversing, and Advanced Methods"
 chapter: 18

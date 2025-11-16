@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 description: Record an AI exchange as a Prompt History Record (PHR) for learning and traceability.
 ---

@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 original_path: docs/01-Introducing-AI-Driven-Development/02-ai-turning-point/01-the-inflection-point.md
 chapter: 01 - Introducing AI-Driven Development

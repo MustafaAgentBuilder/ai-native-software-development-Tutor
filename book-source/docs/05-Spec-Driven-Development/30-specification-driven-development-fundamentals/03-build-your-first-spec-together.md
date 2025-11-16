@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Build Your First Spec: Basic Calculator"
 chapter: 30

@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Strings and Booleans — Text and Truth"
 chapter: 14

@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 sidebar_position: 4
 title: "Lesson 4: Scope and Nested Functions"

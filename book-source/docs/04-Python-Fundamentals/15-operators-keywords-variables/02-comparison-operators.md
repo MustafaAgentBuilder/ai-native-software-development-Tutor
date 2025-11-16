@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Comparison Operators — Making True/False Decisions"
 chapter: 15

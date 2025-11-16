@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 sidebar_position: 8
 title: "Chapter 3: How to Make a Billion Dollars in the AI Era Quiz"

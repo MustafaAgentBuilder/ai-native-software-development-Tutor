@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 sidebar_position: 1
 title: "Lesson 1: Understanding Modules and Imports"

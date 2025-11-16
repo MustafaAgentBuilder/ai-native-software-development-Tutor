@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Variables and Type Hints — Storing Data with Specifications"
 chapter: 14

@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Console I/O and User Input Validation"
 chapter: 22

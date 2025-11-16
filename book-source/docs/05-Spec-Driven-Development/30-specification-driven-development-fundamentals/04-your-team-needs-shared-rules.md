@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Your Team Needs Shared Rules: Memory Banks and Constitutions"
 chapter: 30

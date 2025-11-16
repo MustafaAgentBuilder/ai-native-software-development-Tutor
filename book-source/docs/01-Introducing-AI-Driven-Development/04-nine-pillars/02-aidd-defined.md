@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 sidebar_position: 2
 title: "AIDD Defined: A Complete Methodology"

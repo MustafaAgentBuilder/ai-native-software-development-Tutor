@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Headings - Creating Document Hierarchy"
 description: "Learning to structure specifications with clear heading hierarchy"

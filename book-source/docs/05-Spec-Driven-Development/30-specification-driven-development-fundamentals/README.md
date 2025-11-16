@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 sidebar_position: 1
 title: "Chapter 30: Understanding Spec-Driven Development"

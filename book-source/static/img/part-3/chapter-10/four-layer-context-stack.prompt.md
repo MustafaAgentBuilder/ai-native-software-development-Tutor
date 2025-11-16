@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 # Image Generation Prompt: 4-Layer Context Stack
 
 **Filename**: `four-layer-context-stack.png`

@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Understanding Set Internals — Hashing and O(1) Lookup"
 chapter: 19

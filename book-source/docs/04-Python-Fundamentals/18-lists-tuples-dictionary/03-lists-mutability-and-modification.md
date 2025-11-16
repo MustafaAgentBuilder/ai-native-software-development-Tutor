@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Lists Part 2 — Mutability and Modification Methods"
 chapter: 18

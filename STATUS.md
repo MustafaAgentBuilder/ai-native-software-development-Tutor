@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 # 📊 TutorGPT Platform - Current Status
 
 **Last Updated**: 2025-11-15

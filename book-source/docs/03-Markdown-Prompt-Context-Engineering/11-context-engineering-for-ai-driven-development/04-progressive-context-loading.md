@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: Progressive Context Loading"
 chapter: 11

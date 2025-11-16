@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 description: "Task list for TutorGPT - AI-Powered Book Learning Platform"
 ---

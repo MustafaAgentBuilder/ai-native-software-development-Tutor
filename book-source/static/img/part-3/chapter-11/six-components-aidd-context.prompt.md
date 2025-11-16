@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 # Image Generation Prompt: Six Components of AIDD Context
 
 **Filename**: `six-components-aidd-context.png`

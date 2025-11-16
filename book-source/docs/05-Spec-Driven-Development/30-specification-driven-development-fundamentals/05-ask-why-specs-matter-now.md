@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Ask: Why Do Specs Matter NOW? The AI Moment"
 chapter: 30

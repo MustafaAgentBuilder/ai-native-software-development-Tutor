@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Tasks Phase - Atomic Work Units and Checkpoints"
 chapter: 31

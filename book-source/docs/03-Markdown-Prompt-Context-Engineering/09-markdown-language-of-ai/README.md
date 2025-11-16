@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Chapter 9: Markdown - The Language of AI Communication"
 description: "Master markdown as the specification language that bridges human intent and AI implementation"

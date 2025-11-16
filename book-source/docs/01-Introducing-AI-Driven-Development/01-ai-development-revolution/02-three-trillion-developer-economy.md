@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "The $3 Trillion Developer Economy"
 chapter: 1

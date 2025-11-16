@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Capstone Project: Type-Safe Configuration Manager"
 chapter: 27

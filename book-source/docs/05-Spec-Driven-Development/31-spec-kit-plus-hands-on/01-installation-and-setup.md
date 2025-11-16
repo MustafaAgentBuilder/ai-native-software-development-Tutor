@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Installation & Setup - AI-Native SDD Toolkit"
 chapter: 31

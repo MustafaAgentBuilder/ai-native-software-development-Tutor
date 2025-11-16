@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 # Image Generation Prompt: Command Structure Formula
 
 **Filename**: `command-structure-formula.png`

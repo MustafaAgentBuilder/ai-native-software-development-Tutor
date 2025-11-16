@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Specify Phase - Writing Complete Specifications"
 chapter: 31

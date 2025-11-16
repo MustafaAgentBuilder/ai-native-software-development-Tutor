@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Team Collaboration and Reproducible Environments with AI"
 chapter: 12

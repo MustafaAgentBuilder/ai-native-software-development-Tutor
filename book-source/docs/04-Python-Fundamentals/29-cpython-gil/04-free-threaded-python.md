@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Lesson 4: Free-Threaded Python (3.14+ Production Ready)"
 chapter: 29

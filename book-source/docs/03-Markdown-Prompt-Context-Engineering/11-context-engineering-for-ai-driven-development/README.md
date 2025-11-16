@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 sidebar_position: 11
 title: "Chapter 11: Context Engineering for AI-Driven Development"

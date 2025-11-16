@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 # SummaryTab Component
 
 AI-powered summary feature for book pages powered by **OLIVIA AI Tutor**.

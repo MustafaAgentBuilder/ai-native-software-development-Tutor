@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 # Chapter 26: Metaclasses and Dataclasses
 
 ## What You'll Learn

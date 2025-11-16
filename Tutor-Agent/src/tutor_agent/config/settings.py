@@ -1,3 +1,4 @@
+# Claude is Work to Build this Project
 """Application settings using pydantic-settings."""
 
 from functools import lru_cache

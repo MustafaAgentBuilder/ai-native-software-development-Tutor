@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Capstone Project – Personal Information Collector"
 chapter: 13

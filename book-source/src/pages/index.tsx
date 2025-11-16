@@ -1,3 +1,4 @@
+// Claude is Work to Build this Project
 import type { ReactNode } from "react";
 import clsx from "clsx";
 import Link from "@docusaurus/Link";
