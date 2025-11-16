@@ -334,10 +334,10 @@ async def get_personalized_content(
         # Load original content
         original_content = load_original_content(page_path)
 
-        # Generate personalized version
+        # Generate personalized version (with RAG-powered OLIVIA agent)
         generator = get_content_generator()
         personalized_markdown = generator.generate_personalized_content(
-            original_content, current_user
+            original_content, current_user, page_path  # Pass page_path for RAG context
         )
 
         # 4. Save to cache
