@@ -200,32 +200,61 @@ Communication Style:
 - Approach: Adaptive and learner-centered
 """
 
-    async def generate_personalized_content(
+    async def generate_personalized_content_stream(
         self,
         original_content: str,
         user: User,
-        page_path: str
+        page_path: str,
+        user_query: Optional[str] = None
     ) -> AsyncGenerator[str, None]:
         """
-        Generate personalized content with streaming
+        Generate personalized content OR answer questions with streaming
+
+        This is the main streaming method that handles both:
+        1. Content personalization (when user_query is None)
+        2. Q&A interactions (when user_query is provided)
 
         Args:
-            original_content: Original lesson content (markdown)
+            original_content: Original lesson content (can be empty for Q&A)
             user: User object with learning profile
-            page_path: Current page path
+            page_path: Current page path for context
+            user_query: Optional direct question from user
 
         Yields:
             Content chunks as they're generated
 
         Example:
-            async for chunk in agent.generate_personalized_content(content, user, path):
+            # Q&A mode
+            async for chunk in agent.generate_personalized_content_stream(
+                "", user, "path", user_query="What is Python?"
+            ):
+                print(chunk, end='', flush=True)
+
+            # Content personalization mode
+            async for chunk in agent.generate_personalized_content_stream(
+                original_content, user, "path"
+            ):
                 print(chunk, end='', flush=True)
         """
         # Create personalized agent
         agent = self._create_personalized_agent(user, page_path)
 
-        # Build prompt for personalization
-        prompt = f"""Please personalize the following lesson content for the learner profile in your instructions.
+        # Build prompt based on mode
+        if user_query:
+            # Q&A Mode - Answer user's question
+            prompt = f"""The learner asked: "{user_query}"
+
+Please answer this question:
+1. Use the search_book_content tool to find relevant information from the book
+2. Adapt your explanation to the learner's profile (see your instructions)
+3. Provide accurate, book-grounded responses
+4. If the topic isn't in the book, acknowledge this and provide general guidance
+
+Provide a helpful, personalized response."""
+
+        else:
+            # Content Personalization Mode
+            prompt = f"""Please personalize the following lesson content for the learner profile in your instructions.
 
 ORIGINAL LESSON CONTENT:
 ---
@@ -260,11 +289,11 @@ Remember: Use the search_book_content tool to find related concepts if needed.
                 # Handle completed items (tool calls, messages)
                 if event.item.type == "tool_call_item":
                     # Tool was called (RAG search)
-                    print(f"🔍 Searching book content...")
+                    pass  # Silent, no need to print
 
                 elif event.item.type == "tool_call_output_item":
                     # Tool output received
-                    print(f"📚 Found relevant content")
+                    pass  # Silent
 
                 elif event.item.type == "message_output_item":
                     # Message completed
@@ -275,12 +304,40 @@ Remember: Use the search_book_content tool to find related concepts if needed.
 
             elif event.type == "agent_updated_stream_event":
                 # Agent changed (e.g., handoff)
-                print(f"Agent updated: {event.new_agent.name}")
+                pass  # Silent
 
         # Ensure we return something even if no streaming occurred
         if not full_response:
             full_response = "Error: No content generated"
             yield full_response
+
+    async def generate_personalized_content(
+        self,
+        original_content: str,
+        user: User,
+        page_path: str
+    ) -> AsyncGenerator[str, None]:
+        """
+        Generate personalized content with streaming (legacy method)
+
+        This is a wrapper around generate_personalized_content_stream for backwards compatibility.
+
+        Args:
+            original_content: Original lesson content (markdown)
+            user: User object with learning profile
+            page_path: Current page path
+
+        Yields:
+            Content chunks as they're generated
+
+        Example:
+            async for chunk in agent.generate_personalized_content(content, user, path):
+                print(chunk, end='', flush=True)
+        """
+        async for chunk in self.generate_personalized_content_stream(
+            original_content, user, page_path, user_query=None
+        ):
+            yield chunk
 
 
 # ============================================================================
