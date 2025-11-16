@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 # Chapter 8: Git & GitHub for AI-Driven Development
 
 ## Overview

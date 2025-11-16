@@ -1,3 +1,4 @@
+# Claude is Work to Build this Project
 """
 Personalized content generation service using OpenAI Agents SDK
 

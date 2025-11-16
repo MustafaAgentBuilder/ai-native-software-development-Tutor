@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Understanding Metaclasses – The Classes That Create Classes"
 chapter: 26

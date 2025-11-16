@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "The Six Components of AIDD Context"
 chapter: 11

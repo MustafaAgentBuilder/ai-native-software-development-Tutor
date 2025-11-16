@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 # Chapter 21: Exception Handling
 
 ## Overview

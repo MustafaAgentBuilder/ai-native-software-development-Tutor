@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 # Evidence Compared 2024 vs 2025 - CORRECTED PROMPT
 
 **File**: `evidence-compared-2024-vs-2025.png`

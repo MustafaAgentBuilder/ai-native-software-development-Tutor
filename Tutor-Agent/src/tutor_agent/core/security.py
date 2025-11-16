@@ -1,3 +1,4 @@
+# Claude is Work to Build this Project
 """
 Security utilities for JWT tokens and password hashing
 """

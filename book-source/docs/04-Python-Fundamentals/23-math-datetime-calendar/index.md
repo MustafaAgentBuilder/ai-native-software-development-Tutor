@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 # Chapter 23: Math, Date Time Calendar
 
 Welcome to Chapter 23, where you'll learn to work with mathematical operations and date/time handling using Python 3.14's modern approaches.

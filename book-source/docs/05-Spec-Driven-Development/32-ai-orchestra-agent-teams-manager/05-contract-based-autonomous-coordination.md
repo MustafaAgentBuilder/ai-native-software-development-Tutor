@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Contract-Based Autonomous Coordination"
 chapter: 32

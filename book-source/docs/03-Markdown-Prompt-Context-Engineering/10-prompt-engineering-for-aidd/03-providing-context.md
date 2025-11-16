@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Providing Technical Context - Project-Specific Code"
 chapter: 10

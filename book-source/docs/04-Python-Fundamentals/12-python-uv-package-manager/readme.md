@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 # Chapter 12: Python UV - The Fastest Python Package Manager
 
 Welcome to your first hands-on Python chapter! This chapter teaches you how to manage Python projects professionally using **UV**, the fastest and most modern Python package manager, through AI-driven development workflows.

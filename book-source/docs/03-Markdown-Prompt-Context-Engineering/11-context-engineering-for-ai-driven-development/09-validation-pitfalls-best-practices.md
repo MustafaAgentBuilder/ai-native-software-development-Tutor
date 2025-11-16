@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Validation, Pitfalls & Best Practices"
 chapter: 11

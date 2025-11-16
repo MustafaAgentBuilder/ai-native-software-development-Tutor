@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Lesson 4: Structured Data Formats (CSV and JSON)"
 chapter: 22

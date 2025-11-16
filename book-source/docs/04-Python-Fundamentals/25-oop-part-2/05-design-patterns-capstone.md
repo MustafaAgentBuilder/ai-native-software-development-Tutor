@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Design Patterns (Capstone)"
 chapter: 25

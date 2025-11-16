@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Capstone - Note-Taking App"
 chapter: 22

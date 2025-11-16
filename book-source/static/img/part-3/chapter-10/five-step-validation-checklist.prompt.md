@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 # Image Generation Prompt: 5-Step Validation Checklist
 
 **Filename**: `five-step-validation-checklist.png`

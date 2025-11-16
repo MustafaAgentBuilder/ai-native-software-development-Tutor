@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Understanding Data Types — Integers and Floats"
 chapter: 14

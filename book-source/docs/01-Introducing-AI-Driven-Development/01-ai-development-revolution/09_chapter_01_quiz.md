@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 sidebar_position: 9
 title: "Chapter 1: AI Development Revolution Quiz"

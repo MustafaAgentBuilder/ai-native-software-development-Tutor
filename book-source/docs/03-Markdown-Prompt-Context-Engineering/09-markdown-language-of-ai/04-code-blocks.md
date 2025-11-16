@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Code Blocks - Showing Examples"
 description: "Learning to include code examples and expected output in markdown specifications"

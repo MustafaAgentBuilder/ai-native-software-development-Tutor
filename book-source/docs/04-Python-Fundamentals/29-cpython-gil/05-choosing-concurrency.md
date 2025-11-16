@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Lesson 5: Choosing Your Concurrency Approach"
 chapter: 29

@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 # Image Generation Prompt: Requirements vs Logic Split-Screen
 
 **Filename**: `requirements-vs-logic-split-screen.png`

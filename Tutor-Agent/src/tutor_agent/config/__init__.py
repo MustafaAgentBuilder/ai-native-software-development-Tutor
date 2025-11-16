@@ -1,3 +1,4 @@
+# Claude is Work to Build this Project
 """Configuration module for TutorGPT."""
 
 from .settings import get_settings, Settings

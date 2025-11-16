@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 # Feature Specification: TutorGPT - AI-Powered Book Learning Platform
 
 **Feature Branch**: `001-tutorgpt-platform`

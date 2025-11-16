@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "String Formatting with F-Strings — Creating Dynamic Output"
 chapter: 16

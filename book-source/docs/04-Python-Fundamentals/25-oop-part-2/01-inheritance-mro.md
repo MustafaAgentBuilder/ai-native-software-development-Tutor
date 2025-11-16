@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Inheritance and Method Resolution Order"
 chapter: 25

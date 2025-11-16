@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Parallel Planning and Tasks: Managing 2-3 Agents Simultaneously"
 chapter: 32

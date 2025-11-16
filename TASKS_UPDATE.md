@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 # ⚠️ TASKS.MD UPDATE - RAG Agent Architecture
 
 **Date**: 2025-11-15

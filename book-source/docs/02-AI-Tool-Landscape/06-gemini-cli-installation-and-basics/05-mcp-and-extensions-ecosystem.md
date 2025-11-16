@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "When Your AI Needs More: MCP and Extensions"
 chapter: 2

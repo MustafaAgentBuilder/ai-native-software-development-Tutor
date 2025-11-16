@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Understanding AI Coding Agents as Collaborative Partners"
 chapter: 10

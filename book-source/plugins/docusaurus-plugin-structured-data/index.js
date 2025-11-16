@@ -1,3 +1,4 @@
+// Claude is Work to Build this Project
 /**
  * Docusaurus Plugin: Structured Data (JSON-LD) Injection
  *

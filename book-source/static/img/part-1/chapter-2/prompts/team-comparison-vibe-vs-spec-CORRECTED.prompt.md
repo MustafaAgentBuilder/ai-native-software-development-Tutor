@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 # Team Comparison Vibe vs Spec - CORRECTED PROMPT
 
 **File**: `team-comparison-vibe-vs-spec-timeline.png`

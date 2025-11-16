@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Constructors, Destructors, and Attributes"
 chapter: 24

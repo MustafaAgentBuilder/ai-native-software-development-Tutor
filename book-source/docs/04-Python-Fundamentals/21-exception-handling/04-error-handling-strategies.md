@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Error Handling Strategies – Defensive Programming"
 chapter: 21

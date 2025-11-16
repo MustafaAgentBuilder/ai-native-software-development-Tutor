@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Links, Images & Your First Complete Specification"
 description: "Integrating all markdown skills to create a complete AI-parseable specification"

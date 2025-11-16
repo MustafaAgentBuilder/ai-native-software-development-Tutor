@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 # Image Generation Prompt: The Five Powers of AI Coding Agents
 
 **Image File**: `five-powers-ai-agents.png`

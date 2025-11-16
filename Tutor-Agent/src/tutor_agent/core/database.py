@@ -1,3 +1,4 @@
+# Claude is Work to Build this Project
 """
 Database connection and session management
 """

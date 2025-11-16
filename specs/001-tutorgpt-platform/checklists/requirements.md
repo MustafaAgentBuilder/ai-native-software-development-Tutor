@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 # Specification Quality Validation Checklist
 **Feature**: TutorGPT - AI-Powered Book Learning Platform
 **Spec File**: `specs/001-tutorgpt-platform/spec.md`

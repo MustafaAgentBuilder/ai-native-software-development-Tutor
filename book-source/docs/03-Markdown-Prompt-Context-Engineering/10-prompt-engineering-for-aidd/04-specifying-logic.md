@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Specifying Logic - Implementation Steps for Real Features"
 chapter: 10

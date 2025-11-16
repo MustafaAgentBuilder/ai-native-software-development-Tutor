@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Frozensets — Immutable Sets for Hashable Contexts"
 chapter: 19

@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 # 🧠 AI Native Software Development
 
 > **Colearning Agentic AI with Python and TypeScript – The AI & Spec Driven Way**

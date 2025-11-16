@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 # Image Generation Prompt: Context vs Prompt Engineering
 
 **Filename**: `context-vs-prompt-engineering.png`

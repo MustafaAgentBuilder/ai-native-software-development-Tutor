@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Basic Syntax and Your First Programs"
 chapter: 13
