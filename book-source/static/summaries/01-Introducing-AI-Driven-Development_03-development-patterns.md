@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 original_path: docs/01-Introducing-AI-Driven-Development/02-ai-turning-point/03-development-patterns.md
 chapter: 01 - Introducing AI-Driven Development

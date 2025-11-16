@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Composition Over Inheritance and Code Organization"
 chapter: 25

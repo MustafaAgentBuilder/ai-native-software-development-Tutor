@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 # CoLearning Python Documentation Site
 
 This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator for the CoLearning Python book project.

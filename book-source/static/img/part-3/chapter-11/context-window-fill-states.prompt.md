@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 # Image Generation Prompt: Context Window Fill States
 
 **Filename**: `context-window-fill-states.png`

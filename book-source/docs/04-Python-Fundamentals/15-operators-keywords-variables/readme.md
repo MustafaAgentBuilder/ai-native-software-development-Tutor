@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Chapter 15: Operators, Keywords, and Variables"
 description: "Master Python operators through AI-Native Learning - arithmetic, comparison, logical, and assignment operators with type safety"

@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Cross-Platform Path Handling with pathlib"
 chapter: 22

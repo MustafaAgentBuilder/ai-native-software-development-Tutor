@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 # Implementation Plan: TutorGPT - AI-Powered Book Learning Platform
 
 **Branch**: `001-tutorgpt-platform` | **Date**: 2025-11-14 | **Spec**: [spec.md](./spec.md)

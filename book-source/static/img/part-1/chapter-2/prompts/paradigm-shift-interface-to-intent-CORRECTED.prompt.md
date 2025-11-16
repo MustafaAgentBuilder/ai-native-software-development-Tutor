@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 # Paradigm Shift Interface to Intent - CORRECTED PROMPT
 
 **File**: `paradigm-shift-interface-to-intent.png`

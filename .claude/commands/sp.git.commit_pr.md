@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 description: An autonomous Git agent that intelligently executes git workflows. Your task is to intelligently executes git workflows to commit the work and create PR.
 ---

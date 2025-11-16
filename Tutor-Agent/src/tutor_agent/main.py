@@ -1,3 +1,4 @@
+# Claude is Work to Build this Project
 """
 TutorGPT Platform - FastAPI Backend
 Main application entry point

@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Chapter 10: Prompt Engineering for AI-Driven Development"
 chapter: 10

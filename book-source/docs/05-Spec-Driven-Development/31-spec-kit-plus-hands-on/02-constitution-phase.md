@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Constitution Phase - Project-Wide Rules"
 chapter: 31

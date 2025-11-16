@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Vague Code and the AI Partner Problem"
 chapter: 30

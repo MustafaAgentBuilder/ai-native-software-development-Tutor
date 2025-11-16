@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Chapter 14: Data Types"
 description: "Learn Python data types through AI-Native Learning - variables, type hints, and core types (int, float, str, bool, None)"

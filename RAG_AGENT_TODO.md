@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 # 🤖 RAG-Powered OLIVIA Agent - Implementation TODO
 
 **Status**: Ready to implement

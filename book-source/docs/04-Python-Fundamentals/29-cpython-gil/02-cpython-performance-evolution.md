@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Lesson 2: CPython Performance Evolution (Python 3.14)"
 chapter: 29

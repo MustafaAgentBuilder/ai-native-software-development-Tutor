@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Capstone Project: Prove Your Decomposition Skills"
 chapter: 32

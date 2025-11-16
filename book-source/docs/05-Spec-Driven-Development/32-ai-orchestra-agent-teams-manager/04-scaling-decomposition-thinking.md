@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Scaling Decomposition Thinking: From 3 to 5+ Features"
 chapter: 32

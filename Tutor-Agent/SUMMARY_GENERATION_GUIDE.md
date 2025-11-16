@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 # OLIVIA Summary Generation Guide
 
 This guide explains how to use OLIVIA (the AI tutor agent) to generate summaries for all Part 1 pages of the book.

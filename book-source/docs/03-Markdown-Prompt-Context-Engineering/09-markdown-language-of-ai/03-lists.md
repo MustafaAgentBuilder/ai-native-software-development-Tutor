@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Lists - Organizing Ideas"
 description: "Learning to use unordered and ordered lists to structure requirements and sequential steps"

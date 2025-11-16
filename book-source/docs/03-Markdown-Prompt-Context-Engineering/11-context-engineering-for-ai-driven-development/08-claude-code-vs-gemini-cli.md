@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Claude Code vs Gemini CLI - Tool Comparison"
 chapter: 11

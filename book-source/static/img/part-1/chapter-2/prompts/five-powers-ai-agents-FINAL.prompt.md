@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 # Five Powers of AI Agents - FINAL CORRECTED PROMPT
 
 **File**: `five-powers-ai-agents.png`

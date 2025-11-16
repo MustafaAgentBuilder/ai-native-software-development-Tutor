@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Validating AI-Generated Code — Safety-First Habits"
 chapter: 10

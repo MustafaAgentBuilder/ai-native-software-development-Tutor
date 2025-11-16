@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Introduction to Markdown"
 description: "Understanding markdown's role as the specification language in AI-driven development"

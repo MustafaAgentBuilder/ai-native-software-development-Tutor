@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Clarify Phase - Refining Specs with /sp.clarify"
 chapter: 31

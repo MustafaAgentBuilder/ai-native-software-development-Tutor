@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 description: Generate a custom checklist for the current feature based on user requirements.
 ---

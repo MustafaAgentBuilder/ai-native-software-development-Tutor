@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 sidebar_position: 33
 title: "Chapter 33: Tessl and SpecifyPlus - The Ultimate Workflow"

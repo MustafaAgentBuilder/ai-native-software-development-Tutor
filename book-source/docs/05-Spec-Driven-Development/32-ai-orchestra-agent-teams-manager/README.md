@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Chapter 32: AI Orchestra - Agent Teams Manager"
 chapter: 32

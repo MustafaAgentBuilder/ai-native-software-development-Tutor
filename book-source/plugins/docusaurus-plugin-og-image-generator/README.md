@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 # Docusaurus OG Image Generator Plugin
 
 Automatically generates beautiful Open Graph (social media preview) images for every page in your Docusaurus site.

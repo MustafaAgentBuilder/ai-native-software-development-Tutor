@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 original_path: docs/02-AI-Tool-Landscape/05-claude-code-features-and-workflows/04-mcp-integration.md
 chapter: 02-AI-Tool-Landscape

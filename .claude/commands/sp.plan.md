@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 description: Execute the implementation planning workflow using the plan template to generate design artifacts.
 ---

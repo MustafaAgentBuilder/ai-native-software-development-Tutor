@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 sidebar_position: 5
 title: "Lesson 5: Building a Calculator Utility (Capstone Project)"

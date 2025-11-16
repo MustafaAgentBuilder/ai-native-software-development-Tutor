@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Contact Card Validator: Real-World Integration Project"
 chapter: 16

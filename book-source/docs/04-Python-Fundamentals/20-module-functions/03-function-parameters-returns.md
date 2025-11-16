@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 sidebar_position: 3
 title: "Lesson 3: Function Parameters and Returns"

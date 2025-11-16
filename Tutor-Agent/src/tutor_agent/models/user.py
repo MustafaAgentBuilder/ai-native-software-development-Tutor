@@ -1,3 +1,4 @@
+# Claude is Work to Build this Project
 """
 User models for authentication and profile
 """

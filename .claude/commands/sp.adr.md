@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 description: Review planning artifacts for architecturally significant decisions and create ADRs.
 ---

@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Parallel Implementation & Integration: Proving Decomposition Works"
 chapter: 32

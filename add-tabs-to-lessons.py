@@ -1,3 +1,4 @@
+# Claude is Work to Build this Project
 #!/usr/bin/env python3
 """
 Script to add tabs (Original, Summary, Personalized) to all Part 1 lesson pages

@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Technical Constraints and Examples — Make AI Code Fit Your Project"
 chapter: 10
