@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Writing Clear Commands - Your First Code Generation"
 chapter: 10

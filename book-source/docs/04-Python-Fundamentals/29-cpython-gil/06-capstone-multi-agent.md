@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Lesson 6: Capstone - Multi-Agent Concurrency System"
 chapter: 29

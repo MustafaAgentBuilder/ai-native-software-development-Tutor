@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 sidebar_position: 6
 title: "Chapter 6: Google Gemini CLI: Open Source and Everywhere"

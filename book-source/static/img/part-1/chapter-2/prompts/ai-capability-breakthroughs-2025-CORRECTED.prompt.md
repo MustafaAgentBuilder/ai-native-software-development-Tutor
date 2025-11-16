@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 # AI Capability Breakthroughs 2025 - CORRECTED PROMPT
 
 **File**: `ai-capability-breakthroughs-2025.png`

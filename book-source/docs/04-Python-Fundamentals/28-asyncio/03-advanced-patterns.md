@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Advanced Patterns: Timeouts, Futures, and Error Handling"
 chapter: 28

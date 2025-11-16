@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Memory Profiler Capstone — Building an Object Tracking Tool"
 sidebar_position: 6

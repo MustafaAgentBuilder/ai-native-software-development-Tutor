@@ -1,3 +1,4 @@
+# Claude is Work to Build this Project
 """
 Summary Generation Script for TutorGPT Platform
 Generates 200-400 word summaries for all Part 1 pages using OLIVIA agent

@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "SpecKit-Orchestrated Autonomous Execution"
 chapter: 32

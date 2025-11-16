@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Choosing the Right AI Tool: When Size Matters"
 chapter: 2

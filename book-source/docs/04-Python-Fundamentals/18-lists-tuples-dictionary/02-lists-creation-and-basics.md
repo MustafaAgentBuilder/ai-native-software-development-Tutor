@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Lists Part 1 — Creation and Basic Operations"
 chapter: 18

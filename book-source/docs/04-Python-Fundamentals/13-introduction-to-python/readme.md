@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 # Chapter 13: Introduction to Modern Python
 
 Welcome to your first hands-on Python chapter! You've spent Chapters 1–12 learning the philosophy and tools of AI-Driven Development. Now it's time to apply that philosophy to Python programming. This chapter isn't about memorizing Python syntax—it's about understanding Python as a tool for describing intent that AI agents can execute.

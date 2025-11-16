@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "How Your AI Reads the World: Built-In Tools in Action"
 chapter: 2

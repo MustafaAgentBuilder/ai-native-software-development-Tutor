@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Chapter 25: Object-Oriented Programming Part II"
 sidebar_position: 25

@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 original_path: 04-Python-Fundamentals/12-python-uv-package-manager/03-creating-first-uv-project-with-ai.md
 chapter: 04-Python-Fundamentals

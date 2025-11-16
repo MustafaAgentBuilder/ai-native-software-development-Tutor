@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 # 🚀 Quick Start for Next Developer
 
 **⏱️ 5-Minute Onboarding Guide**

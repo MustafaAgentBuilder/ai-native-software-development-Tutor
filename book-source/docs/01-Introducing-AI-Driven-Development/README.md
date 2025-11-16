@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 sidebar_position: 1
 title: "Part 1: Introducing AI-Driven Development"

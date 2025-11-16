@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "String Fundamentals — Creating and Understanding Text"
 chapter: 16

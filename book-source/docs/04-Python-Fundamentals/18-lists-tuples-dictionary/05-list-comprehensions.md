@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "List Comprehensions — Transforming Data"
 chapter: 18

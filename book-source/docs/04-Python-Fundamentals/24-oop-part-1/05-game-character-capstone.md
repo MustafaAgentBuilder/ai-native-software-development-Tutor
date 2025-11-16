@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Game Character System (Capstone)"
 chapter: 24

@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Building a Type Explorer — Capstone Integration"
 chapter: 14

@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Lesson 3: The Traditional GIL (Pre-3.13)"
 chapter: 29

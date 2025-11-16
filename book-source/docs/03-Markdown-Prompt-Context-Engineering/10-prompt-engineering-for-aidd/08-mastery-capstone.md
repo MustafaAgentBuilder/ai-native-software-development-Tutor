@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Mastery Integration and Capstone — Systematize and Ship"
 chapter: 10

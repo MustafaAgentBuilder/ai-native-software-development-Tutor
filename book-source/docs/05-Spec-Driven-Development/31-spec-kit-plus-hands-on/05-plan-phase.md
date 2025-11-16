@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Plan Phase - Architecture Decisions and ADRs"
 chapter: 31

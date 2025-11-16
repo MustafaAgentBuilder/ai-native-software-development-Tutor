@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 sidebar_position: 2
 title: "Part 2: AI Tool Landscape"

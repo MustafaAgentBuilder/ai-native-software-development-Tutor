@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 # Chapter 18: Lists, Tuples, and Dictionary
 
 This chapter teaches Python's three foundational collection structures: **lists** (mutable sequences), **tuples** (immutable sequences), and **dictionaries** (key-value mappings). You'll learn when to use each structure, how to manipulate them effectively, and how to combine them in real-world applications.

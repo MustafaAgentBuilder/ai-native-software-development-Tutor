@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Advanced Pydantic Patterns"
 chapter: 27

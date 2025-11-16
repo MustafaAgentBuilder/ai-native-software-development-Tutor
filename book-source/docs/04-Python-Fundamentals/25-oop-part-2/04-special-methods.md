@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Special Methods (Magic Methods)"
 chapter: 25

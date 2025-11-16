@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Installing UV with AI Collaboration"
 chapter: 12

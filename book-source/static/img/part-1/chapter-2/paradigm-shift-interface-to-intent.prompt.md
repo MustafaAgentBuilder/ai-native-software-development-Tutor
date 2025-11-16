@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 # Image Generation Prompt: The Paradigm Shift - Interface to Intent
 
 **Image File**: `paradigm-shift-interface-to-intent.png`

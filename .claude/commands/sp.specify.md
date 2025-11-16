@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 description: Create or update the feature specification from a natural language feature description.
 ---

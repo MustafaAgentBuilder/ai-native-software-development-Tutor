@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Encapsulation and Method Types"
 chapter: 24

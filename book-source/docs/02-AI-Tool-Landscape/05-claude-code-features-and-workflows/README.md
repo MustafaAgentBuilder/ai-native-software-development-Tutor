@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 sidebar_position: 5
 title: "Chapter 5: How It All Started — The Claude Code Phenomenon"

@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Pydantic for AI-Native Development"
 chapter: 27

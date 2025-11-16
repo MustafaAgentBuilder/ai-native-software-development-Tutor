@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 # Quiz Component - Usage Guide (v4.0)
 
 ## ✅ No Imports Needed!

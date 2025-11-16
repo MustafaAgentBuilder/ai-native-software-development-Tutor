@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 # Chapter 22: IO and File Handling
 
 Welcome to Chapter 22, where you'll master input/output operations—the foundation of every useful program. You'll learn how programs interact with users through the console, persist data to files for long-term storage, organize file systems using cross-platform paths, and work with structured data formats like CSV and JSON. By the end, you'll build a complete Note-Taking CLI application that integrates all these concepts.

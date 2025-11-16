@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 sidebar_position: 1
 title: "Why This Moment Demands a New Paradigm"

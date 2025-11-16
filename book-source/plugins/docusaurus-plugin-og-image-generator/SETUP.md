@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 # OG Images Fix - Issue Resolution
 
 ## Problem Summary

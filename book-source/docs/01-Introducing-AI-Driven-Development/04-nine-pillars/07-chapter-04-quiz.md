@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 sidebar_position: 7
 title: "Chapter 4: Nine Pillars Quiz"

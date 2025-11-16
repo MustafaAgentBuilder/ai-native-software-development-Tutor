@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 title: "Lesson 1: What is CPython?"
 chapter: 29

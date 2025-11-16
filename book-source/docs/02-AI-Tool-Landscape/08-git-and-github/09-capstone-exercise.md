@@ -1,3 +1,4 @@
+<!-- Claude is Work to Build this Project -->
 ---
 sidebar_position: 9
 title: "Capstone Exercise: Build with Git & GitHub"
