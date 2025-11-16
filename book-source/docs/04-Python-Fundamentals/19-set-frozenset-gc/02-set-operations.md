@@ -43,7 +43,7 @@ skills:
     category: "Technical"
     bloom_level: "Apply"
     digcomp_area: "Digital Content Creation"
-    measurable_at_this_level: "Student can write {x for x in source if condition} syntax correctly"
+    measurable_at_this_level: "Student can write set comprehension syntax with filtering conditions correctly"
 
 learning_objectives:
   - objective: "Perform union operations using both | operator and .union() method"

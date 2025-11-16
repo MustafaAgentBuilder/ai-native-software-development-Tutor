@@ -29,7 +29,7 @@ skills:
     measurable_at_this_level: "Student can explain why comparisons precede if statements in Chapter 17 and give examples"
 
 learning_objectives:
-  - objective: "Understand what each comparison operator (==, !=, >, <, >=, <=) does"
+  - objective: "Understand what each comparison operator (==, !=, &gt;, &lt;, &gt;=, &lt;=) does"
     proficiency_level: "A2"
     bloom_level: "Understand"
     assessment_method: "Explanation of operators; code predictions"

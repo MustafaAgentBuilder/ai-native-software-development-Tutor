@@ -27,7 +27,7 @@ skills:
     category: "Technical"
     bloom_level: "Apply"
     digcomp_area: "Digital Content Creation (formatting numeric data)"
-    measurable_at_this_level: "Student can format numbers with specified decimal places ({price:.2f}) and understand format specifiers"
+    measurable_at_this_level: "Student can format numbers with specified decimal places (e.g., price:.2f format) and understand format specifiers"
 
   - name: "Intent-Based Output Design"
     proficiency_level: "A2"
