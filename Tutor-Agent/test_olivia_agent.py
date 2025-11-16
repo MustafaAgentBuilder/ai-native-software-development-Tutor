@@ -44,14 +44,16 @@ async def test_olivia_agent():
     print("🤖 OLIVIA Agent Testing")
     print("=" * 80)
 
-    # Check for OpenAI API key
-    if not os.getenv("OPENAI_API_KEY"):
-        print("\n❌ ERROR: OPENAI_API_KEY not found in environment!")
-        print("   Please create a .env file with your OpenAI API key:")
-        print("   OPENAI_API_KEY=sk-...")
+    # Check for Gemini API key
+    if not os.getenv("GEMINI_API_KEY"):
+        print("\n❌ ERROR: GEMINI_API_KEY not found in environment!")
+        print("   Please create a .env file with your Gemini API key:")
+        print("   GEMINI_API_KEY=your-api-key-here")
+        print("\n   Get your free Gemini API key at:")
+        print("   https://ai.google.dev/gemini-api/docs/api-key")
         return
 
-    print("\n✅ OpenAI API Key found")
+    print("\n✅ Gemini API Key found")
 
     try:
         # Import OLIVIA agent

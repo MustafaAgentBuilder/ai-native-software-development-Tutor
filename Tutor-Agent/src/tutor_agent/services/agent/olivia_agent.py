@@ -2,16 +2,23 @@
 """
 OLIVIA Agent (OpenAI Learning and Interactive Virtual Instructional Agent)
 
-RAG-powered AI tutor using OpenAI Agents SDK with streaming support.
+RAG-powered AI tutor using Google Gemini with OpenAI Agents SDK streaming support.
 Implements Six-Step Prompting Framework (ACILPR) with real-time RAG.
 """
 
 import asyncio
 from typing import AsyncGenerator, Optional, Dict, Any
-from agents import Agent, Runner, ItemHelpers
+from agents import Agent, Runner, ItemHelpers, OpenAIChatCompletionsModel, AsyncOpenAI, set_tracing_disabled
 from tutor_agent.models.user import User
 from tutor_agent.services.agent.tools import search_book_content
+from dotenv import load_dotenv
 import os
+
+# Load environment variables
+load_dotenv()
+
+# Disable extra tracing for cleaner output
+set_tracing_disabled(True)
 
 
 class OLIVIAAgent:
@@ -26,8 +33,20 @@ class OLIVIAAgent:
     """
 
     def __init__(self):
-        """Initialize OLIVIA agent with tools"""
+        """Initialize OLIVIA agent with Gemini model and tools"""
         self.agent = None  # Will be created per-user for personalization
+
+        # Create Gemini API provider using AsyncOpenAI
+        self.gemini_provider = AsyncOpenAI(
+            api_key=os.getenv("GEMINI_API_KEY"),
+            base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
+        )
+
+        # Set up the chat completion model with Gemini
+        self.model = OpenAIChatCompletionsModel(
+            model="gemini-2.0-flash-exp",  # Fast, free Gemini model
+            openai_client=self.gemini_provider,
+        )
 
     def _create_personalized_agent(self, user: User, page_path: Optional[str] = None) -> Agent:
         """
@@ -43,12 +62,12 @@ class OLIVIAAgent:
         # Build personalized instructions using Six-Step Framework (ACILPR)
         instructions = self._build_personalized_instructions(user, page_path)
 
-        # Create agent with RAG tool
+        # Create agent with RAG tool using Gemini model
         agent = Agent(
             name="OLIVIA",
             instructions=instructions,
             tools=[search_book_content],  # RAG search tool
-            model="gpt-4o-mini"  # Fast, cost-effective model
+            model=self.model  # Gemini 2.0 Flash model
         )
 
         return agent

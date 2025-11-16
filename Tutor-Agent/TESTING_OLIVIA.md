@@ -25,16 +25,22 @@ Create `.env` file (copy from `.env.example`):
 cp .env.example .env
 ```
 
-Edit `.env` and add your OpenAI API key:
+Edit `.env` and add your Google Gemini API key:
 
 ```env
-OPENAI_API_KEY=sk-your-actual-openai-key-here
-OPENAI_MODEL=gpt-4o-mini
+GEMINI_API_KEY=your-actual-gemini-api-key-here
+GEMINI_MODEL=gemini-2.0-flash-exp
 
 # Other settings can stay as default for testing
 JWT_SECRET_KEY=test-secret-key
 DATABASE_URL=sqlite:///./data/tutorgpt.db
 ```
+
+**Get your FREE Gemini API key:**
+- Visit: https://ai.google.dev/gemini-api/docs/api-key
+- Sign in with your Google account
+- Create API key
+- Gemini 2.0 Flash is FREE with high rate limits!
 
 ### 3. ChromaDB Embeddings
 
@@ -232,15 +238,17 @@ Expected: OLIVIA should acknowledge it's not in the book content
 
 ## Troubleshooting
 
-### ❌ Error: "OPENAI_API_KEY not found"
+### ❌ Error: "GEMINI_API_KEY not found"
 
-**Solution**: Create `.env` file with your OpenAI API key
+**Solution**: Create `.env` file with your Gemini API key
 
 ```bash
 cd Tutor-Agent
 cp .env.example .env
-# Edit .env and add: OPENAI_API_KEY=sk-...
+# Edit .env and add: GEMINI_API_KEY=your-key-here
 ```
+
+Get your free key at: https://ai.google.dev/gemini-api/docs/api-key
 
 ### ❌ Error: "ModuleNotFoundError: No module named 'agents'"
 
@@ -262,9 +270,9 @@ uv run python scripts/generate_summaries.py
 
 ### ❌ Slow responses
 
-**Cause**: RAG search + OpenAI API calls take time
-**Normal**: 3-10 seconds for first response
-**Tip**: Use `gpt-4o-mini` model for faster responses (already default)
+**Cause**: RAG search + Gemini API calls take time
+**Normal**: 2-8 seconds for first response
+**Tip**: `gemini-2.0-flash-exp` is already the fastest free model available!
 
 ---
 
@@ -314,7 +322,7 @@ For production:
 - Use the authenticated `/personalized/{page_path}` endpoint
 - Require JWT tokens
 - Cache responses per user
-- Monitor API costs (OpenAI charges per token)
+- Monitor API usage (Gemini 2.0 Flash is FREE with generous rate limits!)
 
 ---
 
@@ -323,9 +331,10 @@ For production:
 If you encounter issues:
 
 1. Check the logs: `uv run python -m tutor_agent.main` (backend logs)
-2. Verify OpenAI API key is valid
+2. Verify Gemini API key is valid at https://aistudio.google.com/app/apikey
 3. Ensure ChromaDB embeddings exist
 4. Check Python version: `python --version` (should be 3.11+)
+5. Test Gemini API directly: `curl https://generativelanguage.googleapis.com/v1beta/models?key=YOUR_API_KEY`
 
 ---
 
