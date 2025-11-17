@@ -103,9 +103,9 @@ except Exception as e:
 # Check 5: Verify tool is registered with agent
 print("\n🤖 Step 5: Checking if tool is registered with OLIVIA agent...")
 try:
-    from tutor_agent.services.agent.olivia_agent import OliviaAgent
+    from tutor_agent.services.agent.olivia_agent import OLIVIAAgent
 
-    olivia = OliviaAgent()
+    olivia = OLIVIAAgent()
     tools = olivia.tools
 
     print(f"   ✅ OLIVIA has {len(tools)} tools registered:")
