@@ -86,10 +86,11 @@ try:
     query = "What is AI-Native Software Development?"
     results = rag._search_with_filter(query, where=None, n_results=3)
 
-    if results and len(results['documents']) > 0:
+    if results and len(results) > 0:
         print("   ✅ RAG search executed successfully!")
-        print(f"   Found {len(results['documents'])} results")
-        print(f"   First result preview: {results['documents'][0][:200]}...")
+        print(f"   Found {len(results)} results")
+        print(f"   First result preview: {results[0]['content'][:200]}...")
+        print(f"   Metadata: {results[0].get('metadata', {})}")
     else:
         print("   ⚠️  Search returned no results")
 
