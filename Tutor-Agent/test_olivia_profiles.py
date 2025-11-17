@@ -101,10 +101,10 @@ async def test_olivia_with_profiles():
         print(f"TEST {idx}/4: {profile['name']}")
         print("=" * 80)
         print(f"\n👤 User Profile:")
-        print(f"   - Programming: {profile['user'].programming_experience}")
-        print(f"   - AI/ML: {profile['user'].ai_ml_experience}")
-        print(f"   - Learning Style: {profile['user'].learning_style}")
-        print(f"   - Language: {profile['user'].preferred_language}")
+        print(f"   - Programming: {profile['user'].programming_experience.value}")
+        print(f"   - AI/ML: {profile['user'].ai_experience.value}")
+        print(f"   - Learning Style: {profile['user'].learning_style.value}")
+        print(f"   - Language: {profile['user'].preferred_language.value}")
         print(f"\n❓ Question: {profile['question']}")
         print(f"\n💬 OLIVIA Response:")
         print("-" * 80)
@@ -113,9 +113,10 @@ async def test_olivia_with_profiles():
             # Generate personalized response
             response_text = ""
             async for chunk in olivia.generate_personalized_content_stream(
+                original_content="",  # Empty for Q&A mode
                 user=profile['user'],
-                user_message=profile['question'],
-                page_path=None
+                page_path="test",
+                user_query=profile['question']
             ):
                 # Collect response chunks
                 response_text += chunk

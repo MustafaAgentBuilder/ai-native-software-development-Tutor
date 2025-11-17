@@ -79,9 +79,10 @@ async def test_visual_learning():
         try:
             response_text = ""
             async for chunk in olivia.generate_personalized_content_stream(
+                original_content="",  # Empty for Q&A mode
                 user=visual_learner,
-                user_message=test['question'],
-                page_path=None
+                page_path="test",
+                user_query=test['question']  # The question to answer
             ):
                 response_text += chunk
                 # Uncomment to see streaming:
