@@ -79,21 +79,19 @@ except Exception as e:
     traceback.print_exc()
     sys.exit(1)
 
-# Check 4: Try a simple search
+# Check 4: Try a simple search using RAG directly
 print("\n🔍 Step 4: Testing RAG search...")
 try:
-    from tutor_agent.services.agent.tools.rag_search import search_book_content
+    # Test search using the RAG search engine directly
+    query = "What is AI-Native Software Development?"
+    results = rag._search_with_filter(query, where=None, n_results=3)
 
-    result = search_book_content(
-        query="What is AI-Native Software Development?",
-        current_page=1,
-        current_chapter="Chapter 1",
-        search_level="book"
-    )
-
-    print("   ✅ RAG search executed successfully!")
-    print(f"   Result length: {len(result)} characters")
-    print(f"   Preview: {result[:200]}...")
+    if results and len(results['documents']) > 0:
+        print("   ✅ RAG search executed successfully!")
+        print(f"   Found {len(results['documents'])} results")
+        print(f"   First result preview: {results['documents'][0][:200]}...")
+    else:
+        print("   ⚠️  Search returned no results")
 
 except Exception as e:
     print(f"   ❌ ERROR executing RAG search: {e}")
