@@ -6,10 +6,9 @@ User models for authentication and profile
 from datetime import datetime
 from typing import Optional
 from sqlalchemy import Column, Integer, String, DateTime, Enum as SQLEnum, Text
-from sqlalchemy.ext.declarative import declarative_base
 import enum
 
-Base = declarative_base()
+from tutor_agent.models.base import Base
 
 
 class ProgrammingExperience(str, enum.Enum):
@@ -38,12 +37,20 @@ class LearningStyle(str, enum.Enum):
 class PreferredLanguage(str, enum.Enum):
     """Supported languages for content"""
     ENGLISH = "en"
-    SPANISH = "es"
-    FRENCH = "fr"
-    GERMAN = "de"
-    CHINESE = "zh"
-    JAPANESE = "ja"
-    # Add more as needed
+    SPANISH = "es"        # Spanish
+    FRENCH = "fr"         # French
+    GERMAN = "de"         # German
+    CHINESE = "zh"        # Chinese (Simplified)
+    JAPANESE = "ja"       # Japanese
+    RUSSIAN = "ru"        # Russian
+    ARABIC = "ar"         # Arabic
+    HINDI = "hi"          # Hindi
+    URDU = "ur"           # Urdu
+    PORTUGUESE = "pt"     # Portuguese
+    ITALIAN = "it"        # Italian
+    KOREAN = "ko"         # Korean
+    TURKISH = "tr"        # Turkish
+    # OLIVIA can teach in ANY language the LLM supports!
 
 
 class User(Base):
