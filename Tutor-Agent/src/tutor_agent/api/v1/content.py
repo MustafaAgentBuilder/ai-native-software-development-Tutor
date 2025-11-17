@@ -109,7 +109,65 @@ def load_original_content(page_path: str) -> str:
 
 
 # ============================================================================
-# Summary Endpoints (Public, No Auth)
+# Original Content Endpoints (Public, No Auth, No AI)
+# ============================================================================
+
+@router.get("/original/{page_path:path}")
+async def get_original_content(page_path: str):
+    """
+    Get raw original markdown content for a page (PUBLIC endpoint)
+
+    **NO OLIVIA INVOLVEMENT** - Pure file serving for Original tab
+
+    Flow:
+    1. Load raw markdown from book-source/docs/
+    2. Return exactly as written (no AI processing)
+    3. Frontend displays in Original tab
+
+    Args:
+        page_path: Relative path to lesson (e.g.,
+                  "01-Introducing-AI-Driven-Development/01-ai-development-revolution/01-moment_that_changed_everything")
+
+    Returns:
+        JSON with original markdown content and metadata
+    """
+    try:
+        # Load raw content from book source
+        original_content = load_original_content(page_path)
+
+        # Extract frontmatter if present
+        parts = original_content.split("---", 2)
+        frontmatter = {}
+        body = original_content
+
+        if len(parts) >= 3:
+            # Parse frontmatter
+            import yaml
+            try:
+                frontmatter = yaml.safe_load(parts[1])
+            except:
+                frontmatter = {}
+            body = parts[2].strip()
+
+        return {
+            "page_path": page_path,
+            "content": body,
+            "frontmatter": frontmatter,
+            "source": "original",
+            "ai_processed": False,  # IMPORTANT: Original tab never uses AI
+        }
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to load original content: {str(e)}",
+        )
+
+
+# ============================================================================
+# Summary Endpoints (Public, No Auth, Pre-Generated)
 # ============================================================================
 
 @router.get("/summary/{page_path:path}", response_model=SummaryResponse)
@@ -119,23 +177,25 @@ async def get_summary(
     db: Session = Depends(get_db),
 ):
     """
-    Get AI-generated summary for a specific page (PUBLIC endpoint)
+    Get pre-generated summary for a page (PUBLIC endpoint)
+
+    **NO OLIVIA INVOLVEMENT** - Serves pre-generated summaries from static/summaries/
 
     Flow:
-    1. Check cache for existing summary
-    2. If cache exists and force_regenerate=False, return cached
-    3. Otherwise, generate new summary with OLIVIA
-    4. Cache and return
+    1. Check cache for summary
+    2. If not cached, load from pre-generated file in book-source/static/summaries/
+    3. Cache and return
 
     Args:
         page_path: Relative path from book-source/docs/ (e.g.,
                   "01-Introducing-AI-Driven-Development/01-ai-development-revolution/01-moment_that_changed_everything")
-        force_regenerate: Force new generation even if cached
+        force_regenerate: Force reload from pre-generated file
 
     Returns:
-        SummaryResponse with summary content
+        SummaryResponse with pre-generated summary content
     """
     cache_manager = SummaryCacheManager(db)
+
 
     # Check cache
     if not force_regenerate:
@@ -150,73 +210,66 @@ async def get_summary(
                 model_version=cached_summary.model_version,
             )
 
-    # Generate new summary
+    # Load pre-generated summary from static files
+    # **NO OLIVIA** - Summary tab uses pre-generated content only
     try:
-        # Load original content
-        original_content = load_original_content(page_path)
+        # Construct path to pre-generated summary file
+        # Path format: book-source/static/summaries/CHAPTER_PAGE.md
+        # Example: 01-Introducing-AI-Driven-Development_01-moment_that_changed_everything.md
 
-        # Generate summary with OLIVIA
-        olivia = OLIVIAAgent()
+        # Extract chapter and page from page_path
+        # Input: "01-Introducing-AI-Driven-Development/01-ai-development-revolution/01-moment_that_changed_everything"
+        path_parts = page_path.split("/")
+        chapter = path_parts[0]  # "01-Introducing-AI-Driven-Development"
+        page_file = path_parts[-1]  # "01-moment_that_changed_everything"
 
-        # Create a simple "summary user" profile (conceptual learner, intermediate)
-        from tutor_agent.models.user import (
-            ProgrammingExperience,
-            AIExperience,
-            LearningStyle,
-            PreferredLanguage,
-        )
+        # Construct summary filename
+        summary_filename = f"{chapter}_{page_file}.md"
 
-        class SummaryUser:
-            """Mock user for summary generation (conceptual, balanced)"""
-            id = 0
-            email = "summary@system.internal"
-            hashed_password = ""
-            programming_experience = ProgrammingExperience.INTERMEDIATE
-            ai_experience = AIExperience.BASIC
-            learning_style = LearningStyle.CONCEPTUAL
-            preferred_language = PreferredLanguage.ENGLISH
+        # Path to summary file
+        summary_path = BOOK_SOURCE_PATH.parent / "static" / "summaries" / summary_filename
 
-        summary_user = SummaryUser()
+        if not summary_path.exists():
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Pre-generated summary not found: {summary_filename}. Summary tab only serves pre-generated content."
+            )
 
-        # Generate summary (collecting all chunks)
-        summary_instruction = """
-        Create a concise summary (200-400 words) of the lesson content.
-        Focus on:
-        - Main concepts and key takeaways
-        - Core ideas in simple language
-        - Essential knowledge for understanding the topic
+        # Load pre-generated summary
+        with open(summary_path, "r", encoding="utf-8") as f:
+            summary_content_raw = f.read()
 
-        DO NOT include code examples or diagrams.
-        Keep it accessible for all skill levels.
-        """
+        # Parse frontmatter and content
+        parts = summary_content_raw.split("---", 2)
+        summary_metadata = {}
+        summary_body = summary_content_raw
 
-        summary_chunks = []
-        async for chunk in olivia.generate_personalized_content_stream(
-            original_content=original_content,
-            user=summary_user,
-            page_path=page_path,
-            user_query=summary_instruction,
-        ):
-            summary_chunks.append(chunk)
+        if len(parts) >= 3:
+            import yaml
+            try:
+                summary_metadata = yaml.safe_load(parts[1])
+            except:
+                summary_metadata = {}
+            summary_body = parts[2].strip()
 
-        summary_content = "".join(summary_chunks).strip()
-        word_count = len(summary_content.split())
+        word_count = len(summary_body.split())
+        generated_date = summary_metadata.get("generated", "2025-11-15")
 
-        # Cache the summary
+        # Cache the pre-generated summary for faster future access
         cache_manager.set(
             page_path=page_path,
-            summary_content=summary_content,
-            model_version="gpt-4o-mini",
+            summary_content=summary_body,
+            model_version="pre-generated-v1",
             word_count=word_count,
         )
 
         return SummaryResponse(
             page_path=page_path,
-            summary_content=summary_content,
+            summary_content=summary_body,
             word_count=word_count,
             cached=False,
-            generated_at=datetime.utcnow(),
-            model_version="gpt-4o-mini",
+            generated_at=datetime.fromisoformat(generated_date) if isinstance(generated_date, str) else datetime.utcnow(),
+            model_version="pre-generated-v1",  # Indicates this is pre-generated, not AI-generated
         )
 
     except HTTPException:
