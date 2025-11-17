@@ -40,8 +40,12 @@ def get_db() -> Generator[Session, None, None]:
 
 def init_db():
     """Initialize database tables"""
-    from tutor_agent.models.user import Base
+    from tutor_agent.models.base import Base
+    # Import all models to register them with Base
+    from tutor_agent.models.user import User, PersonalizedContent
+    from tutor_agent.models.cache import SummaryCache, PersonalizedCache
 
     # Create all tables
     Base.metadata.create_all(bind=engine)
     print("✓ Database tables created successfully")
+    print(f"  - Users, PersonalizedContent, SummaryCache, PersonalizedCache")
