@@ -42,19 +42,17 @@ class RAGSearchEngine:
         # Initialize ChromaDB client
         self.client = chromadb.PersistentClient(path=str(embeddings_path))
 
-        # Create embedding function for 768-dimensional model (matches original embeddings)
-        # The embeddings were created with a 768-dim model, likely 'all-mpnet-base-v2'
+        # Create embedding function for queries (768-dimensional to match collection)
+        # The collection was created with 768-dim embeddings (all-mpnet-base-v2)
         from chromadb.utils import embedding_functions
-        embedding_function = embedding_functions.SentenceTransformerEmbeddingFunction(
+        self.embedding_function = embedding_functions.SentenceTransformerEmbeddingFunction(
             model_name="sentence-transformers/all-mpnet-base-v2"  # 768 dimensions
         )
 
-        # Get book content collection with correct embedding function
+        # Get book content collection WITHOUT embedding function
+        # (to avoid "already exists" error)
         try:
-            self.collection = self.client.get_collection(
-                name="book_content",
-                embedding_function=embedding_function
-            )
+            self.collection = self.client.get_collection(name="book_content")
             print(f"✅ RAG Search Engine initialized with {self.collection.count()} embeddings")
         except Exception as e:
             raise RuntimeError(f"Failed to load book_content collection: {e}")
@@ -129,8 +127,12 @@ class RAGSearchEngine:
     ) -> List[Dict]:
         """Execute ChromaDB query with optional filter"""
         try:
+            # Embed the query using the correct 768-dim embedding function
+            query_embedding = self.embedding_function([query])[0]
+
+            # Query using the embedding instead of text
             query_result = self.collection.query(
-                query_texts=[query],
+                query_embeddings=[query_embedding],
                 n_results=n_results,
                 where=where
             )

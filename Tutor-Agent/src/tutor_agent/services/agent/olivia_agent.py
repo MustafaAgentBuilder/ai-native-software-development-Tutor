@@ -47,7 +47,7 @@ class OLIVIAAgent:
 
         # Create Gemini API provider using AsyncOpenAI
         self.gemini_provider = AsyncOpenAI(
-            api_key=os.getenv("AIzaSyCCtY-MeVd-fMdeH3w81s6B1vQF90izzt0"),
+            api_key=os.getenv("GEMINI_API_KEY"),
             base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
         )
 
