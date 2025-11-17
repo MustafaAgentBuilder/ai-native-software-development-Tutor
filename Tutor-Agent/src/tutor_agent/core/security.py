@@ -9,8 +9,8 @@ from passlib.context import CryptContext
 from jose import JWTError, jwt
 import os
 
-# Password hashing
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+# Password hashing (using argon2 for better compatibility and security)
+pwd_context = CryptContext(schemes=["argon2"], deprecated="auto")
 
 # JWT settings
 SECRET_KEY = os.getenv("JWT_SECRET_KEY", "your-secret-key-change-this-in-production")
@@ -24,7 +24,7 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 
 
 def get_password_hash(password: str) -> str:
-    """Hash a password"""
+    """Hash a password using argon2"""
     return pwd_context.hash(password)
 
 
