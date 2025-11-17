@@ -53,7 +53,7 @@ class OLIVIAAgent:
 
         # Set up the chat completion model with Gemini
         self.model = OpenAIChatCompletionsModel(
-            model="gemini-2.0-flash",  # Fast, free Gemini model
+            model="gemini-2.0-flash-exp",  # Experimental version with function calling support
             openai_client=self.gemini_provider,
         )
 
