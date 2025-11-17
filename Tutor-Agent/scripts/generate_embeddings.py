@@ -173,16 +173,18 @@ def generate_embeddings():
 
         # Add to batch
         for chunk_idx, chunk in enumerate(chunks):
-            # Create unique ID
+            # Create unique ID using full path and chunk index
+            # This ensures uniqueness across all files
+            relative_path = str(md_file.relative_to(docs_path))
             chunk_id = hashlib.md5(
-                f"{md_file.stem}_{chunk_idx}_{chunk[:50]}".encode()
+                f"{relative_path}_{chunk_idx}_{total_chunks}".encode()
             ).hexdigest()
 
             # Add metadata for this chunk
             chunk_metadata = metadata.copy()
             chunk_metadata['chunk_index'] = chunk_idx
             chunk_metadata['total_chunks'] = len(chunks)
-            chunk_metadata['source_file'] = str(md_file.relative_to(docs_path))
+            chunk_metadata['source_file'] = relative_path
 
             documents.append(chunk)
             metadatas.append(chunk_metadata)
