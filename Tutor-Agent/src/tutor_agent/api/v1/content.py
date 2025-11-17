@@ -35,7 +35,8 @@ router = APIRouter()
 security = HTTPBearer()
 
 # Path to book source files
-BOOK_SOURCE_PATH = Path(__file__).parent.parent.parent.parent.parent / "book-source" / "docs"
+# Go up from content.py -> v1 -> api -> tutor_agent -> src -> Tutor-Agent -> project root
+BOOK_SOURCE_PATH = Path(__file__).parent.parent.parent.parent.parent.parent / "book-source" / "docs"
 
 
 # ============================================================================
@@ -657,3 +658,73 @@ async def invalidate_summary_cache(
         "success": success,
         "message": f"Invalidated summary cache for {page_path}" if success else "Cache not found",
     }
+
+
+@router.post("/test-olivia")
+async def test_olivia_qa(
+    query: str,
+    page_path: str = "general",
+    db: Session = Depends(get_db),
+):
+    """
+    Test endpoint for OLIVIA Q&A (Development/Testing only)
+
+    This endpoint allows testing OLIVIA's question answering capabilities
+    without authentication. It creates a test user profile and streams
+    OLIVIA's response.
+
+    Args:
+        query: User's question
+        page_path: Current page context (optional)
+
+    Returns:
+        OLIVIA's response to the question
+
+    Example:
+        POST /api/v1/content/test-olivia?query=What is RAG?&page_path=chapter-1
+    """
+    from tutor_agent.models.user import (
+        User,
+        ProgrammingExperience,
+        AIExperience,
+        LearningStyle,
+        PreferredLanguage,
+    )
+    from tutor_agent.services.agent.olivia_agent import get_olivia_agent
+
+    # Create a test user profile (intermediate Python, basic AI, visual learner)
+    test_user = User(
+        id=999,  # Test user ID
+        email="test@example.com",
+        programming_experience=ProgrammingExperience.INTERMEDIATE,
+        ai_experience=AIExperience.BASIC,
+        learning_style=LearningStyle.VISUAL,
+        preferred_language=PreferredLanguage.ENGLISH,
+    )
+
+    try:
+        # Get OLIVIA agent
+        olivia = get_olivia_agent()
+
+        # Generate response using Q&A mode
+        full_response = ""
+        async for chunk in olivia.generate_personalized_content_stream(
+            original_content="",  # Empty for Q&A mode
+            user=test_user,
+            page_path=page_path,
+            user_query=query,  # This triggers Q&A mode
+        ):
+            full_response += chunk
+
+        return {
+            "query": query,
+            "response": full_response,
+            "page_context": page_path,
+            "test_profile": "intermediate_visual_learner",
+        }
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to generate response: {str(e)}",
+        )

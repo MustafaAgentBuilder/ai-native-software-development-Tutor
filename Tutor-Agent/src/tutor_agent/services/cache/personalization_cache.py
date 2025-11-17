@@ -26,12 +26,12 @@ class PersonalizationCacheManager:
     def __init__(self, db: Session):
         self.db = db
 
-    def get(self, user: User, page_path: str) -> Optional[str]:
+    def get(self, user: User, page_path: str) -> Optional[PersonalizedCache]:
         """
         Get cached personalized content for user and page
 
         Returns:
-            Cached content if exists and profile matches, None otherwise
+            Cached PersonalizedCache object if exists and profile matches, None otherwise
         """
         # Find cached entry
         cached = (
@@ -53,7 +53,7 @@ class PersonalizationCacheManager:
             learning_style=user.learning_style.value,
             language=user.preferred_language.value
         ):
-            return cached.personalized_content
+            return cached
 
         # Cache invalid (profile changed) - delete it
         self.db.delete(cached)

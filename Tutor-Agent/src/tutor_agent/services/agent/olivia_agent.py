@@ -23,8 +23,12 @@ from dotenv import load_dotenv
 from tutor_agent.models.user import User
 from tutor_agent.services.agent.tools import search_book_content
 
-# Load environment variables
-load_dotenv()
+# Load environment variables from project root
+# Go up from olivia_agent.py -> agent -> services -> tutor_agent -> src -> Tutor-Agent
+from pathlib import Path as _Path
+_project_root = _Path(__file__).parent.parent.parent.parent.parent
+_dotenv_path = _project_root / ".env"
+load_dotenv(_dotenv_path)
 
 # Disable extra tracing for cleaner output
 set_tracing_disabled(True)
@@ -115,21 +119,29 @@ Current Learner Profile:
         instruction = self._get_adaptive_instruction(user)
         instruction += """
 
-IMPORTANT - Tool Usage:
-- ALWAYS use the search_book_content tool to find relevant information from the book
-- Reference specific sections/chapters when answering
-- Provide accurate, fact-based responses grounded in the book content
-- If asked about topics not covered in the book, acknowledge this clearly
+CRITICAL - You MUST Only Teach from the Book:
+- **ALWAYS** use the search_book_content tool FIRST before answering ANY question
+- **NEVER** answer from your general knowledge - ONLY use book content
+- If the book doesn't cover a topic, say: "This topic isn't covered in our book yet. Let's focus on what's in the curriculum."
+- **ALWAYS** cite specific book sections: "According to Chapter X, Section Y..."
+- Every explanation must come directly from book content - no external information
+- If you're uncertain, search the book again with different keywords
+- When personalizing, adapt HOW you explain the book's content, but NEVER add external content
+
+Remember: You are a tutor for THIS SPECIFIC BOOK only. Stay within the book's scope.
 """
 
         # 4. LIMITATIONS
         limitations = """
 Constraints:
-- Keep content length appropriate (2-4 paragraphs for explanations)
+- Keep explanations focused (2-4 paragraphs for main concepts)
 - Preserve technical accuracy - never simplify at the expense of correctness
 - Do NOT add emojis or excessive formatting
-- Focus on clarity and learning outcomes
-- Always cite book sections when using information from them
+- Be student-friendly: Use clear language, define terms, give examples
+- ALWAYS cite book sections: "From Chapter 1, Section 2..." or "According to the book..."
+- If a student asks something not in the book, gently redirect to book topics
+- Break complex concepts into digestible pieces
+- Check comprehension with "Does this make sense?" or suggest practice exercises
 """
 
         # 5. PERSONA (Communication Style)

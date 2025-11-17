@@ -24,7 +24,7 @@ class SummaryCacheManager:
     def __init__(self, db: Session):
         self.db = db
 
-    def get(self, page_path: str) -> Optional[str]:
+    def get(self, page_path: str) -> Optional[SummaryCache]:
         """
         Get cached summary for a page
 
@@ -32,7 +32,7 @@ class SummaryCacheManager:
             page_path: Page identifier
 
         Returns:
-            Cached summary content or None
+            Cached SummaryCache object or None
         """
         cached = (
             self.db.query(SummaryCache)
@@ -40,7 +40,7 @@ class SummaryCacheManager:
             .first()
         )
 
-        return cached.summary_content if cached else None
+        return cached
 
     def set(
         self,
