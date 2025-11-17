@@ -191,23 +191,29 @@ def generate_embeddings():
             ids.append(chunk_id)
             total_chunks += 1
 
-    # Add all documents to ChromaDB in one batch
+    # Add all documents to ChromaDB in smaller batches with progress
     print(f"\n💾 Storing {total_chunks} chunks in ChromaDB...")
-    print(f"   This may take a few minutes (generating embeddings)...")
+    print(f"   This may take 20-30 minutes (generating embeddings on CPU)...")
+    print(f"   Progress will be shown every 100 chunks...\n")
 
-    # ChromaDB has a batch size limit, so we'll batch in groups of 5000
-    batch_size = 5000
+    # Use smaller batches (100) to show progress more frequently
+    batch_size = 100
+    total_batches = (len(documents) + batch_size - 1) // batch_size
+
     for i in range(0, len(documents), batch_size):
         batch_docs = documents[i:i+batch_size]
         batch_metas = metadatas[i:i+batch_size]
         batch_ids = ids[i:i+batch_size]
+
+        batch_num = i // batch_size + 1
+        percentage = (i + len(batch_docs)) / len(documents) * 100
 
         collection.add(
             documents=batch_docs,
             metadatas=batch_metas,
             ids=batch_ids
         )
-        print(f"   ✅ Stored batch {i//batch_size + 1} ({len(batch_docs)} chunks)")
+        print(f"   ✅ Batch {batch_num}/{total_batches} ({percentage:.1f}%) - Stored {i+len(batch_docs)}/{len(documents)} chunks")
 
     # Verify
     count = collection.count()
