@@ -57,6 +57,7 @@ differentiation:
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SummaryTab from '@site/src/components/SummaryTab';
+import PersonalizedTab from '@site/src/components/PersonalizedTab';
 
 <Tabs>
   <TabItem value="original" label="📖 Original" default>
@@ -193,7 +194,7 @@ Based on what we've discussed, explain: If I'm learning to build solutions in 20
 
   <TabItem value="personalized" label="✨ Personalized">
 
-*Login required for personalized content powered by OLIVIA AI Tutor*
+<PersonalizedTab pagePath="01-Introducing-AI-Driven-Development/01-ai-development-revolution/01-moment_that_changed_everything" />
 
   </TabItem>
 </Tabs>
