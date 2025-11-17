@@ -1,225 +1,67 @@
 # Claude is Work to Build this Project
 """
-Content API endpoints - Summaries, personalized content, and book content
+Content API endpoints - Three-mode content system
+- Original: Raw markdown (no endpoint needed, served by Docusaurus)
+- Summary: AI-generated summary (public, no auth)
+- Personalized: User-specific content (auth required, streaming)
 """
 
+import json
+import time
 from datetime import datetime
-from fastapi import APIRouter, HTTPException, Query, Depends
+from fastapi import APIRouter, HTTPException, Depends, WebSocket, WebSocketDisconnect, status
 from fastapi.security import HTTPBearer
 from pathlib import Path
 from sqlalchemy.orm import Session
-from typing import Optional
-import re
+from typing import Optional, AsyncGenerator
 
 from tutor_agent.core.database import get_db
-from tutor_agent.models.user import User, PersonalizedContent
-from tutor_agent.schemas.auth import PersonalizedContentResponse
-from tutor_agent.services.personalized_content import get_content_generator
+from tutor_agent.models.user import User
+from tutor_agent.schemas.content import (
+    SummaryResponse,
+    PersonalizedContentResponse,
+    PersonalizedContentRequest,
+    PreferencesUpdateRequest,
+    PreferencesUpdateResponse,
+    StreamingProgressEvent,
+    StreamingCompleteEvent,
+    StreamingErrorEvent,
+)
+from tutor_agent.services.cache.summary_cache import SummaryCacheManager
+from tutor_agent.services.cache.personalization_cache import PersonalizationCacheManager
+from tutor_agent.services.agent.olivia_agent import OLIVIAAgent
 
 router = APIRouter()
 security = HTTPBearer()
 
-# Path to summaries directory (relative to project root)
-SUMMARIES_DIR = Path(__file__).parent.parent.parent.parent.parent / "book-source" / "summaries"
-
 # Path to book source files
 BOOK_SOURCE_PATH = Path(__file__).parent.parent.parent.parent.parent / "book-source" / "docs"
 
-def normalize_page_path(page_path: str) -> str:
-    """
-    Normalize page path to match summary filename format
-
-    Examples:
-        "01-Introducing-AI-Driven-Development/01-ai-development-revolution/01-moment_that_changed_everything.md"
-        -> "01-Introducing-AI-Driven-Development_01-moment_that_changed_everything.md"
-    """
-    # Remove 'docs/' prefix if present
-    page_path = page_path.replace('docs/', '')
-
-    # Extract chapter and filename
-    parts = page_path.split('/')
-    if len(parts) < 2:
-        return None
-
-    chapter = parts[0]  # e.g., "01-Introducing-AI-Driven-Development"
-    filename = parts[-1]  # e.g., "01-moment_that_changed_everything.md"
-
-    # Create summary filename
-    summary_filename = f"{chapter}_{filename}"
-
-    return summary_filename
-
-def find_summary_file(page_path: str) -> Optional[Path]:
-    """Find summary file for given page path"""
-    summary_filename = normalize_page_path(page_path)
-
-    if not summary_filename:
-        return None
-
-    summary_path = SUMMARIES_DIR / summary_filename
-
-    if summary_path.exists():
-        return summary_path
-
-    return None
-
-def parse_summary_content(summary_path: Path) -> dict:
-    """Parse summary markdown file and extract frontmatter + content"""
-    try:
-        content = summary_path.read_text(encoding='utf-8')
-
-        # Split frontmatter and body
-        parts = content.split('---', 2)
-        if len(parts) < 3:
-            # No frontmatter, treat whole content as summary
-            return {
-                "summary": content,
-                "key_concepts": [],
-                "metadata": {}
-            }
-
-        frontmatter = parts[1].strip()
-        body = parts[2].strip()
-
-        # Parse frontmatter (simple YAML parsing)
-        metadata = {}
-        for line in frontmatter.split('\n'):
-            if ':' in line:
-                key, value = line.split(':', 1)
-                metadata[key.strip()] = value.strip()
-
-        # Extract summary and key concepts from body
-        summary_text = ""
-        key_concepts = []
-
-        # Split by headers
-        sections = body.split('##')
-        for section in sections:
-            section = section.strip()
-            if section.startswith('Summary'):
-                # Extract summary content (remove header)
-                summary_text = section.replace('Summary', '', 1).strip()
-            elif section.startswith('Key Concepts'):
-                # Extract bullet points
-                lines = section.split('\n')[1:]  # Skip header line
-                for line in lines:
-                    line = line.strip()
-                    if line.startswith('-'):
-                        concept = line.lstrip('- ').strip()
-                        if concept:
-                            key_concepts.append(concept)
-
-        return {
-            "summary": summary_text,
-            "key_concepts": key_concepts,
-            "metadata": metadata
-        }
-
-    except Exception as e:
-        print(f"Error parsing summary: {e}")
-        return {
-            "summary": "",
-            "key_concepts": [],
-            "metadata": {}
-        }
-
-@router.get("/summary")
-async def get_summary(
-    page_path: str = Query(..., description="Relative path to the page from book-source/docs/")
-):
-    """
-    Get summary for a specific page
-
-    Parameters:
-    - page_path: Relative path from book-source/docs/, e.g.,
-      "01-Introducing-AI-Driven-Development/01-ai-development-revolution/01-moment_that_changed_everything.md"
-
-    Returns:
-    - Summary content with metadata and key concepts
-    - OR "Team Working on it" message if summary doesn't exist yet
-    """
-
-    # Find summary file
-    summary_path = find_summary_file(page_path)
-
-    if not summary_path:
-        # Summary doesn't exist yet
-        return {
-            "status": "pending",
-            "message": "🔧 Team Working on it!",
-            "summary": "Our team is currently preparing a summary for this page. Check back soon!",
-            "key_concepts": [],
-            "metadata": {
-                "page_path": page_path,
-                "generated": False
-            }
-        }
-
-    # Parse and return summary
-    parsed_data = parse_summary_content(summary_path)
-
-    return {
-        "status": "available",
-        "message": "Summary available",
-        **parsed_data,
-        "metadata": {
-            **parsed_data.get("metadata", {}),
-            "page_path": page_path,
-            "generated": True
-        }
-    }
-
-@router.get("/summary/list")
-async def list_available_summaries():
-    """
-    List all available summaries
-
-    Returns:
-    - List of all summary files with metadata
-    """
-
-    if not SUMMARIES_DIR.exists():
-        return {
-            "count": 0,
-            "summaries": []
-        }
-
-    summaries = []
-    for summary_file in SUMMARIES_DIR.glob("*.md"):
-        parsed = parse_summary_content(summary_file)
-        summaries.append({
-            "filename": summary_file.name,
-            "chapter": parsed["metadata"].get("chapter", "Unknown"),
-            "original_path": parsed["metadata"].get("original_path", ""),
-            "difficulty": parsed["metadata"].get("difficulty", ""),
-            "read_time": parsed["metadata"].get("read_time", "")
-        })
-
-    return {
-        "count": len(summaries),
-        "summaries": sorted(summaries, key=lambda x: x["filename"])
-    }
-
 
 # ============================================================================
-# Personalized Content Endpoints
+# Authentication Dependency
 # ============================================================================
 
-async def get_current_user_from_token(
+async def get_current_user(
     credentials: HTTPBearer = Depends(security),
     db: Session = Depends(get_db),
 ) -> User:
-    """Get current user from JWT token"""
-    from tutor_agent.api.v1.auth import get_current_user
-    return await get_current_user(credentials, db)
+    """Get current authenticated user from JWT token"""
+    from tutor_agent.api.v1.auth import get_current_user as auth_get_current_user
+    return await auth_get_current_user(credentials, db)
 
+
+# ============================================================================
+# Helper Functions
+# ============================================================================
 
 def load_original_content(page_path: str) -> str:
     """
     Load original lesson content from book-source
 
     Args:
-        page_path: Relative path to the lesson (e.g., '01-Introducing-AI-Driven-Development/01-ai-development-revolution/01-moment_that_changed_everything')
+        page_path: Relative path to the lesson (e.g.,
+                  '01-Introducing-AI-Driven-Development/01-ai-development-revolution/01-moment_that_changed_everything')
 
     Returns:
         Original markdown content
@@ -232,7 +74,7 @@ def load_original_content(page_path: str) -> str:
 
     if not file_path.exists():
         raise HTTPException(
-            status_code=404,
+            status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Lesson not found: {page_path}",
         )
 
@@ -240,220 +82,578 @@ def load_original_content(page_path: str) -> str:
     with open(file_path, "r", encoding="utf-8") as f:
         content = f.read()
 
-    # Extract content after frontmatter and before tabs
-    # Look for the end of frontmatter (second ---)
+    # Extract content after frontmatter
     parts = content.split("---", 2)
     if len(parts) >= 3:
         # Get body after frontmatter
-        body = parts[2]
+        body = parts[2].strip()
 
         # Remove tab structure if present
-        # Content is between <TabItem value="original"...> and </TabItem>
         if '<TabItem value="original"' in body:
-            # Extract original tab content
             start_marker = '<TabItem value="original"'
             end_marker = '</TabItem>'
 
             start_idx = body.find(start_marker)
             if start_idx != -1:
-                # Find the end of the opening tag
                 content_start = body.find('>', start_idx) + 1
-
-                # Find the first </TabItem>
                 content_end = body.find(end_marker, content_start)
 
                 if content_end != -1:
-                    # Extract just the original content
                     original_content = body[content_start:content_end].strip()
                     return original_content
 
-        # If no tabs structure, return body as is
-        return body.strip()
+        return body
 
     return content
 
 
-@router.get("/personalized/{page_path:path}", response_model=PersonalizedContentResponse)
-async def get_personalized_content(
+# ============================================================================
+# Summary Endpoints (Public, No Auth)
+# ============================================================================
+
+@router.get("/summary/{page_path:path}", response_model=SummaryResponse)
+async def get_summary(
     page_path: str,
-    current_user: User = Depends(get_current_user_from_token),
+    force_regenerate: bool = False,
     db: Session = Depends(get_db),
 ):
     """
-    Get personalized content for a specific lesson page
+    Get AI-generated summary for a specific page (PUBLIC endpoint)
 
-    Workflow:
-    1. Check if cached personalized content exists for this user + page
-    2. Validate cache (profile match)
-    3. If cache valid, return cached content
-    4. If cache invalid/missing, generate new personalized content
-    5. Save to cache and return
+    Flow:
+    1. Check cache for existing summary
+    2. If cache exists and force_regenerate=False, return cached
+    3. Otherwise, generate new summary with OLIVIA
+    4. Cache and return
 
     Args:
-        page_path: Relative path to lesson (e.g., '01-Introducing-AI-Driven-Development/01-ai-development-revolution/01-moment_that_changed_everything')
-        current_user: Authenticated user (from JWT token)
+        page_path: Relative path from book-source/docs/ (e.g.,
+                  "01-Introducing-AI-Driven-Development/01-ai-development-revolution/01-moment_that_changed_everything")
+        force_regenerate: Force new generation even if cached
 
     Returns:
-        PersonalizedContentResponse with markdown content
+        SummaryResponse with summary content
     """
-    # 1. Check for cached content
-    cached_content = (
-        db.query(PersonalizedContent)
-        .filter(
-            PersonalizedContent.user_id == current_user.id,
-            PersonalizedContent.page_path == page_path,
-        )
-        .first()
-    )
+    cache_manager = SummaryCacheManager(db)
 
-    # 2. Validate cache (check if profile matches)
-    if cached_content:
-        is_valid = (
-            cached_content.programming_experience == current_user.programming_experience
-            and cached_content.ai_experience == current_user.ai_experience
-            and cached_content.learning_style == current_user.learning_style
-            and cached_content.preferred_language == current_user.preferred_language
-        )
-
-        if is_valid:
-            # Return cached content
-            return PersonalizedContentResponse(
+    # Check cache
+    if not force_regenerate:
+        cached_summary = cache_manager.get(page_path)
+        if cached_summary:
+            return SummaryResponse(
                 page_path=page_path,
-                markdown_content=cached_content.markdown_content,
-                generated_at=cached_content.generated_at,
+                summary_content=cached_summary.summary_content,
+                word_count=cached_summary.word_count,
                 cached=True,
-                model_version=cached_content.model_version,
+                generated_at=cached_summary.generated_at,
+                model_version=cached_summary.model_version,
             )
 
-        # Cache invalid (profile changed), delete old cache
-        db.delete(cached_content)
-        db.commit()
-
-    # 3. Generate new personalized content
+    # Generate new summary
     try:
         # Load original content
         original_content = load_original_content(page_path)
 
-        # Generate personalized version (with RAG-powered OLIVIA agent)
-        generator = get_content_generator()
-        personalized_markdown = generator.generate_personalized_content(
-            original_content, current_user, page_path  # Pass page_path for RAG context
+        # Generate summary with OLIVIA
+        olivia = OLIVIAAgent()
+
+        # Create a simple "summary user" profile (conceptual learner, intermediate)
+        from tutor_agent.models.user import (
+            ProgrammingExperience,
+            AIExperience,
+            LearningStyle,
+            PreferredLanguage,
         )
 
-        # 4. Save to cache
-        new_cached_content = PersonalizedContent(
-            user_id=current_user.id,
+        class SummaryUser:
+            """Mock user for summary generation (conceptual, balanced)"""
+            id = 0
+            email = "summary@system.internal"
+            hashed_password = ""
+            programming_experience = ProgrammingExperience.INTERMEDIATE
+            ai_experience = AIExperience.BASIC
+            learning_style = LearningStyle.CONCEPTUAL
+            preferred_language = PreferredLanguage.ENGLISH
+
+        summary_user = SummaryUser()
+
+        # Generate summary (collecting all chunks)
+        summary_instruction = """
+        Create a concise summary (200-400 words) of the lesson content.
+        Focus on:
+        - Main concepts and key takeaways
+        - Core ideas in simple language
+        - Essential knowledge for understanding the topic
+
+        DO NOT include code examples or diagrams.
+        Keep it accessible for all skill levels.
+        """
+
+        summary_chunks = []
+        async for chunk in olivia.generate_personalized_content_stream(
+            original_content=original_content,
+            user=summary_user,
             page_path=page_path,
-            markdown_content=personalized_markdown,
-            generated_at=datetime.utcnow(),
-            model_version=generator.model,
-            # Snapshot profile for cache validation
-            programming_experience=current_user.programming_experience,
-            ai_experience=current_user.ai_experience,
-            learning_style=current_user.learning_style,
-            preferred_language=current_user.preferred_language,
+            user_query=summary_instruction,
+        ):
+            summary_chunks.append(chunk)
+
+        summary_content = "".join(summary_chunks).strip()
+        word_count = len(summary_content.split())
+
+        # Cache the summary
+        cache_manager.set(
+            page_path=page_path,
+            summary_content=summary_content,
+            model_version="gpt-4o-mini",
+            word_count=word_count,
         )
 
-        db.add(new_cached_content)
-        db.commit()
-        db.refresh(new_cached_content)
-
-        # 5. Return response
-        return PersonalizedContentResponse(
+        return SummaryResponse(
             page_path=page_path,
-            markdown_content=personalized_markdown,
-            generated_at=new_cached_content.generated_at,
+            summary_content=summary_content,
+            word_count=word_count,
             cached=False,
-            model_version=generator.model,
+            generated_at=datetime.utcnow(),
+            model_version="gpt-4o-mini",
         )
 
-    except FileNotFoundError as e:
+    except FileNotFoundError:
         raise HTTPException(
-            status_code=404, detail=f"Lesson not found: {page_path}"
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Lesson not found: {page_path}"
         )
     except Exception as e:
         raise HTTPException(
-            status_code=500,
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to generate summary: {str(e)}",
+        )
+
+
+# ============================================================================
+# Personalized Content Endpoints (Auth Required)
+# ============================================================================
+
+@router.get("/personalized/{page_path:path}", response_model=PersonalizedContentResponse)
+async def get_personalized_content(
+    page_path: str,
+    force_regenerate: bool = False,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """
+    Get personalized content for a specific lesson page (AUTH REQUIRED)
+
+    Flow:
+    1. Check cache for existing personalized content
+    2. Validate cache (profile match)
+    3. If cache valid and force_regenerate=False, return cached
+    4. Otherwise, generate new personalized content with OLIVIA
+    5. Cache and return
+
+    Args:
+        page_path: Relative path to lesson
+        force_regenerate: Force new generation even if cached
+        current_user: Authenticated user (from JWT token)
+
+    Returns:
+        PersonalizedContentResponse with adapted content
+    """
+    cache_manager = PersonalizationCacheManager(db)
+
+    # Check cache
+    if not force_regenerate:
+        cached_content = cache_manager.get(current_user, page_path)
+        if cached_content:
+            return PersonalizedContentResponse(
+                page_path=page_path,
+                personalized_content=cached_content.personalized_content,
+                cached=True,
+                generated_at=cached_content.generated_at,
+                model_version=cached_content.model_version,
+                profile_snapshot={
+                    "programming_experience": cached_content.programming_exp,
+                    "ai_experience": cached_content.ai_exp,
+                    "learning_style": cached_content.learning_style,
+                    "preferred_language": cached_content.language,
+                },
+            )
+
+    # Generate new personalized content
+    try:
+        # Load original content
+        original_content = load_original_content(page_path)
+
+        # Generate personalized version with OLIVIA
+        olivia = OLIVIAAgent()
+
+        # Collect all chunks
+        content_chunks = []
+        async for chunk in olivia.generate_personalized_content_stream(
+            original_content=original_content,
+            user=current_user,
+            page_path=page_path,
+            user_query=None,  # No specific query, just personalize the lesson
+        ):
+            content_chunks.append(chunk)
+
+        personalized_content = "".join(content_chunks).strip()
+
+        # Cache the content
+        cache_manager.set(
+            user=current_user,
+            page_path=page_path,
+            content=personalized_content,
+            model_version="gpt-4o-mini",
+        )
+
+        return PersonalizedContentResponse(
+            page_path=page_path,
+            personalized_content=personalized_content,
+            cached=False,
+            generated_at=datetime.utcnow(),
+            model_version="gpt-4o-mini",
+            profile_snapshot={
+                "programming_experience": current_user.programming_experience.value,
+                "ai_experience": current_user.ai_experience.value,
+                "learning_style": current_user.learning_style.value,
+                "preferred_language": current_user.preferred_language.value,
+            },
+        )
+
+    except FileNotFoundError:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Lesson not found: {page_path}"
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Failed to generate personalized content: {str(e)}",
         )
 
 
 # ============================================================================
-# OLIVIA Agent Test Endpoint (Development Only)
+# WebSocket Streaming Endpoint (Real-Time Personalization)
 # ============================================================================
 
-@router.post("/test-olivia")
-async def test_olivia_agent(
-    query: str = Query(..., description="Question to ask OLIVIA"),
-    page_path: Optional[str] = Query(None, description="Optional page context")
+@router.websocket("/ws/personalize/{page_path:path}")
+async def websocket_personalize(
+    websocket: WebSocket,
+    page_path: str,
+    db: Session = Depends(get_db),
 ):
     """
-    🧪 Test endpoint for OLIVIA agent (Development/Testing only)
+    WebSocket endpoint for real-time streaming of personalized content
 
-    Test the RAG-powered OLIVIA agent without authentication.
+    Flow:
+    1. Client connects with JWT token in query params
+    2. Server validates token and authenticates user
+    3. Check cache first
+    4. If cache exists, send immediately
+    5. Otherwise, stream generation progress in real-time
+    6. Send progress events during RAG search and generation
+    7. Stream content chunks as they're generated
+    8. Send complete event when done
 
-    Args:
-        query: Question to ask OLIVIA
-        page_path: Optional page path for context
+    Query params:
+        token: JWT authentication token
 
-    Returns:
-        OLIVIA's response with RAG-powered answer
+    WebSocket Events:
+        - type: "progress" - Progress update
+        - type: "chunk" - Content chunk
+        - type: "complete" - Generation complete
+        - type: "error" - Error occurred
     """
+    await websocket.accept()
+
     try:
-        from tutor_agent.services.agent.olivia_agent import OLIVIAAgent
-        from tutor_agent.models.user import User
-        from enum import Enum
+        # Get token from query params
+        token = websocket.query_params.get("token")
+        if not token:
+            await websocket.send_json({
+                "type": "error",
+                "error": "Missing authentication token",
+            })
+            await websocket.close(code=status.WS_1008_POLICY_VIOLATION)
+            return
 
-        # Create mock user for testing
-        class MockExperience(Enum):
-            BEGINNER = "beginner"
-            INTERMEDIATE = "intermediate"
-            ADVANCED = "advanced"
+        # Authenticate user
+        try:
+            from tutor_agent.core.security import decode_access_token
 
-        class MockUser:
-            def __init__(self):
-                self.id = 999
-                self.email = "test@example.com"
-                self.name = "Test User"
-                self.programming_experience = type('obj', (object,), {'value': 'intermediate'})()
-                self.ai_experience = type('obj', (object,), {'value': 'beginner'})()
-                self.learning_style = type('obj', (object,), {'value': 'visual'})()
-                self.preferred_language = type('obj', (object,), {'value': 'en'})()
+            payload = decode_access_token(token)
+            if payload is None:
+                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
 
-        test_user = MockUser()
+            user_id = payload.get("sub")
+            if not user_id:
+                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
 
-        # Initialize OLIVIA
+            user = db.query(User).filter(User.id == int(user_id)).first()
+            if not user or not user.is_active:
+                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
+
+        except Exception:
+            await websocket.send_json({
+                "type": "error",
+                "error": "Invalid or expired token",
+            })
+            await websocket.close(code=status.WS_1008_POLICY_VIOLATION)
+            return
+
+        # Check cache first
+        cache_manager = PersonalizationCacheManager(db)
+        cached_content = cache_manager.get(user, page_path)
+
+        if cached_content:
+            # Send cached content immediately
+            await websocket.send_json({
+                "type": "progress",
+                "message": "Loading cached content...",
+                "progress": 100.0,
+            })
+
+            await websocket.send_json({
+                "type": "complete",
+                "full_content": cached_content.personalized_content,
+                "generated_at": cached_content.generated_at.isoformat(),
+                "model_version": cached_content.model_version,
+                "cached": True,
+            })
+
+            await websocket.close()
+            return
+
+        # Generate new content with streaming
+        start_time = time.time()
+
+        # Progress: Loading original content
+        await websocket.send_json({
+            "type": "progress",
+            "message": "Loading lesson content...",
+            "progress": 10.0,
+            "metadata": {"stage": "loading"}
+        })
+
+        original_content = load_original_content(page_path)
+
+        # Progress: Initializing OLIVIA
+        await websocket.send_json({
+            "type": "progress",
+            "message": "Initializing OLIVIA tutor...",
+            "progress": 20.0,
+            "metadata": {"stage": "initialization"}
+        })
+
         olivia = OLIVIAAgent()
 
-        # Generate response (collecting streaming chunks)
-        response_chunks = []
+        # Progress: RAG search
+        await websocket.send_json({
+            "type": "progress",
+            "message": f"Searching book content with RAG (adapting to {user.learning_style.value} learner)...",
+            "progress": 30.0,
+            "metadata": {"stage": "rag_search", "learning_style": user.learning_style.value}
+        })
+
+        # Progress: Generating personalized content
+        await websocket.send_json({
+            "type": "progress",
+            "message": "Generating personalized content...",
+            "progress": 40.0,
+            "metadata": {"stage": "generation"}
+        })
+
+        # Stream content chunks
+        content_chunks = []
+        chunk_count = 0
+
         async for chunk in olivia.generate_personalized_content_stream(
-            original_content="",
-            user=test_user,
-            page_path=page_path or "test",
-            user_query=query
+            original_content=original_content,
+            user=user,
+            page_path=page_path,
+            user_query=None,
         ):
-            response_chunks.append(chunk)
+            content_chunks.append(chunk)
+            chunk_count += 1
 
-        full_response = "".join(response_chunks)
+            # Send chunk
+            await websocket.send_json({
+                "type": "chunk",
+                "chunk": chunk,
+                "progress": min(40.0 + (chunk_count * 2), 95.0),  # Progress from 40% to 95%
+            })
 
-        return {
-            "status": "success",
-            "query": query,
-            "page_path": page_path,
-            "response": full_response,
-            "user_profile": {
-                "programming": "intermediate",
-                "ai_experience": "beginner",
-                "learning_style": "visual"
+        personalized_content = "".join(content_chunks).strip()
+
+        # Cache the content
+        await websocket.send_json({
+            "type": "progress",
+            "message": "Caching content for future visits...",
+            "progress": 98.0,
+            "metadata": {"stage": "caching"}
+        })
+
+        cache_manager.set(
+            user=user,
+            page_path=page_path,
+            content=personalized_content,
+            model_version="gpt-4o-mini",
+        )
+
+        # Send complete event
+        generation_time_ms = int((time.time() - start_time) * 1000)
+
+        await websocket.send_json({
+            "type": "complete",
+            "full_content": personalized_content,
+            "generated_at": datetime.utcnow().isoformat(),
+            "model_version": "gpt-4o-mini",
+            "generation_time_ms": generation_time_ms,
+            "cached": False,
+        })
+
+        await websocket.close()
+
+    except WebSocketDisconnect:
+        print(f"WebSocket disconnected for page: {page_path}")
+    except FileNotFoundError:
+        await websocket.send_json({
+            "type": "error",
+            "error": f"Lesson not found: {page_path}",
+        })
+        await websocket.close()
+    except Exception as e:
+        await websocket.send_json({
+            "type": "error",
+            "error": str(e),
+            "details": "Failed to generate personalized content",
+        })
+        await websocket.close()
+
+
+# ============================================================================
+# Preferences Update Endpoint
+# ============================================================================
+
+@router.put("/preferences", response_model=PreferencesUpdateResponse)
+async def update_preferences(
+    request: PreferencesUpdateRequest,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """
+    Update user learning preferences (AUTH REQUIRED)
+
+    When preferences are updated:
+    1. Update user profile in database
+    2. Invalidate ALL personalized content cache for this user
+    3. Return updated profile
+
+    Args:
+        request: Preferences to update (only provided fields are updated)
+        current_user: Authenticated user
+
+    Returns:
+        PreferencesUpdateResponse with success status and updated profile
+    """
+    try:
+        # Track what changed
+        changes = []
+
+        # Update provided fields
+        if request.programming_experience is not None:
+            current_user.programming_experience = request.programming_experience
+            changes.append("programming_experience")
+
+        if request.ai_experience is not None:
+            current_user.ai_experience = request.ai_experience
+            changes.append("ai_experience")
+
+        if request.learning_style is not None:
+            current_user.learning_style = request.learning_style
+            changes.append("learning_style")
+
+        if request.preferred_language is not None:
+            current_user.preferred_language = request.preferred_language
+            changes.append("preferred_language")
+
+        # Save changes
+        db.commit()
+        db.refresh(current_user)
+
+        # Invalidate personalized content cache
+        cache_manager = PersonalizationCacheManager(db)
+        invalidated_count = cache_manager.invalidate_user(current_user.id)
+
+        return PreferencesUpdateResponse(
+            success=True,
+            message=f"Updated preferences: {', '.join(changes)}",
+            updated_profile={
+                "programming_experience": current_user.programming_experience.value,
+                "ai_experience": current_user.ai_experience.value,
+                "learning_style": current_user.learning_style.value,
+                "preferred_language": current_user.preferred_language.value,
             },
-            "note": "This is a test endpoint using a mock user profile"
-        }
+            cache_invalidated=True,
+            invalidated_count=invalidated_count,
+        )
 
     except Exception as e:
-        import traceback
-        return {
-            "status": "error",
-            "error": str(e),
-            "traceback": traceback.format_exc()
-        }
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to update preferences: {str(e)}",
+        )
+
+
+# ============================================================================
+# Cache Management Endpoints (Development/Admin)
+# ============================================================================
+
+@router.delete("/cache/personalized/{page_path:path}")
+async def invalidate_personalized_cache(
+    page_path: str,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """
+    Invalidate personalized content cache for a specific page
+
+    Args:
+        page_path: Page to invalidate cache for
+        current_user: Authenticated user
+
+    Returns:
+        Success message
+    """
+    cache_manager = PersonalizationCacheManager(db)
+    count = cache_manager.invalidate_page(page_path)
+
+    return {
+        "success": True,
+        "message": f"Invalidated {count} cached entries for {page_path}",
+    }
+
+
+@router.delete("/cache/summary/{page_path:path}")
+async def invalidate_summary_cache(
+    page_path: str,
+    db: Session = Depends(get_db),
+):
+    """
+    Invalidate summary cache for a specific page (PUBLIC endpoint)
+
+    Args:
+        page_path: Page to invalidate cache for
+
+    Returns:
+        Success message
+    """
+    cache_manager = SummaryCacheManager(db)
+    success = cache_manager.invalidate(page_path)
+
+    return {
+        "success": success,
+        "message": f"Invalidated summary cache for {page_path}" if success else "Cache not found",
+    }

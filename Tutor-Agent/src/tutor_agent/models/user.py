@@ -6,10 +6,9 @@ User models for authentication and profile
 from datetime import datetime
 from typing import Optional
 from sqlalchemy import Column, Integer, String, DateTime, Enum as SQLEnum, Text
-from sqlalchemy.ext.declarative import declarative_base
 import enum
 
-Base = declarative_base()
+from tutor_agent.models.base import Base
 
 
 class ProgrammingExperience(str, enum.Enum):
