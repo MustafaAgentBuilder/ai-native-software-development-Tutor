@@ -34,14 +34,17 @@ async def test_visual_learning():
     print("🎨 OLIVIA Visual Learning Enhancement Test")
     print("=" * 80)
 
-    # Create visual learner profile
+    # Create visual learner profile (using correct field names from User model)
+    from tutor_agent.models.user import ProgrammingExperience, AIExperience, LearningStyle, PreferredLanguage
+
     visual_learner = User(
-        id="visual-test",
+        id=999,  # Test ID
         email="visual@test.com",
-        programming_experience="intermediate",
-        ai_ml_experience="beginner",
-        learning_style="visual",
-        preferred_language="Python"
+        hashed_password="test",  # Not used in tests
+        programming_experience=ProgrammingExperience.INTERMEDIATE,
+        ai_experience=AIExperience.BASIC,
+        learning_style=LearningStyle.VISUAL,
+        preferred_language=PreferredLanguage.ENGLISH
     )
 
     # Initialize OLIVIA

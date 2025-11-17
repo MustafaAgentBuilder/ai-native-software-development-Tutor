@@ -21,7 +21,7 @@ load_dotenv(dotenv_path=env_path)
 
 async def test_olivia_with_profiles():
     """Test OLIVIA with different user profiles"""
-    from tutor_agent.models.user import User
+    from tutor_agent.models.user import User, ProgrammingExperience, AIExperience, LearningStyle, PreferredLanguage
     from tutor_agent.services.agent.olivia_agent import OLIVIAAgent
 
     # Check for OpenAI API key
@@ -40,48 +40,52 @@ async def test_olivia_with_profiles():
         {
             "name": "Beginner Visual Learner",
             "user": User(
-                id="test-user-1",
+                id=1,
                 email="beginner@test.com",
-                programming_experience="beginner",
-                ai_ml_experience="beginner",
-                learning_style="visual",
-                preferred_language="Python"
+                hashed_password="test",
+                programming_experience=ProgrammingExperience.BEGINNER,
+                ai_experience=AIExperience.NONE,
+                learning_style=LearningStyle.VISUAL,
+                preferred_language=PreferredLanguage.ENGLISH
             ),
             "question": "What is a variable in Python?"
         },
         {
             "name": "Intermediate Hands-On Learner",
             "user": User(
-                id="test-user-2",
+                id=2,
                 email="intermediate@test.com",
-                programming_experience="intermediate",
-                ai_ml_experience="beginner",
-                learning_style="hands-on",
-                preferred_language="Python"
+                hashed_password="test",
+                programming_experience=ProgrammingExperience.INTERMEDIATE,
+                ai_experience=AIExperience.BASIC,
+                learning_style=LearningStyle.PRACTICAL,
+                preferred_language=PreferredLanguage.ENGLISH
             ),
             "question": "How do I implement a REST API endpoint in FastAPI?"
         },
         {
             "name": "Advanced Text Learner",
             "user": User(
-                id="test-user-3",
+                id=3,
                 email="advanced@test.com",
-                programming_experience="advanced",
-                ai_ml_experience="intermediate",
-                learning_style="text",
-                preferred_language="Python"
+                hashed_password="test",
+                programming_experience=ProgrammingExperience.ADVANCED,
+                ai_experience=AIExperience.INTERMEDIATE,
+                learning_style=LearningStyle.CONCEPTUAL,
+                preferred_language=PreferredLanguage.ENGLISH
             ),
             "question": "Explain the architecture of the OpenAI Agents SDK"
         },
         {
             "name": "Advanced Visual AI Expert",
             "user": User(
-                id="test-user-4",
+                id=4,
                 email="expert@test.com",
-                programming_experience="advanced",
-                ai_ml_experience="advanced",
-                learning_style="visual",
-                preferred_language="Python"
+                hashed_password="test",
+                programming_experience=ProgrammingExperience.ADVANCED,
+                ai_experience=AIExperience.ADVANCED,
+                learning_style=LearningStyle.VISUAL,
+                preferred_language=PreferredLanguage.ENGLISH
             ),
             "question": "How does RAG work with ChromaDB embeddings?"
         }
