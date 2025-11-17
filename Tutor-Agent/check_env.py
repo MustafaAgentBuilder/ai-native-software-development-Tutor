@@ -25,25 +25,25 @@ else:
     print("   Please create it by copying .env.example")
     exit(1)
 
-# Check GEMINI_API_KEY
-gemini_key = os.getenv("GEMINI_API_KEY")
-if gemini_key:
+# Check OPENAI_API_KEY
+openai_key = os.getenv("OPENAI_API_KEY")
+if openai_key:
     # Mask the key for security (show first 10 chars and last 4)
-    if len(gemini_key) > 14:
-        masked_key = f"{gemini_key[:10]}...{gemini_key[-4:]}"
+    if len(openai_key) > 14:
+        masked_key = f"{openai_key[:10]}...{openai_key[-4:]}"
     else:
-        masked_key = "***" + gemini_key[-4:] if len(gemini_key) > 4 else "***"
+        masked_key = "***" + openai_key[-4:] if len(openai_key) > 4 else "***"
 
-    print(f"\n✅ GEMINI_API_KEY is loaded!")
+    print(f"\n✅ OPENAI_API_KEY is loaded!")
     print(f"   Key (masked): {masked_key}")
-    print(f"   Key length: {len(gemini_key)} characters")
+    print(f"   Key length: {len(openai_key)} characters")
 
     # Check if it's still the placeholder
-    if "PASTE_YOUR" in gemini_key or "your_gemini" in gemini_key:
+    if "YOUR-OPENAI" in openai_key or "your-openai" in openai_key or "sk-YOUR" in openai_key:
         print("\n⚠️  WARNING: You're still using the placeholder!")
-        print("   Replace 'PASTE_YOUR_GEMINI_API_KEY_HERE' with your actual API key")
-        print("\n   Get your FREE Gemini API key at:")
-        print("   https://ai.google.dev/gemini-api/docs/api-key")
+        print("   Replace 'sk-YOUR-OPENAI-API-KEY-HERE' with your actual API key")
+        print("\n   Get your OpenAI API key at:")
+        print("   https://platform.openai.com/api-keys")
         exit(1)
 
     print("\n✅ API key looks valid!")
@@ -51,13 +51,13 @@ if gemini_key:
     print("\nRun: uv run python test_olivia_agent.py")
 
 else:
-    print("\n❌ GEMINI_API_KEY is NOT loaded!")
+    print("\n❌ OPENAI_API_KEY is NOT loaded!")
     print("\nPossible issues:")
     print("  1. The key is not in .env file")
     print("  2. There are spaces around the = sign (remove them)")
     print("  3. The line is commented out (remove #)")
     print("\nYour .env file should have:")
-    print("  GEMINI_API_KEY=your-actual-key-here")
+    print("  OPENAI_API_KEY=sk-your-actual-key-here")
     print("  (NO SPACES around the = sign)")
 
     # Try to show what's in the .env file
@@ -66,7 +66,7 @@ else:
     try:
         with open(env_path, 'r') as f:
             for i, line in enumerate(f, 1):
-                if 'GEMINI_API_KEY' in line:
+                if 'OPENAI_API_KEY' in line:
                     print(f"  Line {i}: {line.rstrip()}")
     except Exception as e:
         print(f"  Error reading file: {e}")

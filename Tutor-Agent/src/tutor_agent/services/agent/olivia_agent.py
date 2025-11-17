@@ -2,7 +2,7 @@
 """
 OLIVIA Agent (OpenAI Learning and Interactive Virtual Instructional Agent)
 
-RAG-powered AI tutor using Google Gemini with OpenAI Agents SDK streaming support.
+RAG-powered AI tutor using OpenAI GPT-4o-mini with OpenAI Agents SDK streaming support.
 Implements Six-Step Prompting Framework (ACILPR) with real-time RAG.
 """
 
@@ -42,19 +42,18 @@ class OLIVIAAgent:
     """
 
     def __init__(self):
-        """Initialize OLIVIA agent with Gemini model and tools"""
+        """Initialize OLIVIA agent with OpenAI model and tools"""
         self.agent = None  # Will be created per-user for personalization
 
-        # Create Gemini API provider using AsyncOpenAI
-        self.gemini_provider = AsyncOpenAI(
-            api_key=os.getenv("GEMINI_API_KEY"),
-            base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
+        # Create OpenAI API provider
+        self.openai_provider = AsyncOpenAI(
+            api_key=os.getenv("OPENAI_API_KEY"),
         )
 
-        # Set up the chat completion model with Gemini
+        # Set up the chat completion model with GPT-4o-mini
         self.model = OpenAIChatCompletionsModel(
-            model="gemini-2.0-flash-exp",  # Experimental version with function calling support
-            openai_client=self.gemini_provider,
+            model="gpt-4o-mini",  # Fast, cheap, and perfect function calling support
+            openai_client=self.openai_provider,
         )
 
     def _create_personalized_agent(
