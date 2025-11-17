@@ -190,7 +190,21 @@ Use markdown formatting. Be clear and concise.
 
         # Adapt based on learning style
         if user.learning_style == LearningStyle.VISUAL:
-            style_instruction = "Use descriptive explanations that paint mental pictures. Suggest diagrams and visual patterns."
+            style_instruction = """Use visual representations heavily:
+- Create Mermaid diagrams (flowcharts, mind maps, sequence diagrams) to visualize concepts
+- Use code examples with clear visual structure
+- Describe spatial/visual relationships between components
+- Include ASCII diagrams or tables when helpful
+- Paint mental pictures with descriptive language
+
+Example Mermaid syntax to use:
+```mermaid
+graph TD
+    A[Concept] --> B[Sub-concept 1]
+    A --> C[Sub-concept 2]
+    B --> D[Detail]
+```
+Always include at least one visual diagram for complex topics."""
         elif user.learning_style == LearningStyle.PRACTICAL:
             style_instruction = "Prioritize code examples and hands-on exercises. Show practical applications immediately."
         elif user.learning_style == LearningStyle.CONCEPTUAL:
