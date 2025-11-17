@@ -174,6 +174,13 @@ def test_summary_endpoint():
 
     test_page = "01-Introducing-AI-Driven-Development/01-ai-development-revolution/01-moment_that_changed_everything"
 
+    # Clear cache first to ensure clean test
+    print("\n   Clearing cache for clean test...")
+    try:
+        requests.delete(f"{BASE_URL}/api/v1/content/cache/summary/{test_page}")
+    except:
+        pass  # Cache endpoint may not exist yet
+
     # Test 3.1: Generate summary (first time - should generate)
     print("\n3.1 Testing summary generation (first time)...")
     try:
@@ -372,21 +379,30 @@ def test_rag_functionality(beginner_token):
             data = response.json()
             answer = data["response"]
 
-            # Check if answer cites book sections
+            # Check if OLIVIA correctly refuses non-book topics
+            refusal_phrases = ["not covered in our book", "not in the book", "isn't covered",
+                             "not covered in the book", "isn't in our book", "topic isn't covered",
+                             "isn't directly covered", "outside the scope", "seems to be outside"]
+            has_refusal = any(phrase in answer.lower() for phrase in refusal_phrases)
+
+            # Check if answer cites book sections (for topics that ARE in the book)
             has_citations = any(phrase in answer.lower() for phrase in
                               ["chapter", "section", "according to", "from the book", "the book explains"])
 
-            # Check if RAG was likely used (look for book-specific terms)
+            # Check if RAG content indicators are present
             rag_indicators = ["retrieval", "augmented", "generation", "embedding", "search", "vector"]
             has_rag_content = sum(1 for word in rag_indicators if word in answer.lower())
 
             if len(answer) > 50:
                 log_test("RAG search", "PASS", f"Generated answer with {len(answer)} chars")
 
-                if has_citations:
+                # CORRECT BEHAVIOR: OLIVIA should refuse topics not in book
+                if has_refusal:
+                    log_test("Book-only teaching check", "PASS", "OLIVIA correctly refuses non-book topics")
+                elif has_citations:
                     log_test("Book citation check", "PASS", "Answer cites book sections")
                 else:
-                    log_test("Book citation check", "WARN", "No clear book citations found")
+                    log_test("Book citation check", "WARN", "No book citations or refusal found")
 
                 if has_rag_content >= 2:
                     log_test("RAG content check", "PASS", f"Found {has_rag_content} RAG-related terms")

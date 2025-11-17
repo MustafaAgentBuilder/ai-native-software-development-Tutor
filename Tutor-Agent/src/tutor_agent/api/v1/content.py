@@ -219,6 +219,9 @@ async def get_summary(
             model_version="gpt-4o-mini",
         )
 
+    except HTTPException:
+        # Re-raise HTTP exceptions (e.g., 404 from load_original_content)
+        raise
     except FileNotFoundError:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -322,6 +325,9 @@ async def get_personalized_content(
             },
         )
 
+    except HTTPException:
+        # Re-raise HTTP exceptions (e.g., 404 from load_original_content)
+        raise
     except FileNotFoundError:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
