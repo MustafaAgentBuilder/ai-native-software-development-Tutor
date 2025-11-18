@@ -43,11 +43,15 @@ class OLIVIAAgent:
         instructions = self._build_personalized_instructions(user, page_path)
 
         # Create agent with RAG tool
+        # Note: Increased timeout to handle slow network connections
         agent = Agent(
             name="OLIVIA",
             instructions=instructions,
             tools=[search_book_content],  # RAG search tool
-            model="gpt-4o-mini"  # Fast, cost-effective model
+            model="gpt-4o-mini",  # Fast, cost-effective model
+            # Network configuration for handling timeouts
+            max_retries=3,  # Retry failed requests
+            timeout=120.0,  # 2 minute timeout for slow networks
         )
 
         return agent
