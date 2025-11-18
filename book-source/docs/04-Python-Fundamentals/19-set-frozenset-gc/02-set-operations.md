@@ -43,7 +43,7 @@ skills:
     category: "Technical"
     bloom_level: "Apply"
     digcomp_area: "Digital Content Creation"
-    measurable_at_this_level: "Student can write {x for x in source if condition} syntax correctly"
+    measurable_at_this_level: 'Student can write set comprehension syntax correctly'
 
 learning_objectives:
   - objective: "Perform union operations using both | operator and .union() method"
@@ -370,9 +370,9 @@ Convert to sets and find students in both classes using intersection.
 ### Exercise 2: Union + Difference Chaining
 
 You have inventory from three warehouses:
-- Warehouse A: `{"Widget1", "Widget2", "Widget3"}`
-- Warehouse B: `{"Widget2", "Widget4", "Widget5"}`
-- Warehouse C: `{"Widget1", "Widget5", "Widget6"}`
+- Warehouse A: `{{"Widget1", "Widget2", "Widget3"}}`
+- Warehouse B: `{{"Widget2", "Widget4", "Widget5"}}`
+- Warehouse C: `{{"Widget1", "Widget5", "Widget6"}}`
 
 Find all unique widgets available across all warehouses (union), then find widgets that are in *only one* warehouse.
 

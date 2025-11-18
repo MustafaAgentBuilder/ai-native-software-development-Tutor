@@ -13,21 +13,21 @@ skills:
     category: "Technical"
     bloom_level: "Apply"
     digcomp_area: "Digital Content Creation (formatting output)"
-    measurable_at_this_level: "Student can write f\"Hello, {name}\" with correct syntax; embed variables in curly braces; produce dynamic output"
+    measurable_at_this_level: 'Student can write f-strings with correct syntax and embed variables'
 
   - name: "Embedding Variables and Expressions"
     proficiency_level: "A2"
     category: "Technical"
     bloom_level: "Apply"
     digcomp_area: "Problem-Solving (composing output)"
-    measurable_at_this_level: "Student can embed variables ({name}), expressions ({x + y}), and method calls ({text.upper()}) within f-strings"
+    measurable_at_this_level: 'Student can embed variables, expressions, and method calls within f-strings'
 
   - name: "Number Formatting in F-Strings"
     proficiency_level: "A2"
     category: "Technical"
     bloom_level: "Apply"
     digcomp_area: "Digital Content Creation (formatting numeric data)"
-    measurable_at_this_level: "Student can format numbers with specified decimal places ({price:.2f}) and understand format specifiers"
+    measurable_at_this_level: 'Student can format numbers with specified decimal places (price formatted to 2 decimals) and understand format specifiers'
 
   - name: "Intent-Based Output Design"
     proficiency_level: "A2"
@@ -219,12 +219,12 @@ print(f"Type of formatted_price: {type(formatted_price)}")  # <class 'str'>
 print(f"Type of receipt: {type(receipt)}")  # <class 'str'>
 ```
 
-**Validation checkpoint**: The key syntax is `{value:.2f}` which means "format the number with 2 decimal places." Let's break this down:
-- `{` starts the expression
+**Validation checkpoint**: The key syntax is `{"{value:.2f}"}` which means "format the number with 2 decimal places." Let's break this down:
+- `{"{"}` starts the expression
 - `value` is the variable to format
 - `:` separates the variable from the format specification
 - `.2f` means "2 decimal places" (the `f` stands for "floating point" format)
-- `}` closes the expression
+- `{"}"}` closes the expression
 
 Understanding this pattern lets you control how numbers appear in your output.
 
