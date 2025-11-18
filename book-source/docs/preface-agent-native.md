@@ -10,6 +10,14 @@ next: "/docs/part-1/chapter-1"
 sidebar_position: 0
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import SummaryTab from '@site/src/components/SummaryTab';
+import PersonalizedTab from '@site/src/components/PersonalizedTab';
+
+<Tabs>
+  <TabItem value="original" label="📖 Original" default>
+
 # Preface: Welcome to the AI-Native Era
 
 For the first time in human history, you can ship production AI-native software by writing specifications, not code—turning your domain expertise into intelligent systems that execute at machine speed.
@@ -579,3 +587,14 @@ You're about to enter a world where software development is collaborative, conve
 Let's begin.
 
 ---
+
+  </TabItem>
+
+  <TabItem value="summary" label="📝 Summary">
+    <SummaryTab pagePath="preface-agent-native" />
+  </TabItem>
+
+  <TabItem value="personalized" label="✨ Personalized">
+    <PersonalizedTab pagePath="preface-agent-native" />
+  </TabItem>
+</Tabs>
