@@ -41,7 +41,7 @@ skills:
     category: "Technical"
     bloom_level: "Understand"
     digcomp_area: "Information Literacy"
-    measurable_at_this_level: "Student can apply comparison operators (==, !=, >, <, >=, <=) in conditional expressions"
+    measurable_at_this_level: 'Student can apply comparison operators in conditional expressions'
 
   - name: "Logical Operators (and/or/not)"
     proficiency_level: "A2"
