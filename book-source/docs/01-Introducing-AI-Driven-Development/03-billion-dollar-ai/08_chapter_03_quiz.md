@@ -1,8 +1,17 @@
-<!-- Claude is Work to Build this Project -->
 ---
 sidebar_position: 8
 title: "Chapter 3: How to Make a Billion Dollars in the AI Era Quiz"
 ---
+
+
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import SummaryTab from '@site/src/components/SummaryTab';
+import PersonalizedTab from '@site/src/components/PersonalizedTab';
+
+<Tabs>
+  <TabItem value="original" label="📖 Original" default>
 
 # Chapter 3: How to Make a Billion Dollars in the AI Era Quiz
 
@@ -529,3 +538,15 @@ Test your understanding of strategic frameworks for building billion-dollar AI c
   ]}
   questionsPerBatch={18}
 />
+
+
+  </TabItem>
+
+  <TabItem value="summary" label="📝 Summary">
+    <SummaryTab pagePath="01-Introducing-AI-Driven-Development/03-billion-dollar-ai/08_chapter_03_quiz" />
+  </TabItem>
+
+  <TabItem value="personalized" label="✨ Personalized">
+    <PersonalizedTab pagePath="01-Introducing-AI-Driven-Development/03-billion-dollar-ai/08_chapter_03_quiz" />
+  </TabItem>
+</Tabs>

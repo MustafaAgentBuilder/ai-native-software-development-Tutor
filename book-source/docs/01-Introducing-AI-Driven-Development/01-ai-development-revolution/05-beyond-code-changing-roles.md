@@ -1,4 +1,3 @@
-<!-- Claude is Work to Build this Project -->
 ---
 title: "Beyond Code: The Changing Role of Developers"
 chapter: 1

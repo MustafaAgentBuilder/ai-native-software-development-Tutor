@@ -1,4 +1,3 @@
-<!-- Claude is Work to Build this Project -->
 ---
 title: "Why Traditional CS Education Falls Short"
 chapter: 1

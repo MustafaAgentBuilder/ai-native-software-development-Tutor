@@ -1,4 +1,3 @@
-<!-- Claude is Work to Build this Project -->
 ---
 sidebar_position: 4
 title: "The DORA Perspective: AI as Amplifier"
