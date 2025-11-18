@@ -20,10 +20,12 @@ router = APIRouter()
 security = HTTPBearer()
 
 # Path to summaries directory (relative to project root)
-SUMMARIES_DIR = Path(__file__).parent.parent.parent.parent.parent / "book-source" / "summaries"
+# __file__ = .../Tutor-Agent/src/tutor_agent/api/v1/content.py
+# Need 6x .parent to reach repo root: v1 -> api -> tutor_agent -> src -> Tutor-Agent -> repo-root
+SUMMARIES_DIR = Path(__file__).parent.parent.parent.parent.parent.parent / "book-source" / "summaries"
 
 # Path to book source files
-BOOK_SOURCE_PATH = Path(__file__).parent.parent.parent.parent.parent / "book-source" / "docs"
+BOOK_SOURCE_PATH = Path(__file__).parent.parent.parent.parent.parent.parent / "book-source" / "docs"
 
 def normalize_page_path(page_path: str) -> str:
     """
@@ -230,10 +232,15 @@ def load_original_content(page_path: str) -> str:
     # Construct full file path
     file_path = BOOK_SOURCE_PATH / f"{page_path}.md"
 
+    # Debug logging
+    print(f"[DEBUG] Loading content from: {file_path}")
+    print(f"[DEBUG] BOOK_SOURCE_PATH: {BOOK_SOURCE_PATH}")
+    print(f"[DEBUG] File exists: {file_path.exists()}")
+
     if not file_path.exists():
         raise HTTPException(
             status_code=404,
-            detail=f"Lesson not found: {page_path}",
+            detail=f"Lesson not found: {page_path} (looked at: {file_path})",
         )
 
     # Read file content
