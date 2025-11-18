@@ -7,6 +7,7 @@ Main application entry point
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
+import os
 
 from tutor_agent.api.v1 import content, auth
 from tutor_agent.config.settings import get_settings
@@ -14,6 +15,10 @@ from tutor_agent.core.database import init_db
 
 # Initialize settings
 settings = get_settings()
+
+# CRITICAL: Set OpenAI API key in environment for OpenAI Agents SDK
+# The SDK looks for OPENAI_API_KEY in os.environ, not just in settings
+os.environ["OPENAI_API_KEY"] = settings.openai_api_key
 
 # Initialize database tables on startup
 init_db()
