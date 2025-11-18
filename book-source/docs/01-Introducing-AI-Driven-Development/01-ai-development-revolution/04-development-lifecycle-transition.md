@@ -1,4 +1,3 @@
-<!-- Claude is Work to Build this Project -->
 ---
 title: "The Development Lifecycle in Transition"
 chapter: 1

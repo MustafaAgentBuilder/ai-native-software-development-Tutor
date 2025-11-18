@@ -1,4 +1,3 @@
-<!-- Claude is Work to Build this Project -->
 ---
 title: "The Opportunity Window"
 chapter: 1

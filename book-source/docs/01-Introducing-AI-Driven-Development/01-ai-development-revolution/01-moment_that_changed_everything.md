@@ -1,4 +1,3 @@
-<!-- Claude is Work to Build this Project -->
 ---
 title: "A Moment That Changed Everything"
 chapter: 1

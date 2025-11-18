@@ -1,4 +1,3 @@
-<!-- Claude is Work to Build this Project -->
 ---
 title: "Preface: Welcome to the AI-Native Era"
 description: "Introduction to AI-native software development and specification-driven methodology."

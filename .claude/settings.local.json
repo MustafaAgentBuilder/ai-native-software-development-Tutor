@@ -23,7 +23,14 @@
       "mcp__playwright__browser_close",
       "Bash(git rm:*)",
       "Bash(npm run clear:*)",
-      "Bash(uv pip install:*)"
+      "Bash(uv pip install:*)",
+      "Bash(python add_tabs_to_all_lessons.py:*)",
+      "Bash(npm run build:*)",
+      "Bash(python fix_tab_frontmatter.py:*)",
+      "Bash(python fix_all_tab_spacing.py:*)",
+      "Bash(python fix_mdx.py:*)",
+      "Bash(npm start)",
+      "Bash(cat:*)"
     ]
   },
   "enableAllProjectMcpServers": true,

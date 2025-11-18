@@ -1,4 +1,3 @@
-<!-- Claude is Work to Build this Project -->
 ---
 sidebar_position: 5
 title: "The M-Shaped Developer—What AIDD Makes Possible"

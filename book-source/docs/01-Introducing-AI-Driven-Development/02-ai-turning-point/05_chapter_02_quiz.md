@@ -1,8 +1,17 @@
-<!-- Claude is Work to Build this Project -->
 ---
 sidebar_position: 5
 title: "Chapter 2: The AI Turning Point Quiz"
 ---
+
+
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import SummaryTab from '@site/src/components/SummaryTab';
+import PersonalizedTab from '@site/src/components/PersonalizedTab';
+
+<Tabs>
+  <TabItem value="original" label="📖 Original" default>
 
 # Chapter 2: The AI Turning Point Assessment
 
@@ -589,3 +598,15 @@ Test your understanding of the inflection point in AI-driven development, core d
   ]}
   questionsPerBatch={18}
 />
+
+
+  </TabItem>
+
+  <TabItem value="summary" label="📝 Summary">
+    <SummaryTab pagePath="01-Introducing-AI-Driven-Development/02-ai-turning-point/05_chapter_02_quiz" />
+  </TabItem>
+
+  <TabItem value="personalized" label="✨ Personalized">
+    <PersonalizedTab pagePath="01-Introducing-AI-Driven-Development/02-ai-turning-point/05_chapter_02_quiz" />
+  </TabItem>
+</Tabs>

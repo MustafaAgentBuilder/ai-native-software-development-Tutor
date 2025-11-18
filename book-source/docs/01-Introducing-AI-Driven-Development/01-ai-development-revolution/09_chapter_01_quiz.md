@@ -1,8 +1,17 @@
-<!-- Claude is Work to Build this Project -->
 ---
 sidebar_position: 9
 title: "Chapter 1: AI Development Revolution Quiz"
 ---
+
+
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import SummaryTab from '@site/src/components/SummaryTab';
+import PersonalizedTab from '@site/src/components/PersonalizedTab';
+
+<Tabs>
+  <TabItem value="original" label="📖 Original" default>
 
 # Chapter 1: AI Development Revolution Quiz
 
@@ -613,3 +622,15 @@ Test your understanding of how AI is transforming software development, from the
   ]}
   questionsPerBatch={18}
 />
+
+
+  </TabItem>
+
+  <TabItem value="summary" label="📝 Summary">
+    <SummaryTab pagePath="01-Introducing-AI-Driven-Development/01-ai-development-revolution/09_chapter_01_quiz" />
+  </TabItem>
+
+  <TabItem value="personalized" label="✨ Personalized">
+    <PersonalizedTab pagePath="01-Introducing-AI-Driven-Development/01-ai-development-revolution/09_chapter_01_quiz" />
+  </TabItem>
+</Tabs>

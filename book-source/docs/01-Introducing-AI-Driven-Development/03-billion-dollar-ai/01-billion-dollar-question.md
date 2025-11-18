@@ -1,4 +1,3 @@
-<!-- Claude is Work to Build this Project -->
 ---
 sidebar_position: 1
 title: "The Billion-Dollar Question"

@@ -1,9 +1,18 @@
-<!-- Claude is Work to Build this Project -->
 ---
 sidebar_position: 7
 title: "Chapter 4: Nine Pillars Quiz"
 chapter: 4
 ---
+
+
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import SummaryTab from '@site/src/components/SummaryTab';
+import PersonalizedTab from '@site/src/components/PersonalizedTab';
+
+<Tabs>
+  <TabItem value="original" label="📖 Original" default>
 
 # Chapter 4: The Nine Pillars of AI-Driven Development—Assessment
 
@@ -660,3 +669,15 @@ This interactive quiz tests your conceptual understanding of AI-Driven Developme
   ]}
   questionsPerBatch={18}
 />
+
+
+  </TabItem>
+
+  <TabItem value="summary" label="📝 Summary">
+    <SummaryTab pagePath="01-Introducing-AI-Driven-Development/04-nine-pillars/07-chapter-04-quiz" />
+  </TabItem>
+
+  <TabItem value="personalized" label="✨ Personalized">
+    <PersonalizedTab pagePath="01-Introducing-AI-Driven-Development/04-nine-pillars/07-chapter-04-quiz" />
+  </TabItem>
+</Tabs>

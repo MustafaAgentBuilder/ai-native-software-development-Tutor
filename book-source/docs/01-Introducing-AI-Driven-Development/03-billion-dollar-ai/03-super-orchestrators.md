@@ -1,4 +1,3 @@
-<!-- Claude is Work to Build this Project -->
 ---
 sidebar_position: 3
 title: "The Economics of Super Orchestrators"

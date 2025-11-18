@@ -1,68 +1,70 @@
+#!/usr/bin/env python3
 """
-Fix MDX compilation errors caused by curly braces in markdown files.
+Fix MDX frontmatter placement - move frontmatter BEFORE imports
 """
+
 import re
 from pathlib import Path
 
-def fix_curly_braces_in_file(file_path: Path):
-    """Fix curly braces in markdown files that cause MDX parsing errors."""
-    content = file_path.read_text(encoding='utf-8')
-    original_content = content
+DOCS_DIR = Path("docs")
 
-    # Pattern to match code blocks (we should NOT modify these)
-    code_block_pattern = r'```[\s\S]*?```'
+def fix_file(file_path: Path) -> bool:
+    """Fix a single file by moving frontmatter before imports."""
+    try:
+        content = file_path.read_text(encoding='utf-8')
 
-    # Find all code blocks
-    code_blocks = list(re.finditer(code_block_pattern, content))
+        # Check if file has tab imports
+        if 'import Tabs from' not in content:
+            return False
 
-    # Track if file was modified
-    modified = False
+        # Find frontmatter (<!-- comment -->\n---\n...---\n)
+        frontmatter_pattern = r'(<!--.*?-->\s*---\s*.*?\s*---\s*)'
+        frontmatter_match = re.search(frontmatter_pattern, content, re.DOTALL)
 
-    # Check if there are inline code sections with curly braces outside code blocks
-    # that are NOT properly escaped
+        if not frontmatter_match:
+            return False  # No frontmatter found
 
-    # For f-strings in inline code, ensure they're in proper code blocks
-    # The issue is MDX tries to parse {...} as JSX expressions
+        frontmatter = frontmatter_match.group(1)
+        frontmatter_start = frontmatter_match.start()
 
-    # The real fix: ensure all Python code with curly braces is in fenced code blocks
-    # Let's check lines mentioned in errors
+        # Check if frontmatter is AFTER imports (the problem)
+        imports_pattern = r'^(import Tabs from)'
+        imports_match = re.search(imports_pattern, content, re.MULTILINE)
 
-    lines = content.split('\n')
+        if imports_match and imports_match.start() < frontmatter_start:
+            # Frontmatter is AFTER imports - need to fix
 
-    for i, line in enumerate(lines, 1):
-        # Check for problematic patterns
-        if '{' in line and '}' in line:
-            # Skip if in YAML frontmatter (between ---)
-            in_frontmatter = False
-            for j in range(i):
-                if lines[j].strip() == '---':
-                    in_frontmatter = not in_frontmatter
+            # Remove frontmatter from current location
+            content_without_frontmatter = content[:frontmatter_start] + content[frontmatter_match.end():]
 
-            if not in_frontmatter:
-                # Check if this line is in a code block
-                in_code_block = False
-                for block in code_blocks:
-                    block_start_line = content[:block.start()].count('\n') + 1
-                    block_end_line = content[:block.end()].count('\n') + 1
-                    if block_start_line <= i <= block_end_line:
-                        in_code_block = True
-                        break
+            # Add frontmatter at the very beginning
+            fixed_content = frontmatter + "\n" + content_without_frontmatter
 
-                # If not in code block and contains curly braces, this might be the issue
-                if not in_code_block and  not line.strip().startswith('#'):
-                    print(f"Line {i}: {line[:100]}")
+            # Write back
+            file_path.write_text(fixed_content, encoding='utf-8')
+            print(f"✅ FIXED: {file_path}")
+            return True
+        else:
+            print(f"⏭️  OK: {file_path}")
+            return False
 
-    return modified
+    except Exception as e:
+        print(f"❌ ERROR: {file_path} - {e}")
+        return False
 
-# Fix the problematic files
-files_to_fix = [
-    Path("docs/04-Python-Fundamentals/15-operators-keywords-variables/02-comparison-operators.md"),
-    Path("docs/04-Python-Fundamentals/16-strings-type-casting/03-f-string-formatting.md"),
-    Path("docs/04-Python-Fundamentals/17-control-flow-loops/01-making-decisions-with-conditionals.md"),
-    Path("docs/04-Python-Fundamentals/19-set-frozenset-gc/02-set-operations.md"),
-]
+def main():
+    """Fix all MD files."""
+    print("🔧 Fixing frontmatter placement in all lesson files...\n")
 
-for file_path in files_to_fix:
-    if file_path.exists():
-        print(f"\n=== Checking {file_path.name} ===")
-        fix_curly_braces_in_file(file_path)
+    fixed_count = 0
+    for md_file in DOCS_DIR.rglob("*.md"):
+        if md_file.name.lower() not in ["readme.md"]:
+            if fix_file(md_file):
+                fixed_count += 1
+
+    print(f"\n{'='*60}")
+    print(f"📊 Fixed {fixed_count} files")
+    print(f"{'='*60}")
+
+if __name__ == "__main__":
+    main()

@@ -1,4 +1,3 @@
-<!-- Claude is Work to Build this Project -->
 ---
 sidebar_position: 1
 title: "The Inflection Point — Why 2025 Is Different"
